@@ -57,7 +57,7 @@ if(sizeof($category_details)==0){
                     <label class="cashback"><span class="yellow"><?php echo $cashback; ?>% </span>cashback</label>
                     <?php }else{ ?>
                     <div class="clearfix"></div>
-                    <label class="cashback"><span class="yellow">0.2% </span>cashback</label>
+                    <label class="cashback"><span class="yellow">0% </span>cashback</label>
                     <?php } ?>
                 </div>
             </div>
@@ -77,7 +77,7 @@ if(sizeof($category_details)==0){
                                     <?php if($cashback!='' && $cashback!=0){ ?>
                                         <label class="cashback"><?php echo $cashback; ?>% cashback</label>
                                     <?php }else{?>
-                                        <label class="cashback">0.2% cashback</label>
+                                        <label class="cashback">0% cashback</label>
                                     <?php }?>
                                     <div class="clearfix"></div>
                                 </div>
@@ -86,7 +86,7 @@ if(sizeof($category_details)==0){
                             <div class="clearfix"></div>
                             <div class="stock-available-not"><?php echo str_replace("'","",$product_details[0]['instock']); ?></div>
                             <div class="clearfix"></div>
-                            <a href="<?php echo base_url("terms"); ?>" class="tnc" target="_blank"><i class="fa fa-link"></i><span> Terms & Condition</span></a>
+<!--                            <a href="<?php echo base_url("terms"); ?>" class="tnc" target="_blank"><i class="fa fa-link"></i><span> Terms & Condition</span></a>-->
                             <a href="#" class="how-it-works howitwork" data-toggle="modal" data-target="#howitwork">How it Works</a>
                             <div class="clearfix"></div>
                             <?php if ($this->session->userdata('fis_logged_in') !== FALSE) { }else{ ?>
@@ -99,7 +99,7 @@ if(sizeof($category_details)==0){
                         </div>
                         <?php 
                             if($cashback==0 || $cashback==""){
-                                $cashback = 0.2;
+                                $cashback = 0;
                             }
                         ?>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 pricing-holder-right">
@@ -233,7 +233,7 @@ if(sizeof($category_details)==0){
                                     <?php if($cashback!=0 && $cashback!=""){ ?>
                                     <label class="cashback"><span class="yellow"><?php echo $cashback ?>% </span>cashback</label>
                                     <?php }else{ ?>
-                                    <label class="cashback"><span class="yellow">0.2% </span>cashback</label>
+                                    <label class="cashback"><span class="yellow">0% </span>cashback</label>
                                     <?php } ?>
                                     </div>
                                     <div class="view-offer">

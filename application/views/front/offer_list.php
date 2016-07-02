@@ -55,7 +55,7 @@
                                     <?php if(isset($discount) && $discount!='' && $discount!=0){ ?>
                                     <label class="cashback"><span class="yellow"><?php echo $discount; ?> </span>cashback</label>
                                     <?php }else{ ?>
-                                    <label class="cashback"><span class="yellow">0.2% </span>cashback</label>
+                                    <label class="cashback"><span class="yellow">0% </span>cashback</label>
                                     <?php } ?>
                                     </div>
                                     <div class="view-offer">

@@ -46,7 +46,7 @@
 												<?php if($cashback!=0 && $cashback!=""){ ?>
 												<label class="cashback"><span class="yellow"><?php echo $cashback ?>% </span>cashback</label>
 												<?php }else{ ?>
-												<label class="cashback"><span class="yellow">0.2% </span>cashback</label>
+												<label class="cashback"><span class="yellow">0% </span>cashback</label>
 												<?php } ?>
 												<div class="view-offer">
 													<btn class="btn btn-warning btn-round btn-wide fw-700"><a href="<?php echo base_url($categoryName."/".$new_title."-".$product['id']); ?>" >VIEW OFFER</a></btn>

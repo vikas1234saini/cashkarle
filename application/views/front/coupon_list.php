@@ -18,13 +18,13 @@
 	}
 	$find = array("CPRC", "CPA","CPS","CPL"," - India");
 	$replace = array("","","","","");
-	$discount = "0.2%";
+	$discount = "0%";
 	if(isset($offer_details[0]['discount']) && $offer_details[0]['discount']!=''){
 		$discount = " ".$offer_details[0]['discount']." ".($offer_details[0]['discount_type']!=''?$offer_details[0]['discount_type']:"%");
 	}
 	//	echo $offer_details[0]['id'];
 	if($offer_details[0]['id']=='56'){	
-		$discount = " 0.2%";
+		$discount = " 0%";
 	}
 
 ?>
@@ -79,7 +79,7 @@
 						$old_dis  = $discount;
 						foreach($couponlist as $key => $value){ 					
 							if($value['offer_id']=='412'){	
-								$discount = "0.2%";
+								$discount = "0%";
 							}else{
 								if($value['discount']!=''){
 									$discount = $value['discount']." ".$value['discount_type'];

@@ -26,7 +26,7 @@
     	                <label class="cashback"><span class="yellow"><?php echo $offer_details[0]['discount']; ?>% </span>cashback</label>
                     <?php }else{ ?>
             	        <br/>
-	                    <label class="cashback"><span class="yellow">0.2% </span>cashback</label>
+	                    <label class="cashback"><span class="yellow">0% </span>cashback</label>
                     <?php } ?>
                 </div>
                 <div class="col-md-8 col-sm-7" style="border:#CCC solid 1px; height:450px; margin-left:10px; margin-top:0px;">
@@ -41,7 +41,7 @@
                         </div>
                         <?php }else{?>
                         <div>
-                        	<label class="cashback" style="color:#23C670; padding:20px 0; font-size:24px;">0.2% cashback</label>
+                        	<label class="cashback" style="color:#23C670; padding:20px 0; font-size:24px;">0% cashback</label>
                         </div>
                         <?php }?>
                         

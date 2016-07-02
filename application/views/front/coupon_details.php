@@ -11,7 +11,7 @@
 	}
 	$find = array("CPRC", "CPA","CPS","CPL"," - India");
 	$replace = array("","","","","");
-	$discount = "0.2%";
+	$discount = "0%";
 	if(isset($offer_details[0]['discount']) && $offer_details[0]['discount']!=''){
 		$discount = " ".$offer_details[0]['discount']." ".$offer_details[0]['discount_type'];
 	}

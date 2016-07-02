@@ -316,6 +316,7 @@ class Product_model extends CI_Model {
 		
 		$this->db->select('*');
 		$this->db->from('tbl_product');
+		$this->db->where("image != ","");
 //		$this->db->where('parentId != ', '0');
 	    $this->db->order_by('id', 'RANDOM');
 	
@@ -395,6 +396,7 @@ class Product_model extends CI_Model {
 		$this->db->where("p.retail_price > ","0");
 		$this->db->where("p.selling_price > ","0");
 		$this->db->limit(35, 0);
+		$this->db->order_by('id', 'RANDOM');
 		$query = $this->db->get();
 //		echo $this->db->last_query();
 		return $query->result_array(); 	

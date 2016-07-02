@@ -257,7 +257,7 @@ class Product extends CI_Controller {
 								
 								$offerdata .= str_replace($find,$replace,$value['title']).'</a></p>
 							</div>
-							<label class="cashback"><span class="yellow">'.($discount!=''?$discount:"0.2%").' </span>cashback</label>
+							<label class="cashback"><span class="yellow">'.($discount!=''?$discount:"0%").' </span>cashback</label>
 							</div>
 							<div class="view-offer">';
 							if($value['coupon_count']>0){
@@ -297,7 +297,7 @@ class Product extends CI_Controller {
 						$maximumRetailPrice	= $product['retail_price'];
 	//					$cashback			= $product['discount'];
 						
-						$cashback = "0.2";
+						$cashback = "0";
 						if($product['sitename']=='snapdeal'){
 							//if($product['retail_price']>2500){
 	//							$cashback		= $product['snapdeal_discount_2500'];
@@ -311,7 +311,7 @@ class Product extends CI_Controller {
 							$cashback		= $product['amazon_discount'];
 						}
 						if($cashback==0 || $cashback==''){
-							$cashback = "0.2";
+							$cashback = "0";
 						}
 						$new_title = preg_replace("/[^0-9a-zA-Z ]/m", "", $title);
 						$new_title = str_replace("catsearch","",strtolower(preg_replace("/ /", "-", $new_title)));
@@ -361,7 +361,7 @@ class Product extends CI_Controller {
 						$maximumRetailPrice	= $product['retail_price'];
 	//					$cashback			= $product['discount'];
 						
-						$cashback = "0.2";
+						$cashback = "0";
 						if($product['sitename']=='snapdeal'){
 							//if($product['retail_price']>2500){
 	//							$cashback		= $product['snapdeal_discount_2500'];
@@ -375,7 +375,7 @@ class Product extends CI_Controller {
 							$cashback		= $product['amazon_discount'];
 						}
 						if($cashback==0 || $cashback==''){
-							$cashback = "0.2";
+							$cashback = "0";
 						}
 						$new_title = preg_replace("/[^0-9a-zA-Z ]/m", "", $title);
 						$new_title = str_replace("catsearch","",strtolower(preg_replace("/ /", "-", $new_title)));

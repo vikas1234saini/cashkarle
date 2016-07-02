@@ -19,8 +19,6 @@ class Front extends CI_Controller {
 		$this->load->model('brand_model');
 		$this->load->model('offer_model');
 		
-		
-		
 		$productlist = $this->product_model->get_rand_product();
 		
 		$data  = array();
