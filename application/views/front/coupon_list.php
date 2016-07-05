@@ -43,7 +43,7 @@
 	            	<div class="card-block">
 	            		<div style="height:120px; position:relative;">
 		                 <?php  if(isset($user_details) && sizeof($user_details)>0){ ?>
-		  				      <a href="<?php echo base_url('oprocess/'.$offer_details[0]['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $offer_details[0]['id']; ?>" data-url="<?php echo $offer_details[0]['url']; ?>" title="<?php echo html_entity_decode($offer_details[0]['title']); ?>" target="_blank" >
+		  				      <a href="<?php echo base_url('oprocess/'.$offer_details[0]['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $offer_details[0]['id']; ?>" data-url="<?php echo $offer_details[0]['url']; ?>" title="<?php echo html_entity_decode($offer_details[0]['title']); ?>" target="_blank" >
 						<?php }else{ ?>
 		                            <a href="<?php echo $offer_details[0]['url']; ?>" class="sign-in-btn buybutton">
 		                <?php } ?>
@@ -94,7 +94,7 @@
 	            		<!--Coupon Heading-->
 	            		<div>
 							<?php if(isset($user_details) && sizeof($user_details)>0){ ?>
-		                		<a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" style="cursor:pointer;" name="<?php echo $value['coupon_code']; ?>"  class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" data-url="<?php echo $value['link']; ?>"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
+		                		<a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" style="cursor:pointer;" name="<?php echo $value['coupon_code']; ?>"  class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" data-url="<?php echo $value['link']; ?>"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
 		                    <?php }else{ ?>
 		                        <a href="<?php echo $value['link']; ?>" style="cursor:pointer;" class="sign-in-btn buybutton"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
 		                    <?php } ?>
@@ -121,7 +121,7 @@
 								if($value['coupon_type']!='Coupon'){
 									if(isset($user_details) && sizeof($user_details)>0){ 
 							?>
-				                       <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" data-url="<?php echo $value['link']; ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" name="<?php echo $value['coupon_code']; ?>"  style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a>
+				                       <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" data-url="<?php echo $value['link']; ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" name="<?php echo $value['coupon_code']; ?>"  style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a>
 		        		            <?php }else{ ?>
 		                		        <a href="<?php echo $value['link']; ?>" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;" class="sign-in-btn buybutton"><?php echo $title ?></a>
 		                    
@@ -131,7 +131,7 @@
 								
 									if(isset($user_details) && sizeof($user_details)>0){ 
 							?>
-				                      <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinusercoupon" rel="<?php echo $value['id']; ?>" name="<?php echo $value['coupon_code']; ?>" data-url="<?php echo $value['link']; ?>" title="<?php echo html_entity_decode($value['coupon_title']); ?>" target="_blank" style="float:right; margin:5px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a><span id="couponcodedisplay<?php echo $value['id']; ?>" style="font-size:12px; text-align:center; line-height:30px; overflow:hidden; float:left;">Coupon code shown here</span>
+				                      <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinusercoupon" rel="<?php echo $value['id']; ?>" name="<?php echo $value['coupon_code']; ?>" data-url="<?php echo $value['link']; ?>" title="<?php echo html_entity_decode($value['coupon_title']); ?>" target="_blank" style="float:right; margin:5px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a><span id="couponcodedisplay<?php echo $value['id']; ?>" style="font-size:12px; text-align:center; line-height:30px; overflow:hidden; float:left;">Coupon code shown here</span>
 		        		            <?php }else{ ?>
 		                		        <a href="<?php echo $value['link']; ?>" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:15px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;" class="sign-in-btn buybutton"><?php echo $title ?></a>
 							<?php } } ?>

@@ -1,51 +1,8 @@
-<?php
-	$extraval = "affExtParam1";
-	$para2 = "";
-	
-	if ($this->session->userdata('random_no') != FALSE && $this->session->userdata('random_no') != "") {
-		$para2 = "&affExtParam2=".$this->session->userdata('random_no');
-	}
-	if(isset($product_details[0]['sitename']) && strtolower($product_details[0]['sitename'])=='flipkart'){
-		$extraval = 'affExtParam1';
-	}
-	
-	if(isset($product_details[0]['sitename']) && strtolower($product_details[0]['sitename'])=='snapdeal'){
-		$extraval = 'affiliateSubId1';
-		$para2 = "&affiliateSubId2=".$this->session->userdata('random_no');
-	}
-?>
-<?php 
-	if(isset($product_details[0]['categoryName']) && $product_details[0]['categoryName']==''){ 
-		$product_details[0]['discount'] 		= 0;
-		$product_details[0]['categoryName'] 	= 'Amazon';
-		$product_details[0]['categoryName'] 	= 'Amazon';
-		
-		$product_details[0]['snapdeal_discount_2500'] 	= 0;
-		$product_details[0]['snapdeal_discount'] 		= 0;
-		$product_details[0]['flipkart_discount'] 		= 0;
-		$product_details[0]['amazon_discount'] 		= 0;
-	}
-	
-	$cashback = 0;
-	if($product_details[0]['sitename']=='snapdeal'){
-		/*if($product_details[0]['retail_price']>2500){
-			$cashback		= $product_details[0]['snapdeal_discount_2500'];
-		}else{
-			$cashback		= $product_details[0]['snapdeal_discount'];
-		}*/
-		
-		$cashback		= $product_details[0]['snapdeal_discount'];
-	}else if($product_details[0]['sitename']=='flipkart'){
-		$cashback		= $product_details[0]['flipkart_discount'];
-	}else if($product_details[0]['sitename']=='amazon'){
-		$cashback		= $product_details[0]['amazon_discount'];
-	}
-?>
 <!DOCTYPE html>
 	<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv="refresh" content="3;<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" />
+        <meta http-equiv="refresh" content="3;<?php echo $main_url;?>" />
         <title>CashKarle</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -90,7 +47,7 @@
 		                        <span style="font-size:36px; font-family:cursive; color:#000; font-weight:bolder;">Enjoy Savings</span>
 		                    </div>
 		                    <!--<h1>CONGRATULATIONS, NOTHING MORE TO DO!</h1><h2>Enjoy saving on <?php echo isset($product_details[0]['title'])?$product_details[0]['title']:(isset($product_details[0]['coupon_title'])?$product_details[0]['coupon_title']:"") ?> via CashKarle.com, India's No.1 Coupon &amp; Cashback website!</h2>-->
-		                    <p class="mt mb text-center"><a class="link" href="<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" rel="nofollow" title="Click to earn cashback" style="text-decoration:none; color:#57A4F4;">Click here</a>&nbsp;&nbsp;if you are not automatically redirected within few seconds.</p>
+		                    <p class="mt mb text-center"><a class="link" href="<?php echo $main_url;?>" rel="nofollow" title="Click to earn cashback" style="text-decoration:none; color:#57A4F4;">Click here</a>&nbsp;&nbsp;if you are not automatically redirected within few seconds.</p>
                 		</div>
                     </div>
                  </div>

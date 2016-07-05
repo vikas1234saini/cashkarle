@@ -51,7 +51,7 @@
             	<div>
                 
 					<?php if(isset($user_details) && sizeof($user_details)>0){ ?>
-                		<a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis'); ?>" style="cursor:pointer;" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['link']; ?>" target="_blank"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?></span></label><?php echo $discount; ?></a>
+                		<a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis'); ?>" style="cursor:pointer;" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['link']; ?>" target="_blank"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?></span></label><?php echo $discount; ?></a>
                     <?php }else{ ?>
                         <a href="<?php echo $value['link']; ?>" style="cursor:pointer;"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?></span></label></a>
                     <?php } ?>
@@ -79,7 +79,7 @@
 					?>
 					<?php if(isset($user_details) && sizeof($user_details)>0){ ?>
                        <!-- <a href="<?php echo $offer_details[0]['url']; ?><?php echo "&userid=".$user_details[0]['id'];?>" target="_blank" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:20px; padding:10px 20px; font-weight:bold; border-radius:30px; text-decoration:none;">BUY NOW</a>-->
-                       <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $offer_details[0]['url']; ?><?php echo "&".$extraval."=".$user_details[0]['id'];?>" target="_blank" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:18px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a>
+                       <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $offer_details[0]['url']; ?><?php echo "&".$extraval."=".$user_details[0]['id'];?>" target="_blank" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:18px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;"><?php echo $title ?></a>
                     <?php }else{ ?>
                         <a href="<?php echo $value['link']; ?>" style="float:right; margin:20px; background:#F5A623; color:#FFF; font-size:18px; padding:5px 10px; font-weight:bold; border-radius:30px; text-decoration:none;" class="sign-in-btn buybutton"><?php echo $title ?></a>
                     <?php } ?>

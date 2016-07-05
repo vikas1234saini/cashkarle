@@ -31,7 +31,7 @@
 										//print_r($user_details);
                     	                    if(isset($user_details) && sizeof($user_details)>0){ 
 										?>
-		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" >
+		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" >
 		        		            <?php }else{ ?>
                                                 <a href="<?php echo $value['url']; ?>" class="sign-in-btn">
 									<?php } } ?>
@@ -43,7 +43,7 @@
                                         <?php }else{ 
                     	                    if(isset($user_details) && sizeof($user_details)>0){ 
 										?>
-		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" >
+		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" >
 		        		            <?php }else{ ?>
                                                 <a href="<?php echo $value['url']; ?>" class="sign-in-btn">
 									<?php } } 
@@ -65,7 +65,7 @@
 										//print_r($user_details);
                     	                    if(isset($user_details) && sizeof($user_details)>0){ 
 										?>
-		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')); ?>" class="signinuseroffer buybutton" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" ><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>
+		                				      <a href="<?php echo base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer buybutton" rel="<?php echo $value['id']; ?>" data-url="<?php echo $value['url']; ?>" title="<?php echo html_entity_decode($value['title']); ?>" target="_blank" ><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>
 		        		            <?php }else{ ?>
                                                 <a href="<?php echo $value['url']; ?>" class="sign-in-btn buybutton"><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>
 									<?php }} ?>

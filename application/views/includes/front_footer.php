@@ -860,7 +860,6 @@ footer p { text-align:justify;}
 			        dataType: 'json',
 					success: function(data) {
 						console.log(data);
-						
 					}
 				});	
                 //return false;
@@ -923,7 +922,7 @@ footer p { text-align:justify;}
 						}
                     //    $('#pageno').val(parseInt($('#pageno').val())+1);
 
-						$('#pageno').val("1");
+						$('#pageno').val("0");
 					}
 				});									 
 				return false;

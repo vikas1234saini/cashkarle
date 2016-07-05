@@ -221,55 +221,56 @@ class Product extends CI_Controller {
 					$find = array("CPRC", "CPA","CPS","CPL"," - India");
 					$replace = array("","","","","");
 					$discount = "";
-					if(isset($offer_details[0]['discount']) && $offer_details[0]['discount']!=''){
-						$discount = " ".$offer_details[0]['discount']." ".$offer_details[0]['discount_type'];
+					if(isset($value['discount']) && $value['discount']!=''){
+						$discount = " ".$value['discount']." ".($value['discount_type']!=''?$value['discount_type']:"%");
 					}
 					$offerdata .= '<div class="col-md-4 col-sm-6">
 						<div class="product-item  coupon-item text-center " style="height:300px;">
 						
                                         	<div style="height:240px;">
 							<div style="height:120px; position:relative;">';
-							//$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
-							if($value['coupon_count']>0){
-                                  $offerdata .=       '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';                                        
+							$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
+							/*if($value['coupon_count']>0){
+                                  $offerdata .=       '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">'; 
 						   }else{ 
 								//print_r($user_details);
 								if(isset($user_details) && sizeof($user_details)>0){ 
-									  $offerdata .=       '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')).'" class="signinuseroffer" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank" >';
+									  $offerdata .=       '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')).'" class="signinuseroffer" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank">';
 								}else{
 									  $offerdata .=       ' <a href="'.$value['url'].'" class="sign-in-btn">';
 								} 
-							}
+							}*/
 								
 							$offerdata .= '<img src="'.$value['image'].'" style="position:absolute;    top:0;    bottom:0;    margin:auto; max-height:110px; padding-top:10px; left:0; right:0;"></a></div>
 							<div class="product-name" style="height:40px;">
 								<p>';
-								//$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
-								  if($value['coupon_count']>0){
+								$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
+								/*  if($value['coupon_count']>0){
                                         $offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
                                   }else{ 
 										if(isset($user_details) && sizeof($user_details)>0){ 
-											  $offerdata .= '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')).'" class="signinuseroffer" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank" >';
+											  $offerdata .= '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')).'" class="signinuseroffer" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank">';
 										}else{
 											$offerdata .= '<a href="'.$value['url'].'" class="sign-in-btn">';
 										} 
-								} 
+								} */
 								
 								$offerdata .= str_replace($find,$replace,$value['title']).'</a></p>
 							</div>
 							<label class="cashback"><span class="yellow">'.($discount!=''?$discount:"0%").' </span>cashback</label>
 							</div>
 							<div class="view-offer">';
-							if($value['coupon_count']>0){
+							$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'"><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>';
+		/*					if($value['coupon_count']>0){
 	                         	$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'"><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>';
                              }else{ 
 									//print_r($user_details);
 	      	                    if(isset($user_details) && sizeof($user_details)>0){ 
-		                			$offerdata .= '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000000,9999999).date('ymdhis')).'" class="signinuseroffer buybutton" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank" ><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>';
+		                			$offerdata .= '<a href="'.base_url('oprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')).'" class="signinuseroffer buybutton" rel="'.$value['id'].'" data-url="'.$value['url'].'" title="'.html_entity_decode($value['title']).'" target="_blank" ><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>';
 		        		        }else{
                                  	$offerdata .= '<a href="'.$value['url'].'" class="sign-in-btn buybutton"><btn class="btn btn-warning btn-round btn-wide fw-700">GET OFFER</btn></a>';
 								}
-							}
+							}*/
 								$offerdata .= '<br />
                             <div style="font-size:11px; margin-top:2px; color:#000; font-weight:800;">'.$value['coupon_count'].' Offers Available</div>
 							</div>
@@ -491,7 +492,7 @@ class Product extends CI_Controller {
 	//	$id 		= $id_array[sizeof($id_array)-1];
 		
 		$data['offerlist']  	= $this->offer_model->get_featured_offer();
-		
+
 		$data['top_coupon']  	= "top coupon";
 		
 //		$data['category_details'] = $this->category_model->get_category_by_id($data['product_details'][0]['category']);
@@ -508,11 +509,92 @@ class Product extends CI_Controller {
         $data['main_content'] = 'front/search';
         $this->load->view('includes/front_template', $data);
 	}
-	function process($id){
-		$data  = array();;
+	function process($id,$random_no){
+
+		$data  = array();
         $this->load->model('product_model');
-		$data['product_details']  	= $this->product_model->get_product_by_id($id);
-		$data['user_details'] 	= $this->session->userdata('fuser_details');
+		$product_details 	= $data['product_details']  	= $this->product_model->get_product_by_id($id);
+		$user_details 		= $data['user_details'] 		= $this->session->userdata('fuser_details');
+		$data['random_no'] 			= $random_no;
+		$this->db->select('id');
+		$this->db->from('tbl_linkgo');
+		$this->db->where('random',$random_no);
+		$query = $this->db->get();
+		
+		$cashback = 0;
+		if($product_details[0]['sitename']=='snapdeal'){
+			/*if($product_details[0]['retail_price']>2500){
+				$cashback		= $product_details[0]['snapdeal_discount_2500'];
+			}else{
+				$cashback		= $product_details[0]['snapdeal_discount'];
+			}*/
+			
+			$cashback		= $product_details[0]['snapdeal_discount'];
+		}else if($product_details[0]['sitename']=='flipkart'){
+			$cashback		= $product_details[0]['flipkart_discount'];
+		}else if($product_details[0]['sitename']=='amazon'){
+			$cashback		= $product_details[0]['amazon_discount'];
+		}
+		$extraval = "affExtParam1";
+		$para2 = "";
+		
+		if (isset($random_no) && $random_no != "") {
+			$para2 = "&affExtParam2=".$random_no;
+		}
+		if(isset($product_details[0]['sitename']) && strtolower($product_details[0]['sitename'])=='flipkart'){
+			$extraval = 'affExtParam1';
+		}
+		
+		if(isset($product_details[0]['sitename']) && strtolower($product_details[0]['sitename'])=='snapdeal'){
+			$extraval = 'aff_sub';
+			$para2 = "&aff_sub2=".$random_no;
+		}
+		
+		if(isset($product_details[0]['categoryName']) && $product_details[0]['categoryName']==''){ 
+			$product_details[0]['discount'] 		= 0;
+			$product_details[0]['categoryName'] 	= 'Amazon';
+			$product_details[0]['categoryName'] 	= 'Amazon';
+			
+			$product_details[0]['snapdeal_discount_2500'] 	= 0;
+			$product_details[0]['snapdeal_discount'] 		= 0;
+			$product_details[0]['flipkart_discount'] 		= 0;
+			$product_details[0]['amazon_discount'] 			= 0;
+		}
+		
+		$data['main_url'] = (isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"")) ."&".$extraval."=".$user_details[0]['id'].$para2;
+		$data['cashback'] = $cashback;
+		if( $query->num_rows()==0){
+			$cdata = array();
+			$cdata['link'] 		= $data['main_url'];
+			$cdata['user_id'] 	= $user_details[0]['id'];
+			$cdata['date'] 		= date('Y-m-d H:i:s');
+			$cdata['url'] 		= $product_details[0]['url'];
+			$cdata['random'] 	= $random_no;
+			$cdata['action'] 	= base_url('process/'.$id.'/'.$random_no);
+			$cdata['discount'] 	= $cashback;
+			$cdata['main_id'] 	= $id;
+			$cdata['sitename'] 	= $product_details[0]['sitename'];
+			$this->db->insert('tbl_linkgo', $cdata);
+		}else{
+			
+			$cdata = array();
+			$cdata['link'] 		= $data['main_url'];
+			$cdata['user_id'] 	= $user_details[0]['id'];
+			$cdata['date'] 		= date('Y-m-d H:i:s');
+			$cdata['url'] 		= $product_details[0]['url'];
+			$cdata['random'] 	= $random_no;
+			$cdata['action'] 	= base_url('process/'.$id.'/'.$random_no);
+			$cdata['discount'] 	= $cashback;
+			$cdata['main_id'] 	= $id;
+			$cdata['sitename'] 	= $product_details[0]['sitename'];
+			$this->db->where('random',$random_no)->update('tbl_linkgo', $cdata);
+		}
+		//echo "<pre>";
+		//print_r($cdata);
+		//die;
+		//print_r($data['product_details']);
+//		echo $id.",".$random;
+	//	die;
         $this->load->view('front/process', $data);
 	}
 	function offerprocess($id){

@@ -86,12 +86,12 @@ class Offer_model extends CI_Model {
 		$this->db->from('tbl_offer as o');
 		$this->db->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left');
 		$this->db->group_by('o.main_id');
-		$this->db->where("o.url != ",'');
-		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 	    $this->db->order_by('coupon_count', "desc");
-		
 		$this->db->where("o.status",'1');
-		if(isset($arr['category'])){
+		$this->db->where("o.sitename != ",'flipkart');
+		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+		
+		/*if(isset($arr['category']) && $arr['category']!=''){
 			$category = $arr['category_name'];
 			$this->db->like("c.category",$category,"both");
 		}
@@ -100,9 +100,9 @@ class Offer_model extends CI_Model {
 			if($brand!='all'){
 				$this->db->like("brand",$brand,"both");
 			}
-		}
+		}*/
 		if(isset($arr['search_for']) && $arr['search_for']=='top_coupon'){
-			$this->db->where("o.featured",'1');
+			//$this->db->where("o.featured",'1');
 		}
 		if(isset($arr['bycashback'])){
 			$cahsback_array = explode("-",$arr['bycashback']);
@@ -116,10 +116,16 @@ class Offer_model extends CI_Model {
 			if(isset($cahsback_array[1])){
 				$this->db->where("o.discount <= ",$cahsback_array[1]);
 			}
+		}else{
+			$where = "c.offer_id is  NULL";
+			$this->db->or_where($where);	
 		}
 		$this->db->limit(18, $arr['pageno']*18);
+
 		$query = $this->db->get();
+		
 		//echo $this->db->last_query();
+		//die;
 		return $query->result_array(); 
     }
 	/**
@@ -319,8 +325,12 @@ class Offer_model extends CI_Model {
 		$this->db->group_by('o.main_id');
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.status",'1');
+		$this->db->where("o.sitename != ",'flipkart');
+//		$where = "c.offer_id is  NULL";
+	//	$this->db->or_where($where);
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 //		$this->db->where('o.featured', '1');
+		$this->db->limit(18, 0);
 		$query = $this->db->get();
 	//	echo $this->db->last_query();
 		return $query->result_array(); 
