@@ -63,14 +63,25 @@
             </div>
           </div>
           <div class="control-group">
+            <label for="inputError" class="control-label">Discount Given For Mobile</label>
+            <div class="controls">
+              <input type="text" id="discount_given_mobile" name="discount_given_mobile" value="<?php echo set_value('discount_given_mobile'); ?>" >
+
+            </div>
+          </div>
+          <div class="control-group">
             <label for="inputError" class="control-label">Discount By Us</label>
             <div class="controls">
               <input type="text" id="discount_by_us" name="discount_by_us" value="<?php echo set_value('discount_by_us'); ?>" >
-             <!-- <select name="discount_unit" id="discount_unit">
-              	<option value="%">%</option>
-                <option value="Rs">Rs</option>
-                <option value="$">$</option>
-              </select>-->
+
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="inputError" class="control-label">Discount By Us For Moblie</label>
+            <div class="controls">
+              <input type="text" id="discount_by_us_mobile" name="discount_by_us_mobile" value="<?php echo set_value('discount_by_us_mobile'); ?>" >
+
             </div>
           </div>
 

@@ -55,9 +55,9 @@
 	            <li>
 	              <a href="<?php echo base_url(); ?>admin/flipkartdiscount">Flipkart</a>
 	            </li>
-	            <li>
+	            <!--<li>
 	              <a href="<?php echo base_url(); ?>admin/flipkartofferdiscount">Flipkart Offer</a>
-	            </li>
+	            </li>-->
 	          </ul>
 	        </li>
 	        <!--<li <?php if($this->uri->segment(3) == 'category'){echo 'class="active"';}?>>
@@ -89,6 +89,9 @@
 	        </li>
 	        <li <?php if($this->uri->segment(3) == 'contact'){echo 'class="active"';}?>>
 	          <a href="<?php echo base_url(); ?>admin/contact">Contact Us</a>
+	        </li>
+	        <li <?php if($this->uri->segment(3) == 'order'){echo 'class="active"';}?>>
+	          <a href="<?php echo base_url(); ?>admin/order">Order</a>
 	        </li>
             <?php if(strtolower($login_user_details[0]['admin_login_name'])==strtolower('admin')){ ?>
 	        <li <?php if($this->uri->segment(3) == 'agent'){echo 'class="active"';}?>>

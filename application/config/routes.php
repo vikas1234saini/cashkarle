@@ -98,6 +98,8 @@ $route['admin/export/(:any)'] = 'admin_export/index/$1';
 
 
 $route['admin/getofferorder'] = 'admin_offer/getofferorder';
+$route['admin/getproductorder'] = 'admin_product/getproductorder';
+$route['admin/getcontactorder'] = 'admin_contact/getcontactorder';
 $route['admin/getuseroption'] = 'admin_user/getuseroption';
 $route['admin/getticketoption'] = 'admin_ticket/getticketoption';
 
@@ -174,9 +176,11 @@ $route['admin/banner/(:any)'] = 'admin_banner/index/$1';
 $route['admin/contact'] = 'admin_contact/index';
 $route['admin/contact/add'] = 'admin_contact/add';
 $route['admin/contact/update'] = 'admin_contact/update';
+$route['admin/contact/view'] = 'admin_contact/view';
 $route['admin/contact/updatestatus/(:any)/(:any)'] = 'admin_contact/updatestatus/$1/$2';
 $route['admin/contact/updatefeatured/(:any)/(:any)'] = 'admin_contact/updatefeatured/$1/$2';
 $route['admin/contact/update/(:any)'] = 'admin_contact/update/$1';
+$route['admin/contact/view/(:any)'] = 'admin_contact/view/$1';
 $route['admin/contact/delete/(:any)'] = 'admin_contact/delete/$1';
 $route['admin/contact/(:any)'] = 'admin_contact/index/$1';
 

@@ -50,14 +50,13 @@
       //form validation
       echo validation_errors();
 
-      echo form_open('admin/offer/update/'.$this->uri->segment(4).'', $attributes);
+      echo form_open('admin/offer/update/'.$this->uri->segment(4), $attributes);
 	  $data_hide = "";
 	   if($offer[0]['id']=='56'){
 		   $data_hide = 'style="display:none;" ';
 	   }
       ?>
       <fieldset>
-     
           <div class="control-group">
             <label for="inputError" class="control-label">Title</label>
             <div class="controls">
@@ -110,11 +109,9 @@
           
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
-            <a href="<?php echo site_url()."admin/".$this->uri->segment(2); ?>"><button class="btn" type="button">Cancel</button></a>
+            <a href="<?php echo site_url()."admin/".$this->uri->segment(2); ?>/<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>"><button class="btn" type="button">Cancel</button></a>
           </div>
         </fieldset>
-      
+      <input type="hidden" value="<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>" name="pageno" />
     	<?php echo form_close(); ?>
-
     </div>
-     

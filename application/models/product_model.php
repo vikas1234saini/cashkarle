@@ -329,7 +329,7 @@ class Product_model extends CI_Model {
 		return $query->result_array(); 
     }
 	
-    public function get_product($search_string=false, $order=false, $order_type='Asc', $limit_start, $limit_end)
+    public function get_product($search_string=false, $order=false, $order_type='desc', $limit_start, $limit_end, $orderfor)
     {
 	    
 //		$this->db->select('*');
@@ -344,10 +344,27 @@ class Product_model extends CI_Model {
 			$this->db->like('p.title', $search_string,"both");
 		}
 
-		if($order){
+		/*if($order){
 			$this->db->order_by($order, $order_type);
 		}else{
 		    $this->db->order_by('p.id', $order_type);
+		}*/
+		
+		if($order){	
+			if($orderfor=='category'){
+				$this->db->like('c.categoryName', $order,"both");
+			}
+			if($orderfor=='status'){
+				$this->db->where('o.status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('o.admin', $order);
+			}
+			
+			$this->db->order_by("p.title", $order_type);
+		}else{
+		    $this->db->order_by('p.id', $order_type);
+			
 		}
 
 		$this->db->limit($limit_start, $limit_end);
@@ -367,16 +384,28 @@ class Product_model extends CI_Model {
     * @param int $order
     * @return int
     */
-    function count_product($search_string=false, $order=false, $status=false)
+    function count_product($orderfor=false,$search_string=false, $order=false, $status=false)
     {
-		$this->db->select('*');
-		$this->db->from('tbl_product');
+		$this->db->select('p.id');
+		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
+		$this->db->from('tbl_product as p');
 		if($search_string!=false){
 			$this->db->like('title', $search_string,"both");
 		}
 		
 		$this->db->where("selling_price > ","0");
 		$this->db->where("retail_price > ","0");
+		if($order){	
+			if($orderfor=='category'){
+				$this->db->like('c.categoryName', $order,"both");
+			}
+			if($orderfor=='status'){
+				$this->db->where('o.status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('o.admin', $order);
+			}
+		}
 		$query = $this->db->get();
 		return $query->num_rows();        
     }
@@ -402,18 +431,40 @@ class Product_model extends CI_Model {
 		return $query->result_array(); 	
 	}
 	
-	function get_all_product($search_string=false){
+	function get_all_product($search_string=false,$order, $order_type,$orderfor){
 		$this->db->select('p.*,c.categoryName');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		
-		if($search_string){
+		if($search_string!=false){
 			$this->db->like('title', $search_string,"both");
 		}
+		
+		if($order){	
+			if($orderfor=='category'){
+				$this->db->like('c.categoryName', $order,"both");
+			}
+			if($orderfor=='status'){
+				$this->db->where('o.status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('o.admin', $order);
+			}
+			
+			$this->db->order_by("p.title", $order_type);
+		}else{
+		    $this->db->order_by('p.id', $order_type);
+			
+		}
+
+		$this->db->where("selling_price > ","0");
+		$this->db->where("retail_price > ","0");
 //		$this->db->where("p.featured",'1');
 	//	$this->db->where("p.retail_price > ","0");
 		//$this->db->where("p.selling_price > ","0");
-		$this->db->limit(30000, 0);
+		
+		//$this->db->limit(30000, 0);
+		
 		$query = $this->db->get();
 //		echo $this->db->last_query();
 		$daat = $query->result_array();
@@ -421,7 +472,7 @@ class Product_model extends CI_Model {
 		return  $daat;
 	}
 	
-    public function get_product_by_relation($str,$id)
+    public function get_product_by_relation($str,$id,$catname=false)
     {
 		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
 		$this->db->from('tbl_product as p');
@@ -436,7 +487,9 @@ class Product_model extends CI_Model {
 //			$search_list .= " OR p.title LIKE '%".$value."%'";
 		}*/
 //		$this->db->where($search_list.")");
-
+		if($catname && $catname!=''){	
+			$this->db->where("p.category",$catname);	
+		}
 		$this->db->where("p.retail_price > ","0");
 		$this->db->where("p.selling_price > ","0");
 		$this->db->where("p.id != ",$id);

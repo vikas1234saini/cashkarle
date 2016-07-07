@@ -35,7 +35,7 @@ class Contact_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_contact($search_string=false, $order=false, $order_type='Asc', $limit_start, $limit_end)
+    public function get_contact($search_string=false, $order=false, $order_type='Asc',$from_date=false, $to_date=false, $limit_start, $limit_end, $orderfor=false)
     {
 	    
 		$this->db->select('*');
@@ -44,10 +44,22 @@ class Contact_model extends CI_Model {
 		if($search_string){
 			$this->db->where("(c.name like '%".$search_string."%' || c.email like '%".$search_string."%' || c.option like '%".$search_string."%' || c.description like '%".$search_string."%')");
 		}
-		if($order){
-			$this->db->order_by($order, $order_type);
+		
+		if($from_date != false && $from_date != 0 && $from_date != ''){
+			$this->db->where('(date(date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+		}
+		if($order || $order==0){
+			if($orderfor=='status'){
+				$this->db->where('status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('admin', $order);
+			}
+			
+			$this->db->order_by("id", $order_type);
 		}else{
 		    $this->db->order_by('id', $order_type);
+			
 		}
 //	    $this->db->where('c.parentId != ', '0');
 
@@ -55,7 +67,7 @@ class Contact_model extends CI_Model {
 		//$this->db->limit('4', '4');
 
 		$query = $this->db->get();
-//		echo $this->db->last_query();
+		//echo $this->db->last_query();
 		$result = $query->result_array();
 		return $result; 	
     }
@@ -67,14 +79,27 @@ class Contact_model extends CI_Model {
     * @param int $order
     * @return int
     */
-    function count_contact($search_string=false, $order=false, $status=false)
+    function count_contact($orderfor=false,$from_date=false, $to_date=false,$search_string=false, $order=false, $status=false)
     {
-		$this->db->select('*');
+		$this->db->select('id');
 		$this->db->from('tbl_contactus as c');
 		if($search_string){
 			$this->db->where("(c.name like '%".$search_string."%' || c.email like '%".$search_string."%' || c.option like '%".$search_string."%' || c.description like '%".$search_string."%')");
 		}
+		
+		if($from_date != false && $from_date != 0 && $from_date != ''){
+			$this->db->where('(date(date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+		}
+		if($order || $order==0){
+			if($orderfor=='status'){
+				$this->db->where('status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('admin', $order);
+			}
+		}
 		$query = $this->db->get();
+		//echo $this->db->last_query();
 		return $query->num_rows();        
     }
 

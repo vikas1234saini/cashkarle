@@ -133,9 +133,9 @@ class Admin_snapdealdiscount extends CI_Controller {
                 $data_to_store = array(
                     'category' => $this->input->post('category'),
                     'discount_given' => $this->input->post('discount_given'),
-                   // 'discount_given_2500' => $this->input->post('discount_given_2500'),
+                    'discount_given_mobile' => $this->input->post('discount_given_mobile'),
                     'discount_by_us' => $this->input->post('discount_by_us'),
-                    //'discount_by_us_2500' => $this->input->post('discount_by_us_2500')
+                    'discount_by_us_mobile' => $this->input->post('discount_by_us_mobile')
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -183,9 +183,9 @@ class Admin_snapdealdiscount extends CI_Controller {
                 $data_to_store = array(
                     'category' => $this->input->post('category'),
                     'discount_given' => $this->input->post('discount_given'),
-                   // 'discount_given_2500' => $this->input->post('discount_given_2500'),
+                    'discount_given_mobile' => $this->input->post('discount_given_mobile'),
                     'discount_by_us' => $this->input->post('discount_by_us'),
-                    //'discount_by_us_2500' => $this->input->post('discount_by_us_2500')
+                    'discount_by_us_mobile' => $this->input->post('discount_by_us_mobile')
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -196,7 +196,7 @@ class Admin_snapdealdiscount extends CI_Controller {
 					
 					$data_update = array();
 					$data_update['snapdeal_discount'] 		= $this->input->post('discount_by_us');
-				//	$data_update['snapdeal_discount_2500'] 	= $this->input->post('discount_by_us_2500');
+					$data_update['snapdeal_discount_mobile'] 	= $this->input->post('discount_by_us_mobile');
 					$this->db->where('snapdeal_group', $id);
 					$this->db->update('tbl_category', $data_update);
 					

@@ -67,15 +67,23 @@
             </div>
           </div>
           <div class="control-group">
+            <label for="inputError" class="control-label">Discount Given For Moblie</label>
+            <div class="controls">
+              <input type="text" id="discount_given_mobile" name="discount_given_mobile" value="<?php echo $flipkartdiscount[0]['discount_given_mobile']; ?>" >
+            </div>
+          </div>
+          <div class="control-group">
             <label for="inputError" class="control-label">Discount By Us</label>
             <div class="controls">
               <input type="text" id="discount_by_us" name="discount_by_us" value="<?php echo $flipkartdiscount[0]['discount_by_us']; ?>" >
               
-              <!--<select name="discount_unit" id="discount_unit">
-              	<option value="%" <?php if($flipkartdiscount[0]['discount_unit']=='%'){ ?> selected="selected" <?php } ?>>%</option>
-                <option value="Rs" <?php if($flipkartdiscount[0]['discount_unit']=='Rs'){ ?> selected="selected" <?php } ?>>Rs</option>
-                <option value="$" <?php if($flipkartdiscount[0]['discount_unit']=='$'){ ?> selected="selected" <?php } ?>>$</option>
-              </select>-->
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Discount By Us For Mobile</label>
+            <div class="controls">
+              <input type="text" id="discount_by_us_mobile" name="discount_by_us_mobile" value="<?php echo $flipkartdiscount[0]['discount_by_us_mobile']; ?>" >
+              
             </div>
           </div>
           <div class="form-actions">

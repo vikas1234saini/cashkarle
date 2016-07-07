@@ -78,10 +78,11 @@
 
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
-            <a href="<?php echo site_url().'admin/'.$this->uri->segment(2); ?>"><button class="btn" type="button">Cancel</button></a>
+            <a href="<?php echo site_url().'admin/'.$this->uri->segment(2); ?>/<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>"><button class="btn" type="button">Cancel</button></a>
           </div>
         </fieldset>
 
+      <input type="hidden" value="<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>" name="pageno" />
       <?php echo form_close(); ?>
 
     </div>

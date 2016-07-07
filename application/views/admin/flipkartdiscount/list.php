@@ -84,8 +84,10 @@ height: 26px;"');
                 <th class="yellow header headerSortDown">Cashkarle Category</th>
                 <th class="yellow header headerSortDown">Category</th>
                 <th class="yellow header headerSortDown">Discount By Flipkart</th>
+                <th class="yellow header headerSortDown">Discount By Flipkart For Mobile</th>
                 <!--<th  style="width:200px; word-wrap: break-word;" class="yellow header headerSortDown">Site Url</th>-->
                 <th class="yellow header headerSortDown">Discount By CashKarle</th>
+                <th class="yellow header headerSortDown">Discount By CashKarle For Moblie</th>
                 <th class="yellow header headerSortDown">Username</th>
                <!-- <th class="yellow header headerSortDown">Featured</th>-->
                 <th class="red header">Actions</th>
@@ -109,9 +111,11 @@ height: 26px;"');
                 echo '<td>'.$allcategory.'</td>';
                 echo '<td>'.$row['category'].' </td>';
                 echo '<td>'.$row['discount_given'].' </td>';
-                echo '<td>'.$row['admin'].' </td>';
+                echo '<td>'.$row['discount_given_mobile'].' </td>';
               //  echo '<td style="width:200px; word-wrap: break-word;">'.$row['url'].' </td>';
                 echo '<td>'.$row['discount_by_us'].' </td>';
+                echo '<td>'.$row['discount_by_us_mobile'].' </td>';
+                echo '<td>'.$row['admin'].' </td>';
 				/*if($row['featured']==1){
                 	echo '<td><a href="'.site_url("admin").'/flipkartdiscount/updatefeatured/'.$row['id'].'/0/">Active</a></td>';
 				}else{

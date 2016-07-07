@@ -26,7 +26,8 @@ class Admin_product extends CI_Controller {
         //all the posts sent by the view
         $search_string 	= $this->input->post('search_string');        
         $order 			= $this->input->post('order'); 
-        $order_type 	= $this->input->post('order_type'); 
+        $order_type 	= $this->input->post('order_type');  
+        $orderfor	 	= $this->input->post('orderfor'); 
 
         //pagination settings
         $config['per_page'] = 30;
@@ -49,7 +50,7 @@ class Admin_product extends CI_Controller {
             $limit_end = 0;
         } 
 		if($search_string !== false || $order !== false || $page != ''){ 
-
+			$filter_session_data['page'] = $page;
 
             if($search_string != false){
                 $filter_session_data['search_string'] = $search_string;
@@ -70,6 +71,17 @@ class Admin_product extends CI_Controller {
 				}
             }
             $data['order'] = $order;
+			
+			
+            if($orderfor != false){
+                $filter_session_data['orderfor'] = $orderfor;
+            }else{
+				if($page!=''){
+                	$orderfor = $this->session->userdata('orderfor');
+	                $filter_session_data['orderfor'] = $orderfor;
+				}
+            }
+            $data['orderfor'] = $orderfor;
 	
             if($order_type != false){
                 $filter_session_data['order_type'] = $order_type;
@@ -86,32 +98,69 @@ class Admin_product extends CI_Controller {
 
             //fetch agency data into arrays
            
-            $data['count_product']= $this->product_model->count_product($search_string, $order,null);
+            $data['count_product']= $this->product_model->count_product($orderfor,$search_string, $order,null);
             $config['total_rows'] = $data['count_product'];
-            $data['product'] = $this->product_model->get_product($search_string, $order, $order_type, $config['per_page'],$limit_end);        
+            $data['product'] = $this->product_model->get_product($search_string, $order, $order_type, $config['per_page'],$limit_end,$orderfor);        
 
         }else{
 
             //clean filter data inside section
 			
+            $filter_session_data['page'] = '';
             $filter_session_data['search_string'] = '';
             $filter_session_data['order'] = '';
-            $filter_session_data['order_type'] = '';
+            $filter_session_data['order_type'] = 'desc';
             $this->session->set_userdata($filter_session_data);
 
             //pre selected options
-            $data['search_string'] = '';
-            $data['order'] 		= 'id';
-            $data['order_type'] = '';
+            $data['search_string'] 	= '';
+            $data['order'] 			= '';
+            $data['orderfor'] 		= '';
+            $data['order_type'] 	= 'desc';
 
             //fetch sql data into arrays
-            $data['count_product']	= $this->product_model->count_product();
+            $data['count_product']	= $this->product_model->count_product($orderfor);
 			
-            $data['product'] 			= $this->product_model->get_product('', '', $order_type, $config['per_page'],$limit_end);        
+            $data['product'] 			= $this->product_model->get_product('', '', 'desc', $config['per_page'],$limit_end,$orderfor);        
             $config['total_rows'] 	= $data['count_product'];
 
         }//!isset($agencyId) && !isset($search_string) && !isset($order)
 
+
+		$options_offer_sort1 = array();
+	//	if($orderfor=='offerby'){
+			$this->load->model('category_model');
+			$allcategory = $this->category_model->get_all_main_category();	
+			
+			$inarray = array();
+			foreach($allcategory as $key=>$value){
+				$strinval = $value['categoryName'];
+				if(!in_array($strinval,$inarray)){
+			//		echo "<option value='".$strinval."'>".$strinval."</option>";
+					$options_offer_sort1[$strinval]= $strinval;
+					$inarray[] = $strinval; 
+				}
+			}
+		//}
+		if($orderfor=='username'){
+	        $this->load->model('agent_model');
+			$allofferby = $this->agent_model->get_all_agent();	
+			
+			$inarray = array();
+			foreach($allofferby as $key=>$value){
+				$strinval = $value['admin_login_name'];
+				if(!in_array($strinval,$inarray)){
+					$options_offer_sort1[$strinval]= $strinval;
+					$inarray[] = $strinval; 
+				}
+			}
+		}
+		if($orderfor=='status'){
+			$options_offer_sort1 = array();
+			$options_offer_sort1['1'] = 'Active';
+			$options_offer_sort1['0'] = 'Deactive';
+		}
+		$data['options_offer_sort1'] = $options_offer_sort1;
         //initializate the panination helper 
         $this->pagination->initialize($config);   
 
@@ -152,8 +201,12 @@ class Admin_product extends CI_Controller {
                 //if the insert has returned true then we show the flash message
                 if($this->product_model->store_product($data_to_store)){
                     $data['flash_message'] = TRUE; 
-					 $this->session->set_flashdata('flash_message', 'added');
-	                redirect('admin/product/');
+					$this->session->set_flashdata('flash_message', 'added');
+	                if($this->input->post('pageno')!=''){
+	                	redirect('admin/product/'.$this->input->post('pageno'));
+					}else{
+	                	redirect('admin/product/');
+					}
 					die;
                 }else{
                     $data['flash_message'] = FALSE; 
@@ -208,7 +261,12 @@ class Admin_product extends CI_Controller {
                 //if the insert has returned true then we show the flash message
                 if($this->product_model->update_product($id, $data_to_store) == TRUE){
                     $this->session->set_flashdata('flash_message', 'updated');
-	                redirect('admin/product/');
+	     //           redirect('admin/product/');
+					if($this->input->post('pageno')!=''){
+	                	redirect('admin/product/'.$this->input->post('pageno'));
+					}else{
+	                	redirect('admin/product/');
+					}
 					die;
                 }else{
                     $this->session->set_flashdata('flash_message', 'not_updated');
@@ -268,5 +326,42 @@ class Admin_product extends CI_Controller {
 			die;
 		}
 //		echo $id."---".$status;
+	}
+	function getproductorder(){
+		$post_data = $this->input->post();	
+		if($post_data['str']=='category'){
+	        $this->load->model('category_model');
+			$allcategory = $this->category_model->get_all_main_category();	
+			
+			$inarray = array();
+			foreach($allcategory as $key=>$value){
+				$strinval = $value['categoryName'];
+				if(!in_array($strinval,$inarray)){
+					echo "<option value='".$strinval."'>".$strinval."</option>";
+					$inarray[] = $strinval; 
+				}
+			}
+		}
+		if($post_data['str']=='username'){
+	        $this->load->model('agent_model');
+			$allofferby = $this->agent_model->get_all_agent();	
+			
+			$inarray = array();
+			foreach($allofferby as $key=>$value){
+				$strinval = $value['admin_login_name'];
+				if(!in_array($strinval,$inarray)){
+					echo "<option value='".$strinval."'>".$strinval."</option>";
+					$inarray[] = $strinval; 
+				}
+			}
+		}
+		if($post_data['str']=='status'){			
+			echo "<option value='1'>Active</option>";
+			echo "<option value='0'>Deactive</option>";
+		}
+		if($post_data['str']=='payouttype'){			
+			echo "<option value='cpa_percentage'>cpa_percentage</option>";
+			echo "<option value='cpa_flat'>cpa_flat</option>";
+		}
 	}
 }

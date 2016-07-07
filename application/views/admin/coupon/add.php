@@ -1,3 +1,9 @@
+	<script src="<?php echo  base_url('assets/js/calendar/DateTimePicker.js'); ?>" type="text/javascript"></script>
+    <style>
+	#calBorder{ z-index:100000 !important;}
+	select{ width:100px !important;}
+	</style>
+
     <div class="container top">
       
       <ul class="breadcrumb">
@@ -76,21 +82,48 @@
           <div class="control-group">
             <label for="inputError" class="control-label">Coupon</label>
             <div class="controls">
-              <?php echo set_value('coupon_title'); ?>
+              <input type="text" id="coupon_title" name="coupon_title" value="<?php echo set_value('coupon_title'); ?>" >
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Coupon Description</label>
+            <div class="controls">
+              <input type="text" id="coupon_description" name="coupon_description" value="<?php echo set_value('coupon_description'); ?>" >
+            </div>
+          </div>
+           <div class="control-group">
+            <label for="inputError" class="control-label">Start Date</label>
+            <div class="controls">
+             	<div id='datetimepicker1'><input name="added" id="added" type="text"  value="<?php echo set_value('date'); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('added','DDMMYYYY')" /></div>
+            </div>
+          </div>
+           <div class="control-group">
+            <label for="inputError" class="control-label">Coupon Expiry</label>
+            <div class="controls">
+             	<div id='datetimepicker1'><input name="coupon_expiry" id="coupon_expiry" type="text"  value="<?php echo set_value('coupon_expiry'); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('coupon_expiry','DDMMYYYY')" /></div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Link</label>
+            <div class="controls">
+              <input type="text" id="link" name="link" value="<?php echo set_value('link'); ?>" >
             </div>
           </div>
           <div class="control-group">
             <label for="inputError" class="control-label">Cashback</label>
             <div class="controls">
               <input type="text" id="discount" name="discount" value="<?php echo set_value('discount'); ?>" >
+                <select name="discount_type" id="discount_type">
+              	<option value="%" <?php if(set_value('discount_type')=='%'){ ?> selected="selected" <?php }?>>%</option>
+                <option value="Rs" <?php if(set_value('discount_type')=='Rs'){ ?> selected="selected" <?php }?>>Rs</option>
+                <option value="$" <?php if(set_value('discount_type')=='$'){ ?> selected="selected" <?php }?>>$</option>
+              </select>
             </div>
           </div>
           
-          
-
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
-            <a href="<?php echo site_url().'admin/'.$this->uri->segment(2); ?>"><button class="btn" type="button">Cancel</button></a>
+            <a href="<?php echo site_url().'admin/offer'; ?>"><button class="btn" type="button">Cancel</button></a>
           </div>
         </fieldset>
 

@@ -159,10 +159,10 @@ class Admin_ticket extends CI_Controller {
         $this->pagination->initialize($config);   
 
 		$options_offer_sort1 = array();
-		if($orderfor=='offerby'){
+		//if($orderfor=='offerby'){
 			
 	        $this->load->model('offer_model');
-			$allofferby = $this->offer_model->get_just_all_offer();	
+			$allofferby = $this->offer_model->get_just_all_offer_ticket();	
 			
 			$find = array("CPRC", "CPA","CPS","CPL"," - India"," - UAE"," - Qatar");
 			$replace = array("","","","","");
@@ -174,8 +174,10 @@ class Admin_ticket extends CI_Controller {
 					$inarray[] = $strinval; 
 				}
 			}
-		}
+		//}
 		if($orderfor=='username'){
+			
+			$options_offer_sort1 = array();
 	        $this->load->model('agent_model');
 			$allofferby = $this->agent_model->get_all_agent();	
 			
@@ -189,6 +191,8 @@ class Admin_ticket extends CI_Controller {
 			}
 		}
 		if($orderfor=='status'){			
+			
+			$options_offer_sort1 = array();
 			$options_offer_sort1['0'] = 'Opened';
 			$options_offer_sort1['1'] = 'Closeed';
 			$options_offer_sort1['2'] = 'Re-opened';
@@ -244,7 +248,7 @@ class Admin_ticket extends CI_Controller {
 				$post_data_new['transection_id'] 	= $post_data['transection_id'];
 				$post_data_new['description'] 		= $post_data['description'];
 				//$post_data_new['user_id'] 			= $user_details[0]['id'];
-				$post_data_new['ticket_id'] 		= rand(10000000,99999999);
+				$post_data_new['ticket_id'] 		= date('Ym').rand(1000,9999);;
 				
 				$login_user_details = $this->session->userdata('user_details');
 				$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
@@ -490,7 +494,7 @@ class Admin_ticket extends CI_Controller {
 		$post_data = $this->input->post();	
 		if($post_data['str']=='offerby'){
 	        $this->load->model('offer_model');
-			$allofferby = $this->offer_model->get_just_all_offer();	
+			$allofferby = $this->offer_model->get_just_all_offer_ticket();	
 			
 			$find = array("CPRC", "CPA","CPS","CPL"," - India"," - UAE"," - Qatar");
 			$replace = array("","","","","");

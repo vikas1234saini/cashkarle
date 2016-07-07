@@ -32,8 +32,11 @@ class Product extends CI_Controller {
 		$data['category_details'] 	= $this->category_model->get_category_by_id($data['product_details'][0]['category']);
 		
 		$askey = str_replace("-"," ",$str2);
-		$data['relative_products']  = $this->product_model->get_product_by_relation($askey,$data['product_details'][0]['id']);
-		
+		if(isset($data['category_details'][0])){
+			$data['relative_products']  = $this->product_model->get_product_by_relation($askey,$data['product_details'][0]['id'],$data['category_details'][0]['id']);
+		}else{
+			$data['relative_products']  = $this->product_model->get_product_by_relation($askey,$data['product_details'][0]['id']);
+		}
 		
 		$data['list'] 			= $this->category_model->get_all_parent_category();
 		$data['listnew'] 		= $this->category_model->get_all_main_category();

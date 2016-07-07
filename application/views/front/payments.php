@@ -8,6 +8,8 @@ foreach($orderlist as $key=>$row){
 .payumoneydetails{ display:none;}
 .mobiwikdetails{ display:none;}
 .paytm{ display:none;}
+.selectclass{border:#249F5E solid 2px !important; padding:10px; overflow:hidden; border-radius:10px;  margin:10px;}
+.changepayment{ padding:10px; overflow:hidden; margin:10px;border:#ffffff solid 2px;}
 </style>
 <section class="profile">
     <div class="container">
@@ -78,8 +80,8 @@ foreach($orderlist as $key=>$row){
               	<td align="left" style="width:70%;">
                   
               	<div>
-                  <a href="javascript:void(0);" rel="bankaccount" class="changepayment" ><button type="button" class="btn btn-wide btn-round btn-primary banktransfer">Bank Tansfer</button></a> 
-                  	<a href="javascript:void(0);" style="margin:10px;" class="payumoneytransfer changepayment" rel="payumoney" ><img src="<?php echo base_url(); ?>assets/img/payumoney.png" width="80px" /></a>
+                  	<a href="javascript:void(0);" rel="bankaccount" class="changepayment" ><button type="button" class="btn btn-wide btn-round btn-primary banktransfer">Bank Tansfer</button></a> 
+                  	<!--<a href="javascript:void(0);" style="margin:10px;" class="payumoneytransfer changepayment" rel="payumoney" ><img src="<?php echo base_url(); ?>assets/img/payumoney.png" width="80px" /></a>-->
                   	<a href="javascript:void(0);" style="margin:10px;" class="mobiwiktransfer changepayment" rel="mobiwik"><img src="<?php echo base_url(); ?>assets/img/mobikwik.png" width="80px" /></a>
                   	<a href="javascript:void(0);" style="margin:10px;" class="paytmetransfer changepayment" rel="paytm"><img src="<?php echo base_url(); ?>assets/img/paytm.png" width="80px" /></a>
                   </div>

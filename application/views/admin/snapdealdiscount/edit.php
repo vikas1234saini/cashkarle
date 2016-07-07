@@ -66,24 +66,24 @@
               <input type="text" id="discount_given" name="discount_given" value="<?php echo $snapdealdiscount[0]['discount_given']; ?>" >
             </div>
           </div>
-<!--          <div class="control-group">
-            <label for="inputError" class="control-label">Discount Given For More Than 2500</label>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Discount Given For Mobile</label>
             <div class="controls">
-              <input type="text" id="discount_given_2500" name="discount_given_2500" value="<?php echo $snapdealdiscount[0]['discount_given_2500']; ?>" >
+              <input type="text" id="discount_given_mobile" name="discount_given_mobile" value="<?php echo $snapdealdiscount[0]['discount_given_mobile']; ?>" >
             </div>
-          </div>-->
+          </div>
           <div class="control-group">
             <label for="inputError" class="control-label">Discount By Us</label>
             <div class="controls">
               <input type="text" id="discount_by_us" name="discount_by_us" value="<?php echo $snapdealdiscount[0]['discount_by_us']; ?>" >
             </div>
           </div>
-<!--          <div class="control-group">
-            <label for="inputError" class="control-label">Discount By Us For More Than 2500</label>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Discount By Us For Mobile</label>
             <div class="controls">
-              <input type="text" id="discount_by_us_2500" name="discount_by_us_2500" value="<?php echo $snapdealdiscount[0]['discount_by_us_2500']; ?>" >
+              <input type="text" id="discount_by_us_mobile" name="discount_by_us_mobile" value="<?php echo $snapdealdiscount[0]['discount_by_us_mobile']; ?>" >
             </div>
-          </div>-->
+          </div>
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
             <a href="<?php echo site_url()."admin/".$this->uri->segment(2); ?>"><button class="btn" type="button">Cancel</button></a>

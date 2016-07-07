@@ -90,7 +90,7 @@ footer p { text-align:justify;}
                                     <div id="fblogin">
 	                                    <div style="margin:10px;"><center><a href="#" onclick="FBLogin();" ><img src="<?php echo base_url(); ?>assets/img/sign-in-facebook.png" width="200" border="0" /></a></center></div>
 	                                    <div style="margin:10px;"><center><a href="<?php echo base_url('twitterloginlink'); ?>" ><img src="<?php echo base_url(); ?>assets/img/twitter-button.png" width="200" border="0" /></a></center></div>
-                                        <div style="margin:10px;"><center><div class="g-signin2" id="google_plus" onclick="renderButton();" data-width="200" data-theme="dark" data-height="38" data-longtitle="true"></div></center></div>
+                                        <!--<div style="margin:10px;"><center><div class="g-signin2" id="google_plus" onclick="renderButton();" data-width="200" data-theme="dark" data-height="38" data-longtitle="true"></div></center></div>-->
 	                                    <div style="margin:10px; height:35px;"><center><script type="in/Login"></script></center></div>
              
 	                                    <!--<center><div class="g-signin2" id="google_plus" onclick="renderButton();" data-width="250" data-theme="dark" data-height="50" data-longtitle="true"></center>-->
@@ -121,7 +121,14 @@ footer p { text-align:justify;}
     
                                     <h2 class="text-left green" style="margin-top:0;">Sign Up</h2>
                                     <p class="fw-300 text-left" style="font-size:14px;color:#4e4e4d">Sign up with us for amazing deals and cashback</p>
-                                    
+                                    <div id="signupsocial">                
+					                    <a href="#" onclick="FBLogin();" ><img src="<?php echo base_url(); ?>assets/img/facebook-icon.png" width="40px" /></a>
+					                    <a href="<?php echo base_url('twitterloginlink'); ?>" ><img src="<?php echo base_url(); ?>assets/img/twitter-icon.png" width="40px" /></a>
+                                        <script type="in/Login"></script>
+                                    </div>
+                                    <div>                
+                                    	<strong>- OR -</strong>
+                                    </div>
 						            <div class="error_signup" style="color:#F00;"></div>
                                     <input class="form-control cfc" placeholder="Name" name="username" id="username" style="margin-top:10px;">
                                     <input class="form-control cfc" placeholder="Email" name="email" id="email" style="margin-top:10px;">
@@ -1434,7 +1441,9 @@ footer p { text-align:justify;}
 				$('.bankdetails').hide();
 				$('.paytm').hide();						 
 				$('#maintable').show();						 
+				$('.changepayment').removeClass('selectclass');
 				
+				$(this).addClass('selectclass');
 				if($(this).attr('rel')=="bankaccount"){				
 					document.getElementById('payment_option').value='bankaccount';
 					$('.bankdetails').show();
@@ -1695,6 +1704,8 @@ if($toggle && $slider)
 					console.log('The Linkedin JS has loaded.');
 					console.log('You can now login.');
 					$('a[id*=li_ui_li_gen_]').css({marginBottom:'20px'}).html('<img src="<?php echo base_url(); ?>assets/img/linkedin-register-large.png" width="200" border="0" />'); 
+					$('#signupsocial a[id*=li_ui_li_gen_]').css({marginBottom:'0px'}).html('<img src="<?php echo base_url(); ?>assets/img/linkedin-icon.png" width="40" border="0" />'); 
+					$('.IN-widget').css({display:'-webkit-inline-box',marginBottom:'5px'});
 					$('.IN-widget').bind('click', function(){
 						IN.Event.on(IN, "auth", OnLinkedInAuth);
 					});

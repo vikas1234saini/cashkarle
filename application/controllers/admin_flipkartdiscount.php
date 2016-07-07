@@ -133,7 +133,9 @@ class Admin_flipkartdiscount extends CI_Controller {
                 $data_to_store = array(
                     'category' => $this->input->post('category'),
                     'discount_given' => $this->input->post('discount_given'),
-                    'discount_by_us' => $this->input->post('discount_by_us')
+                    'discount_by_us' => $this->input->post('discount_by_us'),
+                    'discount_given_mobile' => $this->input->post('discount_given_mobile'),
+                    'discount_by_us_mobile' => $this->input->post('discount_by_us_mobile')
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -181,7 +183,9 @@ class Admin_flipkartdiscount extends CI_Controller {
                 $data_to_store = array(
                     'category' => $this->input->post('category'),
                     'discount_given' => $this->input->post('discount_given'),
-                    'discount_by_us' => $this->input->post('discount_by_us')
+                    'discount_by_us' => $this->input->post('discount_by_us'),
+                    'discount_given_mobile' => $this->input->post('discount_given_mobile'),
+                    'discount_by_us_mobile' => $this->input->post('discount_by_us_mobile')
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -192,6 +196,7 @@ class Admin_flipkartdiscount extends CI_Controller {
 					
 					$data_update = array();
 					$data_update['flipkart_discount'] 		= $this->input->post('discount_by_us');
+					$data_update['flipkart_discount_mobile'] 		= $this->input->post('discount_by_us_mobile');
 					$this->db->where('flipkart_group', $id);
 					$this->db->update('tbl_category', $data_update);
 					

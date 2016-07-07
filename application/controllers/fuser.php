@@ -901,7 +901,7 @@ class Fuser extends CI_Controller {
 			$post_data_new['transection_id'] 	= $post_data['transection_id'];
 			$post_data_new['description'] 		= $post_data['description'];
 			$post_data_new['user_id'] 			= $user_details[0]['id'];
-			$post_data_new['ticket_id'] 		= rand(10000000,99999999);
+			$post_data_new['ticket_id'] 		= date('Ym').rand(1000,9999);
 			$post_data_new['ip'] 				= $_SERVER["REMOTE_ADDR"];
 			$post_data_new['added_date']		= date('Y-m-d H:i:s');
 			
@@ -1368,6 +1368,9 @@ class Fuser extends CI_Controller {
 		$ticketdetails = $this->ticket_model->get_ticket_by_id($post_data['id']);
 		$data_html = "<div><strong>Ticket No:  ".$ticketdetails[0]['ticket_id']."</strong></div>";
 		$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
+		$data_html .= "<div><strong>Description:  ".$ticketdetails[0]['description']."</strong></div>";
+		$data_html .= "<div><strong>Retailer:  ".$ticketdetails[0]['retailer']."</strong></div>";
+		$data_html .= "<div><strong>Transection Id:  ".$ticketdetails[0]['transection_id']."</strong></div>";
 		
         $prev_reply = $this->ticket_model->get_all_reply_by_ticket($ticketdetails[0]['id']);
 		if(sizeof($prev_reply)>0){

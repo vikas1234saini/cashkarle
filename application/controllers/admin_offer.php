@@ -20,15 +20,13 @@ class Admin_offer extends CI_Controller {
     * Load the main view with all the current model model's data.
     * @return void
     */
-    public function index()
-    {
+    public function index(){
 
         //all the posts sent by the view
         $search_string 	= $this->input->post('search_string');        
         $order 			= $this->input->post('order'); 
         $order_type 	= $this->input->post('order_type'); 
         $orderfor	 	= $this->input->post('orderfor'); 
-		
 
         //pagination settings
         $config['per_page'] = 30;
@@ -50,7 +48,8 @@ class Admin_offer extends CI_Controller {
         if ($limit_end < 0){
             $limit_end = 0;
         } 
-		if($search_string !== false || $order !== false || $page != ''){ 
+		if($search_string !== false || $order !== false || $page != ''){
+            $filter_session_data['page'] = $page;
             if($search_string != false){
                 $filter_session_data['search_string'] = $search_string;
             }else{
@@ -104,28 +103,29 @@ class Admin_offer extends CI_Controller {
         }else{
 
             //clean filter data inside section
+            $filter_session_data['page'] = '';
             $filter_session_data['search_string'] = '';
             $filter_session_data['order'] = '';
             $filter_session_data['orderfor'] = '';
-            $filter_session_data['order_type'] = '';
+            $filter_session_data['order_type'] = 'desc';
             $this->session->set_userdata($filter_session_data);
 
             //pre selected options
             $data['search_string'] 	= '';
-            $data['order'] 			= 'id';
+            $data['order'] 			= '';
             $data['orderfor'] 		= '';
-            $data['order_type'] 	= '';
+            $data['order_type'] 	= 'desc';
 
             //fetch sql data into arrays
             $data['count_offer']	= $this->offer_model->count_offer($orderfor);
 			
-            $data['offer'] 			= $this->offer_model->get_offer('', '', $order_type, $config['per_page'],$limit_end,$orderfor);        
+            $data['offer'] 			= $this->offer_model->get_offer('', '', 'desc', $config['per_page'],$limit_end,$orderfor);        
             $config['total_rows'] 	= $data['count_offer'];
 
         }//!isset($agencyId) && !isset($search_string) && !isset($order)
 //		$data['options_offer_sort1'] = array();
 		$options_offer_sort1 = array();
-		if($orderfor=='offerby'){
+	//	if($orderfor=='offerby'){
 			$allofferby = $this->offer_model->get_just_all_offer();	
 			
 			$find = array("CPRC", "CPA","CPS","CPL"," - India"," - UAE"," - Qatar");
@@ -138,7 +138,7 @@ class Admin_offer extends CI_Controller {
 					$inarray[] = $strinval; 
 				}
 			}
-		}
+		//}
 		if($orderfor=='username'){
 	        $this->load->model('agent_model');
 			$allofferby = $this->agent_model->get_all_agent();	
@@ -152,11 +152,15 @@ class Admin_offer extends CI_Controller {
 				}
 			}
 		}
-		if($orderfor=='status'){			
+		if($orderfor=='status'){
+			
+			$options_offer_sort1 = array();
 			$options_offer_sort1['1'] = 'Active';
 			$options_offer_sort1['0'] = 'Deactive';
 		}
 		if($orderfor=='payouttype'){			
+		
+			$inarray = array();
 			$options_offer_sort1['cpa_percentage'] 	= 'cpa_percentage';
 			$options_offer_sort1['cpa_flat'] 		= 'cpa_flat';
 		}
@@ -188,7 +192,11 @@ class Admin_offer extends CI_Controller {
                     'discount' => $this->input->post('discount'),
                     'discount_type' => $this->input->post('discount_type'),
                     'image' => $this->input->post('image'),
-                    'url' => $this->input->post('url')
+                    'url' => $this->input->post('url'),
+                    'percent_payout' => $this->input->post('percent_payout'),
+                    'payout_type' => $this->input->post('payout_type'),
+                    'default_payout' => $this->input->post('default_payout'),
+                    'sitename' => 'hasoffer'
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -198,7 +206,11 @@ class Admin_offer extends CI_Controller {
                 if($this->offer_model->store_offer($data_to_store)){
                     $data['flash_message'] = TRUE; 
 					 $this->session->set_flashdata('flash_message', 'added');
-	                redirect('admin/offer/');
+	                if($this->input->post('pageno')!=''){
+	                	redirect('admin/offer/'.$this->input->post('pageno'));
+					}else{
+	                	redirect('admin/offer/');
+					}
 					die;
                 }else{
                     $data['flash_message'] = FALSE; 
@@ -248,7 +260,11 @@ class Admin_offer extends CI_Controller {
                 //if the insert has returned true then we show the flash message
                 if($this->offer_model->update_offer($id, $data_to_store) == TRUE){
                     $this->session->set_flashdata('flash_message', 'updated');
-	                redirect('admin/offer/');
+					if($this->input->post('pageno')!=''){
+	                	redirect('admin/offer/'.$this->input->post('pageno'));
+					}else{
+	                	redirect('admin/offer/');
+					}
 					die;
                 }else{
                     $this->session->set_flashdata('flash_message', 'not_updated');

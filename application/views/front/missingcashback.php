@@ -51,7 +51,7 @@ foreach($orderlist as $key=>$row){
                         <td><?php echo $row['retailer']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
                         <td><?php echo $row['transection_id']; ?></td>
-                        <td><a  data-toggle="modal" data-target="#ticketimage" rel="<?php echo base_url("assets/uploads/attachment/".$row['attachment']); ?>" class="tickimage"><?php echo $row['attachment']; ?></a></td>
+                        <td><a  data-toggle="modal" data-target="#ticketimage" rel="<?php echo base_url("assets/uploads/attachment/".$row['attachment']); ?>" class="tickimage">View Attachement</a></td>
                         <td><?php echo $row['status']!='1'?"Processing":"Closed<br /><a href='#' data-toggle='modal' data-target='#reopenticket' class='reopenticketlink' rel='".$row['id']."'>Re-open</a>"; ?></td>
                         <td><a  data-toggle="modal" data-target="#ticketdetails" rel="<?php echo $row['id']; ?>" class="tickdetails">Details</a></td>
                         </tr>

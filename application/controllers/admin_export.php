@@ -233,10 +233,12 @@ class Admin_export extends CI_Controller {
 				set_time_limit(0);
 				$header_array = array('A1'=>'S.No',
 									  'B1'=>'Title',
-									  'C1'=>'Company',
-									  'D1'=>'Description',
-									  'E1'=>'Added',
-									  'F1'=>'Expiry'
+									  'C1'=>'Offer By',
+									  'D1'=>'Payout Type',
+									  'E1'=>'Percent Payout',
+									  'F1'=>'Default Payout',
+									  'G1'=>'Cashback',
+									  'H1'=>'Username'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -246,15 +248,19 @@ class Admin_export extends CI_Controller {
 				
 				$counter = 2;
 			
-				$this->load->model('offer_model');	
-				$downloaded 	= $this->offer_model->get_coupon();
+				$this->load->model('offer_model');
+				$downloaded 	= $this->offer_model->get_offer_all(false, false, false,false);
 				foreach($downloaded as $key_d => $value_d){
+					$sitename = 'hasoffer';
+					$sitename = ($value_d['sitename']=='hasoffer'?"Vcommission":$value_d['sitename']);
 					$header_array1 = array('A'.$counter=>$counter-1,
-									  'B'.$counter=>$value_d['coupon_title'],
-									  'C'.$counter=>$value_d['offer_name'],
-									  'D'.$counter=>$value_d['coupon_description'],
-									  'E'.$counter=>$value_d['added'],
-									  'F'.$counter=>$value_d['coupon_expiry']
+									  'B'.$counter=>$value_d['title'],
+									  'C'.$sitename,
+									  'D'.$counter=>$value_d['payout_type'],
+									  'E'.$counter=>$value_d['percent_payout'],
+									  'F'.$counter=>$value_d['default_payout'],
+									  'G'.$counter=>$value_d['discount']." ".$value_d['discount_type'],
+									  'H'.$counter=>$value_d['admin']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -512,14 +518,15 @@ class Admin_export extends CI_Controller {
 			}
 			
 			if($for=='offer'){
-				
 				set_time_limit(0);
 				$header_array = array('A1'=>'S.No',
 									  'B1'=>'Title',
-									  'C1'=>'Company',
-									  'D1'=>'Description',
-									  'E1'=>'Added',
-									  'F1'=>'Expiry'
+									  'C1'=>'Offer By',
+									  'D1'=>'Payout Type',
+									  'E1'=>'Percent Payout',
+									  'F1'=>'Default Payout',
+									  'G1'=>'Cashback',
+									  'H1'=>'Username'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -528,16 +535,21 @@ class Admin_export extends CI_Controller {
 				}
 				
 				$counter = 2;
-			
+		
 				$this->load->model('offer_model');	
-				$downloaded 	= $this->offer_model->get_coupon(false,$get_data['key']);
+				$downloaded 	= $this->offer_model->get_offer_all($get_data['key'], $get_data['order'], $get_data['order_type'],$get_data['orderfor']);
+				
 				foreach($downloaded as $key_d => $value_d){
+					$sitename = 'hasoffer';
+					$sitename = ($value_d['sitename']=='hasoffer'?"Vcommission":$value_d['sitename']);
 					$header_array1 = array('A'.$counter=>$counter-1,
-									  'B'.$counter=>$value_d['coupon_title'],
-									  'C'.$counter=>$value_d['offer_name'],
-									  'D'.$counter=>$value_d['coupon_description'],
-									  'E'.$counter=>$value_d['added'],
-									  'F'.$counter=>$value_d['coupon_expiry']
+									  'B'.$counter=>$value_d['title'],
+									  'C'.$counter=>$sitename,
+									  'D'.$counter=>$value_d['payout_type'],
+									  'E'.$counter=>$value_d['percent_payout'],
+									  'F'.$counter=>$value_d['default_payout'],
+									  'G'.$counter=>$value_d['discount']." ".$value_d['discount_type'],
+									  'H'.$counter=>$value_d['admin']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -569,7 +581,8 @@ class Admin_export extends CI_Controller {
 			
 				//echo "test";
 				$this->load->model('product_model');	
-				$downloaded 	= $this->product_model->get_all_product($get_data['key']);
+				$downloaded 	= $this->product_model->get_all_product($get_data['key'], $get_data['order'], $get_data['order_type'],$get_data['orderfor']);
+				
 				//echo "test";
 				//print_r($downloaded);
 				//die;
@@ -579,10 +592,10 @@ class Admin_export extends CI_Controller {
 									  'C'.$counter=>$value_d['categoryName'],
 									  'D'.$counter=>$value_d['description'],
 									  'E'.$counter=>$value_d['selling_price'],
-									  'G'.$counter=>$value_d['retail_price'],
-									  'H'.$counter=>$value_d['brand'],
-									  'I'.$counter=>$value_d['sitename'],
-									  'J'.$counter=>$value_d['instock']
+									  'F'.$counter=>$value_d['retail_price'],
+									  'G'.$counter=>$value_d['brand'],
+									  'H'.$counter=>$value_d['sitename'],
+									  'I'.$counter=>$value_d['instock']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);

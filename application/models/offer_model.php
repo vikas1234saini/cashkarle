@@ -200,7 +200,7 @@ class Offer_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_offer($search_string=false, $order=false, $order_type='Asc', $limit_start, $limit_end,$orderfor=false)
+    public function get_offer($search_string=false, $order=false, $order_type='desc', $limit_start, $limit_end,$orderfor=false)
     {
 	    
 		$this->db->select('o.*');
@@ -236,6 +236,39 @@ class Offer_model extends CI_Model {
 		return $result; 	
     }
 
+    public function get_offer_all($search_string=false, $order=false, $order_type='Asc',$orderfor=false) {
+	    
+		$this->db->select('o.*');
+		$this->db->from('tbl_offer as o');
+		$this->db->where("o.id != ",'56');
+		
+		if($search_string){
+			$this->db->like('o.title', $search_string,"both");
+		}
+		if($order){
+			
+			if($orderfor=='offerby'){
+				$this->db->like('o.title', $order,"both");
+			}
+			if($orderfor=='status'){
+				$this->db->where('o.status', $order);
+			}
+			if($orderfor=='payouttype'){
+				$this->db->where('o.payout_type', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('o.admin', $order);
+			}
+			$this->db->order_by("title", $order_type);
+		}else{
+		    $this->db->order_by('o.id', $order_type);
+		}
+
+		$query = $this->db->get();
+//		echo $this->db->last_query();
+		$result = $query->result_array();
+		return $result; 	
+    }
     /**
     * Count the number of rows
     * @param int $offerName
@@ -352,6 +385,22 @@ class Offer_model extends CI_Model {
 		return $query->result_array(); 
     }
 	
+    /**
+    * Get offer by his is
+    * @param int $offer_id 
+    * @return array
+    */
+    public function get_just_all_offer_ticket()
+    {
+		
+		$this->db->select('retailer as title');
+		$this->db->from('tbl_ticket');
+	//	$this->db->where("o.status",'1');
+//		$this->db->where('o.featured', '1');
+		$query = $this->db->get();
+	//	echo $this->db->last_query();
+		return $query->result_array(); 
+    }
     /**
     * Get offer by his is
     * @param int $offer_id 

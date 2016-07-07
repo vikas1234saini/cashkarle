@@ -78,18 +78,25 @@ height: 26px;"');
             <thead>
               <tr>
                 <th class="header">#</th>
-                <th class="yellow header headerSortDown">Link</th>
+                <th class="yellow header headerSortDown">Order Id</th>
+                <th class="yellow header headerSortDown">User</th>
                 <th class="yellow header headerSortDown">Amount</th>
+                <th class="yellow header headerSortDown">Sitename</th>
+                <th class="yellow header headerSortDown">Status</th>
+                <th class="yellow header headerSortDown">Date</th>
               </tr>
             </thead>
             <tbody>
               <?php
-              foreach($order as $row)
+              foreach($order as $count=>$row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['title'].' </td>';
-                echo '<td>'.$row['title'].' </td>';
+                echo '<td>'.($count+1).'</td>';
+                echo '<td>'.$row['random'].' </td>';
+                echo '<td>'.$row['user_id'].' </td>';
+                echo '<td>'.$row['amount'].' </td>';
+                echo '<td>'.$row['sitename'].' </td>';
+                echo '<td>'.$row['orderStatus'].' </td>';
                 echo '</tr>';
               }
               ?>      

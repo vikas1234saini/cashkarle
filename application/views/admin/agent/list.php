@@ -104,7 +104,7 @@ height: 26px;"');
 						echo '<td>'.$counter[0]['counter'].'</td>';
 						
 						echo '<td>'.date('d-M-Y',strtotime($row['last_login_date'])).'</td>';
-						echo '<td>'.date('h:m a',strtotime($row['last_login_date'])).'</td>';
+						echo '<td>'.date('h:i a',strtotime($row['last_login_date'])).'</td>';
 						
 						// echo '<td>'.$row['admin'].'</td>';
 						echo '<td class="crud-actions"><a href="'.site_url("admin").'/agent/update/'.$row['admin_auto_id'].'" class="btn btn-info">view & edit</a>';

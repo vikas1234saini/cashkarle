@@ -127,7 +127,7 @@ class Admin_coupon extends CI_Controller {
         if ($this->input->server('REQUEST_METHOD') === 'POST'){
 
             //form validation
-			$this->form_validation->set_rules('couponName', 'coupon name', 'required');
+			$this->form_validation->set_rules('coupon_title', 'coupon', 'required');
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
 
             //if the form has passed through the validation
@@ -136,7 +136,12 @@ class Admin_coupon extends CI_Controller {
                     'coupon_title' => $this->input->post('coupon_title'),
                     'discount' => $this->input->post('discount'),
                     'offer_id' => $this->input->post('offer_id'),
-                    'offer_name' => $this->input->post('offer_name')
+                    'offer_name' => $this->input->post('offer_name'),
+                    'coupon_description' => $this->input->post('coupon_description'),
+                    'added' => date("Y-m-d",strtotime($this->input->post('added'))),
+                    'coupon_expiry' => date("Y-m-d",strtotime($this->input->post('coupon_expiry'))),
+                    'link' => $this->input->post('link')
+					
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -146,11 +151,13 @@ class Admin_coupon extends CI_Controller {
                 if($this->coupon_model->store_coupon($data_to_store)){
                     $data['flash_message'] = TRUE; 
 					 $this->session->set_flashdata('flash_message', 'added');
-	                redirect('admin/coupon/');
+	                redirect('admin/couponoffer/'.$this->input->post('offer_id'));
 					die;
                 }else{
                     $data['flash_message'] = FALSE; 
                 }
+				
+                redirect('admin/coupon/add/'.$id.'');
             }
         }
 		

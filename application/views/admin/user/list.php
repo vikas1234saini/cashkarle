@@ -165,7 +165,7 @@ $(document).ready(function() {
 					}else{
 						echo '<td>Email</td>';
 					}
-					echo '<td>'.$row['payment'].' </td>';
+					echo '<td>'.round($row['payment'],2).' </td>';
 					echo '<td>'.$row['admin'].' </td>';
 					if($row['status']==1){
 						echo '<td><a href="'.site_url("admin").'/user/updatestatus/'.$row['id'].'/0/">Active</a></td>';

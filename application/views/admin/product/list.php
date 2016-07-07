@@ -1,4 +1,19 @@
-
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	$("#orderfor").change(function() {
+								  //alert($(this).val());
+		var str = $(this).val();						  
+		jQuery.ajax({
+			type: "POST",
+			url: "<?php echo base_url('admin/getproductorder'); ?>",
+			data:"str="+str,
+			success: function(res) {
+				$('#orderlist').html(res);
+			}
+		});
+	});		
+});		
+</script>
 	<div class="container top">
 
       <ul class="breadcrumb">
@@ -42,7 +57,7 @@
            
             $attributes = array('class' => 'form-inline reset-margin', 'id' => 'myform');
            
-            //save the columns names in a array that we will use as filter         
+            //save the columns names in a array that we will use as filter
             $options_product_sort = array();    
             /*foreach ($supervisor as $array) {
               foreach ($array as $key => $value) {
@@ -50,30 +65,32 @@
               }
               break;
             }*/
-			$options_product_sort['title'] = 'title';
-			$options_product_sort['id'] = 'id';
+			
+			$options_offer_sort['category'] = 'Category';
+			$options_offer_sort['username'] = 'Username';
+			$options_offer_sort['status'] = 'Status';
 			
             echo form_open('admin/product', $attributes);
      
+
               echo form_label('Search:', 'search_string');
-              echo form_input('search_string', $search_string, 'style="width: 170px;
-height: 26px;"');
+              echo form_input('search_string', $search_string, 'style="width: 170px; height: 26px;"')."&nbsp;&nbsp;";
 
               echo form_label('Order by:', 'order');
-              echo form_dropdown('order', $options_product_sort, $order, 'class="span2"');
+              echo form_dropdown('orderfor', $options_offer_sort, $orderfor, 'class="span2" id="orderfor"')."&nbsp;&nbsp;";
+              echo form_dropdown('order', $options_offer_sort1, $order, 'class="span2" id="orderlist"')."&nbsp;&nbsp;";
 
               $data_submit = array('name' => 'mysubmit', 'class' => 'btn btn-primary', 'value' => 'Go');
 
               $options_order_type = array('Asc' => 'Asc', 'Desc' => 'Desc');
-              echo form_dropdown('order_type', $options_order_type, $order_type, 'class="span1"');
+              echo form_dropdown('order_type', $options_order_type, $order_type, 'class="span1"')."&nbsp;&nbsp;";
 
-              echo form_submit($data_submit);
+              echo form_submit($data_submit)."&nbsp;&nbsp;";
               echo form_button('myreset',"Reset",'class="btn btn-danger" onclick=window.location.href="'.base_url('admin/product').'"');
-
             echo form_close();
             ?>
 
-			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/discount?for=product&key=<?php echo $search_string; ?>">Export Data</a></div>
+			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/product?for=product&key=<?php echo $search_string; ?>&orderfor=<?php echo $orderfor; ?>&order=<?php echo $order; ?>&order_type=<?php echo $order_type; ?>">Export Data</a></div>
           </div>
 
           <table class="table table-striped table-bordered table-condensed">
@@ -85,7 +102,7 @@ height: 26px;"');
                 <th class="yellow header headerSortDown">Site Url</th>
                 <th class="yellow header headerSortDown">Category</th>
                 <th class="yellow header headerSortDown">Status</th>
-                <th class="yellow header headerSortDown">Featured</th>
+               <!--<th class="yellow header headerSortDown">Featured</th>-->
                 <th class="yellow header headerSortDown">Username</th>
                 <!--<th class="red header">Actions</th>-->
               </tr>
@@ -105,11 +122,11 @@ height: 26px;"');
 				}else{
                 	echo '<td><a href="'.site_url("admin").'/product/updatestatus/'.$row['id'].'/1/">De-active</a></td>';
 				}
-				if($row['featured']==1){
+				/*if($row['featured']==1){
                 	echo '<td><a href="'.site_url("admin").'/product/updatefeatured/'.$row['id'].'/0/">Active</a></td>';
 				}else{
                 	echo '<td><a href="'.site_url("admin").'/product/updatefeatured/'.$row['id'].'/1/">De-active</a></td>';
-				}
+				}*/
                 echo '<td>'.$row['admin'].' </td>';
                 /*echo '<td class="crud-actions">
                   <a href="'.site_url().'admin/product/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  ';

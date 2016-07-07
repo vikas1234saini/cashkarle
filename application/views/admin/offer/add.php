@@ -68,8 +68,30 @@
               <input type="text" id="url" name="url" value="<?php echo set_value('url'); ?>" >
             </div>
           </div>
+          
+          <div class="control-group" >
+            <label for="inputError" class="control-label">Payout Type</label>
+            <div class="controls">
+               <select name="payout_type" id="payout_type">
+              	<option value="cpa_flat" <?php if(set_value('payout_type')=='cpa_flat'){ ?> selected="selected" <?php }?>>Flat</option>
+                <option value="cpa_pacentage" <?php if(set_value('payout_type')=='cpa_pacentage'){ ?> selected="selected" <?php }?>>Pacentage</option>
+              </select>
+            </div>
+          </div>
+          <div class="control-group" >
+            <label for="inputError" class="control-label">Percent Payout</label>
+            <div class="controls">
+              <input type="text" id="percent_payout" name="percent_payout" value="<?php echo set_value('percent_payout'); ?>" />
+            </div>
+          </div>
           <div class="control-group">
-            <label for="inputError" class="control-label">Cashback(%)</label>
+            <label for="inputError" class="control-label">Default Payout</label>
+            <div class="controls">
+              <input type="text" id="default_payout" name="default_payout" value="<?php echo set_value('default_payout'); ?>" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Cashback</label>
             <div class="controls">
               <input type="text" id="discount" name="discount" value="<?php echo set_value('discount'); ?>" >
               <select name="discount_type" id="discount_type">
@@ -83,9 +105,10 @@
 
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
-            <a href="<?php echo site_url().'admin/'.$this->uri->segment(2); ?>"><button class="btn" type="button">Cancel</button></a>
+            <a href="<?php echo site_url().'admin/'.$this->uri->segment(2); ?>/<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>"><button class="btn" type="button">Cancel</button></a>
           </div>
         </fieldset>
+      <input type="hidden" value="<?php echo $this->session->userdata('page')!=''?$this->session->userdata('page'):0; ?>" name="pageno" />
 
       <?php echo form_close(); ?>
 

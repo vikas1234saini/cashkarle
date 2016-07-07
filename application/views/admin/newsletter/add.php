@@ -1,3 +1,10 @@
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	$("#checkAll").click(function () {
+     	$('input:checkbox').not(this).prop('checked', this.checked);
+ 	});
+});		
+</script>
 <style>
 .search_link{ margin:0 10px;}
 </style>
@@ -84,7 +91,7 @@
       <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
-                <th class="header" style="width:20px;"><input type="checkbox" checked="checked" /></th>
+                <th class="header" style="width:20px;"><input type="checkbox" checked="checked" id="checkAll" /></th>
               <!--  <th class="yellow header headerSortDown">Name</th>-->
                 <th class="yellow header headerSortDown">Email</th>
               </tr>
@@ -94,7 +101,15 @@
 			  if(sizeof($user_list)>0){
 				  foreach($user_list as $row){
 					echo '<tr>';
-					echo '<td><input type="checkbox" name="userlist[]" value="'.$row['email'].'" checked="checked" /></td>';
+					if(isset($_POST['userlist']) && in_array($row['email'],$_POST['userlist'])){
+						echo '<td><input type="checkbox" name="userlist[]" value="'.$row['email'].'" checked="checked" /></td>';
+					}else{
+						if(isset($_POST) && sizeof($_POST)>0){
+							echo '<td><input type="checkbox" name="userlist[]" value="'.$row['email'].'" /></td>';
+						}else{
+							echo '<td><input type="checkbox" name="userlist[]" value="'.$row['email'].'" checked="checked" /></td>';
+						}
+					}
 					//echo '<td>'.$row['title'].' </td>';
 					echo '<td>'.$row['email'].' </td>';
 					echo '</tr>';
@@ -112,13 +127,13 @@
            <div class="control-group">
             <label for="inputError" class="control-label">Title</label>
             <div class="controls">
-              <input type="text" id="title" name="title" value="" >
+              <input type="text" id="title" name="title" value="<?php echo set_value('title'); ?>" >
             </div>
           </div>
           <div class="control-group">
             <label for="inputError" class="control-label">Description</label>
             <div class="controls">
-            	<?php echo $this->ckeditor->editor('description','');?> <?php echo form_error('description','<p class="error">'); ?>
+            	<?php echo $this->ckeditor->editor('description',set_value('description'));?> <?php echo form_error('description','<p class="error">'); ?>
             </div>
           </div>
           

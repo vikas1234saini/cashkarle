@@ -100,9 +100,14 @@
 		                    <?php } ?>
 	                	</div>
 		            	
-		            	<div class="more">
-		                	<?php echo str_replace($value['coupon_code'],"XXXXXX",html_entity_decode(html_entity_decode($value['coupon_description']))); ?>
-		                </div>
+                        	<?php if($value['coupon_description']!=''){ ?>
+                            
+			            	<div class="more">
+			                	<?php echo str_replace($value['coupon_code'],"XXXXXX",html_entity_decode(html_entity_decode($value['coupon_description']))); ?>
+                            </div>
+                            <?php }else{ ?>
+                            <div>Get</div>
+							<?php } ?>
 						<!--End Date-->
 		            	<div class="coupon-end-date" >
 		                	<!--<div  style="padding:0px;"><strong>Promo Code: <?php echo $value['promo_id']; ?></strong></div>-->

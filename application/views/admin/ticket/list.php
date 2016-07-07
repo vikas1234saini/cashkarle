@@ -135,6 +135,7 @@ $(document).ready(function() {
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">User Name</th>
                 <th class="yellow header headerSortDown">Retailer</th>
+                <th class="yellow header headerSortDown">Transection Id</th>
                 <th class="yellow header headerSortDown">Status</th>
                 <th class="yellow header headerSortDown">Close Ticket</th>
                 <th class="yellow header headerSortDown">Username</th>
@@ -149,6 +150,7 @@ $(document).ready(function() {
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['username'].' </td>';
                 echo '<td>'.$row['retailer'].' </td>';
+                echo '<td>'.$row['transection_id'].' </td>';
 				if($row['status']==1){
 					echo "<td>Closed</td>";
 				}elseif($row['status']==2){

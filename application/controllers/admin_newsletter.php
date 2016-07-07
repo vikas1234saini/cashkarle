@@ -282,7 +282,7 @@ class Admin_newsletter extends CI_Controller {
         }
 //        $this->load->model('news_model');
 		$data['user_list'] = $this->newsletter_model->get_all_user($for);
-		$data['for'] = 'for';
+		$data['for'] = $for;
 //		print_r($user_list);
         //load the view
         $data['main_content'] = 'admin/newsletter/add';

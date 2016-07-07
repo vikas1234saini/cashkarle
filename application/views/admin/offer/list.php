@@ -92,6 +92,7 @@ $(document).ready(function() {
             echo form_close();
             ?>
 
+			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/offer?for=offer&key=<?php echo $search_string; ?>&orderfor=<?php echo $orderfor; ?>&order=<?php echo $order; ?>&order_type=<?php echo $order_type; ?>">Export Data</a></div>
           </div>
 
           <table class="table table-striped table-bordered table-condensed">
