@@ -78,7 +78,7 @@ height: 26px;"');
             echo form_close();
             ?>
 
-			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/discount?for=brand&key=<?php echo $search_string; ?>">Export Data</a></div>
+			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/brand?for=brand&key=<?php echo $search_string; ?>">Export Data</a></div>
           </div>
 
           <table class="table table-striped table-bordered table-condensed">

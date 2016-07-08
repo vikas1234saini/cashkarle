@@ -903,7 +903,10 @@ footer p { text-align:justify;}
             });
 			
 			$('#frmsearchatt').on('submit', function(event) {
+				
 				event.preventDefault();
+				
+				$('#pageno').val("0");
 				$.ajax({
 					url: "<?php echo base_url("searchajax"); ?>",
 					type: "POST",

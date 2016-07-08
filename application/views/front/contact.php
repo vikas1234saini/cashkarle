@@ -35,7 +35,7 @@ p {
             	<td><strong>Topics:</strong></td>
             	<td align="left" style="width:70%;">
                     <select name="option" id="option">
-                    	<option value="Bank Account" <?php if(set_value('description')=='Business query'){ ?> selected="selected" <?php } ?>>Business query</option>
+                    	<option value="Business query" <?php if(set_value('description')=='Business query'){ ?> selected="selected" <?php } ?>>Business query</option>
                         <option value="General Query" <?php if(set_value('description')=='General Query'){ ?> selected="selected" <?php } ?>>General Query</option>
                         <option value="Media" <?php if(set_value('description')=='Media'){ ?> selected="selected" <?php } ?>>Media</option>
                         <option value="Partnerships" <?php if(set_value('description')=='Partnerships'){ ?> selected="selected" <?php } ?>>Partnerships</option>

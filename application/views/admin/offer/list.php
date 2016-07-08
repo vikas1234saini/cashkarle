@@ -108,6 +108,7 @@ $(document).ready(function() {
                 <th class="yellow header headerSortDown">Default Payout</th>
                 <th class="yellow header headerSortDown">Cashback</th>
                 <th class="yellow header headerSortDown">Username</th>
+                <th class="yellow header headerSortDown">Date</th>
                 <th class="yellow header headerSortDown">Status</th>
                 <th class="red header">Actions</th>
               </tr>
@@ -127,6 +128,7 @@ $(document).ready(function() {
                 echo '<td>'.$row['default_payout'].' </td>';
                 echo '<td>'.$row['discount'].'  '.$row['discount_type'].' </td>';
                 echo '<td>'.$row['admin'].' </td>';
+                echo '<td>'.date("d-M Y h:i a",strtotime($row['date'])).' </td>';
 				if($row['status']==1){
                 	echo '<td><a href="'.site_url("admin").'/offer/updatestatus/'.$row['id'].'/0/">Active</a></td>';
 				}else{

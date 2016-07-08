@@ -93,22 +93,34 @@
 					<div class="card-block offer-repeater">
 	            		<!--Coupon Heading-->
 	            		<div>
-							<?php if(isset($user_details) && sizeof($user_details)>0){ ?>
-		                		<a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" style="cursor:pointer;" name="<?php echo $value['coupon_code']; ?>"  class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" data-url="<?php echo $value['link']; ?>"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
-		                    <?php }else{ ?>
-		                        <a href="<?php echo $value['link']; ?>" style="cursor:pointer;" class="sign-in-btn buybutton"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
-		                    <?php } ?>
+                        
+                        	<?php if($value['coupon_description']!=''){ ?>
+								<?php if(isset($user_details) && sizeof($user_details)>0){ ?>
+                                    <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" style="cursor:pointer;" name="<?php echo $value['coupon_code']; ?>"  class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" data-url="<?php echo $value['link']; ?>"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
+                                <?php }else{ ?>
+                                    <a href="<?php echo $value['link']; ?>" style="cursor:pointer;" class="sign-in-btn buybutton"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
+                                <?php } ?>
+                            <?php }else{ ?>
+								<?php 
+									$getword = "";
+									if(strpos(strtolower($value['coupon_title']),'get')==false){
+										$getword = "Get ";
+									}
+									if(isset($user_details) && sizeof($user_details)>0){ 
+								?>
+                                    <a href="<?php echo base_url('ocprocess/'.$value['id']."/".rand(1000,9999).date('ymdhis')); ?>" style="cursor:pointer;" name="<?php echo $value['coupon_code']; ?>"  class="signinuseroffer" rel="<?php echo $value['id']; ?>" target="_blank" data-url="<?php echo $value['link']; ?>"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($getword.$value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
+                                <?php }else{ ?>
+                                    <a href="<?php echo $value['link']; ?>" style="cursor:pointer;" class="sign-in-btn buybutton"><label class="cashback"><span class="yellow" style="color:#23C670; cursor:pointer;"><?php echo html_entity_decode($getword.$value['coupon_title']); ?> <?php echo $discount!=''?"+ ".$discount." more cashback":""; ?></span></label></a>
+                                <?php } ?>
+							<?php } ?>                            
+                            
 	                	</div>
 		            	
-                        	<?php if($value['coupon_description']!=''){ ?>
                             
 			            	<div class="more">
 			                	<?php echo str_replace($value['coupon_code'],"XXXXXX",html_entity_decode(html_entity_decode($value['coupon_description']))); ?>
                             </div>
-                            <?php }else{ ?>
-                            <div>Get</div>
-							<?php } ?>
-						<!--End Date-->
+                        <!--End Date-->
 		            	<div class="coupon-end-date" >
 		                	<!--<div  style="padding:0px;"><strong>Promo Code: <?php echo $value['promo_id']; ?></strong></div>-->
 		                	<div ><!--<strong>Added date: <?php echo date('d M Y',strtotime($value['added'])); ?></strong>,&nbsp;&nbsp;&nbsp;&nbsp;--><strong>End Date: <?php echo date('d M Y',strtotime($value['coupon_expiry'])); ?></strong></div>

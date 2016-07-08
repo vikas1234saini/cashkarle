@@ -269,7 +269,7 @@
                         <div class="input-group">
                            <div class="input-group-addon" id="search-icon"></div>
                            <input type="text" class="form-control search-control " id="skey" name="key" placeholder="Search for products ,offers and Coupons" value="<?php echo isset($skey)?$skey:"";?>">
-                           <div id="search-btn" class="input-group-addon btn btn-warning" >SEARCH</div>
+                           <div id="search-btn" class="input-group-addon btn btn-warning" ><img src="<?php echo base_url(); ?>assets/img/search-icon.png" style="width:16px;"></div>
                            <input type="submit" name="sub" value="s" id="btnsubmit" style="display:none;" />
                            <?php  if(isset($_GET['cid'])){ ?>
                            <input type="hidden" name="cid" id="cid" value="<?php echo $_GET['cid']; ?>" />

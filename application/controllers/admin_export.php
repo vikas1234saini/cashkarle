@@ -45,8 +45,8 @@ class Admin_export extends CI_Controller {
 									  'D1'=>'Discount Given',
 									  'E1'=>'Discount By Us',
 									  'F1'=>'Unit',
-									  'G1'=>'Discount given more than 2500',
-									  'H1'=>'Discount given by us on more than 2500');
+									  'G1'=>'Discount given for mobile',
+									  'H1'=>'Discount given by us for mobile');
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
 					$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
@@ -63,8 +63,8 @@ class Admin_export extends CI_Controller {
 									  'D'.$counter=>$value_d['discount_given'],
 									  'E'.$counter=>$value_d['discount_by_us'],
 									  'F'.$counter=>$value_d['discount_unit'],
-									  'G'.$counter=>"",
-									  'H'.$counter=>""
+									  'G'.$counter=>$value_d['discount_given_mobile'],
+									  'H'.$counter=>$value_d['discount_by_us_mobile']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -73,7 +73,7 @@ class Admin_export extends CI_Controller {
 					$counter++;
 				}
 				
-				$downloaded 	= $this->flipkartofferdiscount_model->get_all_flipkartofferdiscount();
+				/*$downloaded 	= $this->flipkartofferdiscount_model->get_all_flipkartofferdiscount();
 				foreach($downloaded as $key_d => $value_d){
 					$header_array1 = array('A'.$counter=>$counter-1,
 									  'B'.$counter=>$value_d['category'],
@@ -81,15 +81,15 @@ class Admin_export extends CI_Controller {
 									  'D'.$counter=>$value_d['discount_given'],
 									  'E'.$counter=>$value_d['discount_by_us'],
 									  'F'.$counter=>$value_d['discount_unit'],
-									  'G'.$counter=>"",
-									  'H'.$counter=>""
+									  'G'.$counter=>$value_d['discount_given_mobile'],
+									  'H'.$counter=>$value_d['discount_by_us_mobile']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
 						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
 					}
 					$counter++;
-				}
+				}*/
 				$downloaded 	= $this->amazondiscount_model->get_all_amazondiscount();
 				foreach($downloaded as $key_d => $value_d){
 					$header_array1 = array('A'.$counter=>$counter-1,
@@ -115,9 +115,9 @@ class Admin_export extends CI_Controller {
 									  'C'.$counter=>"Snapdeal",
 									  'D'.$counter=>$value_d['discount_given'],
 									  'E'.$counter=>$value_d['discount_by_us'],
-									  'F'.$counter=>""
-									//  'G'.$counter=>$value_d['discount_given_2500']
-									  //'H'.$counter=>$value_d['discount_by_us_2500']
+									  'F'.$counter=>"",
+									  'G'.$counter=>$value_d['discount_given_mobile'],
+									  'H'.$counter=>$value_d['discount_by_us_mobile']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -322,22 +322,23 @@ class Admin_export extends CI_Controller {
 				$this->load->model('amazondiscount_model');
 				$this->load->model('snapdealdiscount_model');
 				
-				$header_array = array('A1'=>'S.No',
-									  'B1'=>'Category',
-									  'C1'=>'Retailer',
-									  'D1'=>'Discount Given',
-									  'E1'=>'Discount By Us',
-									  'F1'=>'Unit',
-									  'G1'=>'Discount given more than 2500',
-									  'H1'=>'Discount given by us on more than 2500');
-				foreach($header_array as $key => $value){
-					$this->excel->getActiveSheet()->setCellValue($key, $value);
-					$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
-					$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
-				}
-				
-				$counter = 2;
 				if($get_data['for']=='flipkartdiscount'){
+					$for = $get_data['for'];	
+					$header_array = array('A1'=>'S.No',
+										  'B1'=>'Category',
+										  'C1'=>'Retailer',
+										  'D1'=>'Discount Given',
+										  'E1'=>'Discount By Us',
+										  'F1'=>'Unit',
+										  'G1'=>'Discount given for mobile',
+										  'H1'=>'Discount given by us for mobile');
+					foreach($header_array as $key => $value){
+						$this->excel->getActiveSheet()->setCellValue($key, $value);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
+					}
+					
+					$counter = 2;
 					$downloaded 	= $this->flipkartdiscount_model->get_all_flipkartdiscount($get_data['key']);
 					foreach($downloaded as $key_d => $value_d){
 						$header_array1 = array('A'.$counter=>$counter-1,
@@ -346,8 +347,8 @@ class Admin_export extends CI_Controller {
 										  'D'.$counter=>$value_d['discount_given'],
 										  'E'.$counter=>$value_d['discount_by_us'],
 										  'F'.$counter=>$value_d['discount_unit'],
-										  'G'.$counter=>"",
-										  'H'.$counter=>""
+										  'G'.$counter=>$value_d['discount_given_mobile'],
+										  'H'.$counter=>$value_d['discount_by_us_mobile']
 										  );
 						foreach($header_array1 as $key => $value){
 							$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -357,7 +358,7 @@ class Admin_export extends CI_Controller {
 					}
 				}
 				
-				if($get_data['for']=='flipkartofferdiscount'){
+				/*if($get_data['for']=='flipkartofferdiscount'){
 					$downloaded 	= $this->flipkartofferdiscount_model->get_all_flipkartofferdiscount($get_data['key']);
 					foreach($downloaded as $key_d => $value_d){
 						$header_array1 = array('A'.$counter=>$counter-1,
@@ -366,8 +367,8 @@ class Admin_export extends CI_Controller {
 										  'D'.$counter=>$value_d['discount_given'],
 										  'E'.$counter=>$value_d['discount_by_us'],
 										  'F'.$counter=>$value_d['discount_unit'],
-										  'G'.$counter=>"",
-										  'H'.$counter=>""
+										  'G'.$counter=>$value_d['discount_given_mobile'],
+										  'H'.$counter=>$value_d['discount_by_us_mobile']
 										  );
 						foreach($header_array1 as $key => $value){
 							$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -375,8 +376,22 @@ class Admin_export extends CI_Controller {
 						}
 						$counter++;
 					}
-				}
+				}*/
 				if($get_data['for']=='amazondiscount'){
+					$for = $get_data['for'];
+					$header_array = array('A1'=>'S.No',
+										  'B1'=>'Category',
+										  'C1'=>'Retailer',
+										  'D1'=>'Discount Given',
+										  'E1'=>'Discount By Us',
+										  'F1'=>'Unit');
+					foreach($header_array as $key => $value){
+						$this->excel->getActiveSheet()->setCellValue($key, $value);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
+					}
+					
+					$counter = 2;
 					$downloaded 	= $this->amazondiscount_model->get_all_amazondiscount($get_data['key']);
 					foreach($downloaded as $key_d => $value_d){
 						$header_array1 = array('A'.$counter=>$counter-1,
@@ -385,8 +400,6 @@ class Admin_export extends CI_Controller {
 										  'D'.$counter=>$value_d['discount_given'],
 										  'E'.$counter=>$value_d['discount_by_us'],
 										  'F'.$counter=>$value_d['discount_unit']
-//										  'G'.$counter=>"",
-	//									  'H'.$counter=>""
 										  );
 						foreach($header_array1 as $key => $value){
 							$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -396,6 +409,22 @@ class Admin_export extends CI_Controller {
 					}
 				}
 				if($get_data['for']=='snapdealdiscount'){
+					$for = $get_data['for'];
+					$header_array = array('A1'=>'S.No',
+										  'B1'=>'Category',
+										  'C1'=>'Retailer',
+										  'D1'=>'Discount Given',
+										  'E1'=>'Discount By Us',
+										  'F1'=>'Unit',
+										  'G1'=>'Discount given for mobile',
+										  'H1'=>'Discount given by us for mobile');
+					foreach($header_array as $key => $value){
+						$this->excel->getActiveSheet()->setCellValue($key, $value);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
+					}
+					
+					$counter = 2;
 					$downloaded 	= $this->snapdealdiscount_model->get_all_snapdealdiscount($get_data['key']);
 					foreach($downloaded as $key_d => $value_d){
 						$header_array1 = array('A'.$counter=>$counter-1,
@@ -403,9 +432,9 @@ class Admin_export extends CI_Controller {
 										  'C'.$counter=>"Snapdeal",
 										  'D'.$counter=>$value_d['discount_given'],
 										  'E'.$counter=>$value_d['discount_by_us'],
-										  'F'.$counter=>""
-										 // 'G'.$counter=>$value_d['discount_given_2500'],
-										  //'H'.$counter=>$value_d['discount_by_us_2500']
+										  'F'.$counter=>"",
+										  'G'.$counter=>$value_d['discount_given_mobile'],
+										  'H'.$counter=>$value_d['discount_by_us_mobile']
 										  );
 						foreach($header_array1 as $key => $value){
 							$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -419,8 +448,8 @@ class Admin_export extends CI_Controller {
 				$header_array = array('A1'=>'S.No',
 									  'B1'=>'Brand',
 									  'C1'=>'Category',
-									  'D1'=>'Discount',
-									  'E1'=>'Status'
+//									  'D1'=>'Discount',
+									  'D1'=>'Status'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -436,8 +465,8 @@ class Admin_export extends CI_Controller {
 					$header_array1 = array('A'.$counter=>$counter-1,
 									  'B'.$counter=>$value_d['brandName'],
 									  'C'.$counter=>$value_d['parentName'],
-									  'D'.$counter=>$value_d['discount'],
-									  'E'.$counter=>$value_d['status']
+									  //'D'.$counter=>$value_d['discount'],
+									  'D'.$counter=>$value_d['status']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);

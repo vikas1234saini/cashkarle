@@ -92,6 +92,8 @@ class Product_model extends CI_Model {
 	    $this->db->order_by('p.id', 'desc');
 	    $this->db->order_by('p.selling_price', 'desc');
 	    $this->db->order_by('p.image', 'desc');
+		
+		$this->db->where('p.status', '1');
 		$query = $this->db->get();
 //		echo $this->db->last_query();
 //		return $query->result_array(); 
@@ -116,6 +118,7 @@ class Product_model extends CI_Model {
 		$this->db->where("p.retail_price > ","0");
 		$this->db->limit(18, 0);
 	    $this->db->order_by('p.image', 'desc');
+	    $this->db->where('p.status', '1');
 		$query = $this->db->get();
 //		echo $this->db->last_query();
 		return $query->result_array();
@@ -130,6 +133,7 @@ class Product_model extends CI_Model {
 		$this->db->where("p.selling_price > ","0");
 		$this->db->where("p.retail_price > ","0");
 	    $this->db->order_by('p.image', 'desc');
+	    $this->db->where('p.status', '1');
 		$this->db->limit(18, 0);
 		$query = $this->db->get();
 		return $query->result_array(); 
@@ -256,6 +260,7 @@ class Product_model extends CI_Model {
 		if($arr['pageno']==1){
 			$this->db->where("p.image != ","");
 		}
+	    $this->db->where('p.status', '1');
 		$this->db->limit(18, $arr['pageno']*18);
 	//    $this->db->order_by('p.image', 'IS NOT NULL');
 	    $this->db->order_by('p.id', 'desc');
@@ -324,6 +329,7 @@ class Product_model extends CI_Model {
 		
 		$this->db->where("selling_price > ","0");
 		$this->db->where("retail_price > ","0");
+	    $this->db->where('status', '1');
 		$query = $this->db->get();
 	//	echo $this->db->last_query();
 		return $query->result_array(); 
@@ -424,6 +430,7 @@ class Product_model extends CI_Model {
 		$this->db->where("p.featured",'1');
 		$this->db->where("p.retail_price > ","0");
 		$this->db->where("p.selling_price > ","0");
+		 $this->db->where('p.status', '1');
 		$this->db->limit(35, 0);
 		$this->db->order_by('id', 'RANDOM');
 		$query = $this->db->get();
@@ -459,6 +466,7 @@ class Product_model extends CI_Model {
 
 		$this->db->where("selling_price > ","0");
 		$this->db->where("retail_price > ","0");
+		 $this->db->where('p.status', '1');
 //		$this->db->where("p.featured",'1');
 	//	$this->db->where("p.retail_price > ","0");
 		//$this->db->where("p.selling_price > ","0");
@@ -492,6 +500,7 @@ class Product_model extends CI_Model {
 		}
 		$this->db->where("p.retail_price > ","0");
 		$this->db->where("p.selling_price > ","0");
+		$this->db->where('p.status', '1');
 		$this->db->where("p.id != ",$id);
 		$this->db->limit(4, 0);
 	    $this->db->order_by('p.id', 'desc');

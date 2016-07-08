@@ -1378,7 +1378,7 @@ class Fuser extends CI_Controller {
 		}
 		foreach($prev_reply as $key=>$value){
 			$data_html .= "<div style='border:solid 1px; padding:10px; margin:10px;'><div>".$value['reply']."</div>";
-			$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($value['added_date']))."</strong></div>";
+			$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($value['date']))."</strong></div>";
 			$data_html .= "<div><strong>By:  ".$value['user']."</strong></div></div></div>";
 			
 		}

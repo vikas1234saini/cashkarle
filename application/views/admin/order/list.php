@@ -97,6 +97,7 @@ height: 26px;"');
                 echo '<td>'.$row['amount'].' </td>';
                 echo '<td>'.$row['sitename'].' </td>';
                 echo '<td>'.$row['orderStatus'].' </td>';
+                echo '<td>'.date("d-M Y h:i a",strtotime($row['date'])).' </td>';
                 echo '</tr>';
               }
               ?>      

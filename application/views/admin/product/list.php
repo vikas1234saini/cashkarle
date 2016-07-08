@@ -101,9 +101,9 @@ $(document).ready(function() {
                 <th class="yellow header headerSortDown">Image</th>
                 <th class="yellow header headerSortDown">Site Url</th>
                 <th class="yellow header headerSortDown">Category</th>
-                <th class="yellow header headerSortDown">Status</th>
-               <!--<th class="yellow header headerSortDown">Featured</th>-->
                 <th class="yellow header headerSortDown">Username</th>
+               <th class="yellow header headerSortDown">Date</th>
+                <th class="yellow header headerSortDown">Status</th>
                 <!--<th class="red header">Actions</th>-->
               </tr>
             </thead>
@@ -117,6 +117,8 @@ $(document).ready(function() {
                 echo '<td align="center"><img style="max-width:100px;max-height:100px;" src="'.$row['image'].'" /> </td>';
                 echo '<td>'.$row['url'].' </td>';
                 echo '<td>'.$row['categoryName'].' </td>';
+                echo '<td>'.$row['admin'].' </td>';
+                echo '<td>'.date('d-M Y h:i a',strtotime($row['date'])).' </td>';
 				if($row['status']==1){
                 	echo '<td><a href="'.site_url("admin").'/product/updatestatus/'.$row['id'].'/0/">Active</a></td>';
 				}else{
@@ -127,7 +129,6 @@ $(document).ready(function() {
 				}else{
                 	echo '<td><a href="'.site_url("admin").'/product/updatefeatured/'.$row['id'].'/1/">De-active</a></td>';
 				}*/
-                echo '<td>'.$row['admin'].' </td>';
                 /*echo '<td class="crud-actions">
                   <a href="'.site_url().'admin/product/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  ';
 				  $login_user_details = $this->session->userdata('user_details');

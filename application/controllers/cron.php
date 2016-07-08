@@ -64,6 +64,7 @@ class Cron extends CI_Controller {
 					
 					
 					if( $query->num_rows() == 0){
+						$cdata['date'] = date('Y-m-d H:i:s');
 						$this->db->insert('tbl_product', $cdata);
 						$add_count++;
 					}else{
@@ -99,6 +100,7 @@ class Cron extends CI_Controller {
 					
 					
 					if( $query->num_rows() == 0){
+						$cdata['date'] = date('Y-m-d H:i:s');
 						$this->db->insert('tbl_product', $cdata);
 						$add_count++;
 					}else{
@@ -181,6 +183,7 @@ class Cron extends CI_Controller {
 					$cdata['sitename']						= "hasoffer";	
 					
 					if( $query->num_rows() == 0){
+						$cdata['date'] = date('Y-m-d H:i:s');
 						$this->db->insert('tbl_offer', $cdata);
 						$add_count++;
 					}else{
@@ -395,6 +398,8 @@ class Cron extends CI_Controller {
 				$this->db->where('offer_id',"412");
 				$query = $this->db->get();
 				if( $query->num_rows()==0){
+					
+					$cdata['date'] = date('Y-m-d H:i:s');
 					$this->db->insert('tbl_coupon', $cdata);
 					echo "insert<br />";
 					$add_count++;

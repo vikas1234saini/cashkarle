@@ -89,6 +89,7 @@ height: 26px;"');
                 <th class="yellow header headerSortDown">Offer</th>
                 <th class="yellow header headerSortDown">Cashback</th>
                 <th class="yellow header headerSortDown">Username</th>
+                <th class="yellow header headerSortDown">Date</th>
                 <th class="red header">Actions</th>
               </tr>
             </thead>
@@ -102,6 +103,7 @@ height: 26px;"');
                 echo '<td>'.$row['offer_name'].' </td>';
                 echo '<td>'.$row['discount']." ".$row['discount_type'].' </td>';
                 echo '<td>'.$row['admin'].' </td>';
+                echo '<td>'.date('d-M Y h:i a',strtotime($row['date'])).' </td>';
 				/*if($row['status']==1){
                 	echo '<td><a href="'.site_url("admin").'/coupon/updatestatus/'.$row['id'].'/0/">Active</a></td>';
 				}else{
