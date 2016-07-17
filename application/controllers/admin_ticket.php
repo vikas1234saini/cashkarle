@@ -159,7 +159,7 @@ class Admin_ticket extends CI_Controller {
         $this->pagination->initialize($config);   
 
 		$options_offer_sort1 = array();
-		//if($orderfor=='offerby'){
+		if($orderfor=='offerby'){
 			
 	        $this->load->model('offer_model');
 			$allofferby = $this->offer_model->get_just_all_offer_ticket();	
@@ -174,7 +174,7 @@ class Admin_ticket extends CI_Controller {
 					$inarray[] = $strinval; 
 				}
 			}
-		//}
+		}
 		if($orderfor=='username'){
 			
 			$options_offer_sort1 = array();
@@ -396,7 +396,8 @@ class Admin_ticket extends CI_Controller {
         $status = $this->uri->segment(5);
 		
 		$post_data_new = array(
-			'status' => $status
+			'status' => $status,
+			'close_date' => date('Y-m-d H:i:s')
 		);
 		$login_user_details = $this->session->userdata('user_details');
 		$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
@@ -443,8 +444,9 @@ class Admin_ticket extends CI_Controller {
 					
 					$post_data_new = array();
 				//	$post_data_new['date'] 			= date("Y-m-d",strtotime($post_data['date']));
-					$post_data_new['ticket_id'] 	= $id;
+					//$post_data_new['ticket_id'] 	= $id;
 					$post_data_new['status'] 		= '1';
+					$post_data_new['close_date'] 	= date('Y-m-d H:i:s');
 					
 					$login_user_details = $this->session->userdata('user_details');
 					
@@ -453,6 +455,19 @@ class Admin_ticket extends CI_Controller {
 					
 					//if the insert has returned true then we show the flash message
 					$this->ticket_model->update_ticket($id, $post_data_new);
+					
+					if($post_data['cashback']!=''){
+						
+				        $ticket_details = $this->ticket_model->get_ticket_by_id($id);
+						$order_insert = array();
+						$order_insert['sitename'] 		= "Added By Cashkarle";
+						$order_insert['amount'] 		= $post_data['cashback'];
+						$order_insert['orderStatus'] 	= "Approved";
+						$order_insert['user_id'] 		= $ticket_details[0]['user_id'];
+						$order_insert['date']		= date('Y-m-d H:i:s');
+						$this->db->insert("tbl_order",$order_insert);
+						
+					}
 					
 					/*$config = array('mailtype' => 'html');
 					$this->load->library('email',$config);
@@ -524,6 +539,10 @@ class Admin_ticket extends CI_Controller {
 			echo "<option value='0'>Opened</option>";
 			echo "<option value='1'>Closed</option>";
 			echo "<option value='2'>Re-opened</option>";
+		}
+		
+		if($post_data['str']=='no'){			
+			echo " ";
 		}
 	}
 }

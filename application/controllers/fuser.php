@@ -105,7 +105,28 @@ class Fuser extends CI_Controller {
 					
 					$data['status']  = '1';	
 					$data['error']	 = 'User created successful.';
+							
+					$subject = 'Hey '.$this->input->post('username').', CashKarle Welcomes you.';
+					$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+					$html .= "Hey ".$this->input->post('username').",<br /><br />";
+					$html .= "Congratulations! Now you are the part of Biggest Saving Community. <br/>Come on our website whenever you want to shop anything from Snapdeal,Flipkart Paytm and Many more.we will give you Coupons, Cashbacks and rewards points for your shopping.<br/><br/>";
+					$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
+					$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+					//$this->email->message($html);	
+						
+					// Always set content-type when sending HTML email
+					$headers = "MIME-Version: 1.0" . "\r\n";
+					$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 					
+					// More headers
+					$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+			//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+					$to = $this->input->post('email');
+					if(mail($to,$subject,$html,$headers)){
+						$arr = array('status' => 1);
+					}else{
+						$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+					}
 					echo json_encode($data);
 					die;
 				}else {							
@@ -145,17 +166,32 @@ class Fuser extends CI_Controller {
 				echo json_encode( $arr );
 				die;
 			}
-			$this->load->library('email');
+			/*$this->load->library('email');
 			$this->email->set_mailtype('html');
 			$this->email->from('info@cashkarle.com', 'cashkarle');
 			$this->email->to($post_data['forgotemail']); 
 			//$this->email->cc('vikas1234saini@gmail.com');  
 			$this->email->set_mailtype('html');
 			
-			$this->email->subject('Your cashkarle.com Password');
-			$this->email->message("<br /><br />Welcome to <a href='".base_url()."'>cashkarle.com</a> !<br />Your Password is ".$password_data[0]->password);	
+			$this->email->subject();*/
+			$subject = 'Hey '.$password_data[0]->username.',Your CashKarle account password';
+			$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+			$html .= "Hey ".$password_data[0]->username.",<br /><br />";
+			$html .= "Your CashKarle account password is:   ".$password_data[0]->password."<br /><br />";
+			$html .= "<a href='".base_url()."'>Click here</a> to sign in to your CashKarle.com account with your existing password.<br /><br />";
+			$html .= "If you have any Concern  <a href='".base_url('contact')."'>Click Here</a> to contact our support team.<br /><br />";
+			$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+			//$this->email->message($html);	
+				
+			// Always set content-type when sending HTML email
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 			
-			if($this->email->send()){
+			// More headers
+			$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+	//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+			$to = $post_data['forgotemail'];
+			if(mail($to,$subject,$html,$headers)){
 				$arr = array('status' => 1);
 			}else{
 				$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
@@ -894,8 +930,9 @@ class Fuser extends CI_Controller {
 			}
 			
 //			$user_details	= $this->session->userdata('fuser_details');
-			
-			$post_data_new['retailer'] 			= $post_data['retailer'];
+			$ticket_rand = explode("__",$post_data['retailer']);
+			$post_data_new['retailer'] 			= isset($ticket_rand[0])?$ticket_rand[0]:"";
+			$post_data_new['random'] 			= isset($ticket_rand[1])?$ticket_rand[1]:"";
 			$post_data_new['date'] 				= date("Y-m-d",strtotime($post_data['date']));
 			$post_data_new['amount'] 			= $post_data['amount'];
 			$post_data_new['transection_id'] 	= $post_data['transection_id'];
@@ -1065,12 +1102,15 @@ class Fuser extends CI_Controller {
 	
 	function getlistretailer(){
 		
+		$user_details	= $this->session->userdata('fuser_details');
+		
+//		$post_data_new['user_id']	= $user_details[0]['id'];
 		$post_data = $this->input->post();
 		$post_data_new 	= array();
-		$golink = $this->db->select('*')->from('tbl_linkgo')->where("date >=",date('Y-m-d 00:00:00',strtotime($post_data['date'])))->where("date <=",date('Y-m-d 23:59:59',strtotime($post_data['date'])))->get()->result_array(); 
+		$golink = $this->db->select('*')->from('tbl_linkgo')->where("user_id",$user_details[0]['id'])->where("date >=",date('Y-m-d 00:00:00',strtotime($post_data['date'])))->where("date <=",date('Y-m-d 23:59:59',strtotime($post_data['date'])))->get()->result_array(); 
 		$datasite = array();
 		$option = "";
-		foreach($golink as $key=>$val){
+		foreach($golink as $key_count=>$val){
 			$key = "";
 			if (strpos($val['link'], 'snapdeal') !== false){
 			    $key = 'Snapdeal';
@@ -1095,12 +1135,12 @@ class Fuser extends CI_Controller {
 					$key = 'Flipkart';
 				}
 			}
-			if(!in_array($key,$datasite)){
+			//if(!in_array($key,$datasite)){
 				if($key!=''){
 					$datasite[] = $key;
-					$option .= "<option value='".$key."'>".$key."</option>";
+					$option .= "<option value='".$key."__".$val['random']."'>".$key."(".date("d-M Y h:i a",strtotime($val['date'])).")</option>";
 				}
-			}
+			//}
 		}
 //		print_r($datasite);
 		//print_r($golink);

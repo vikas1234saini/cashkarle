@@ -129,7 +129,9 @@ $(document).ready(function() {
 
 			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/user?for=user&key=<?php echo $search_string; ?>&from=<?php echo $from_date; ?>&to=<?php echo $to_date; ?>">Export Data</a></div>
           </div>
-
+			<div style="padding-top:20px;padding-bottom:20px; font-size:14px;">
+            	<strong>Total Earnigns: <?php echo round($total_payment[0]['payment'],2); ?></strong>
+            </div>
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>

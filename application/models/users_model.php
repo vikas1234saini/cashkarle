@@ -283,5 +283,12 @@ class Users_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
-
+	public function total_payment(){
+		$this->db->select('c.id,sum(discount) as payment');
+		$this->db->from('tbl_user as c');
+		$this->db->join('tbl_order as p', 'p.user_id = c.id', 'left');
+		
+		$query = $this->db->get();
+		return $query->result_array();
+	}
 }

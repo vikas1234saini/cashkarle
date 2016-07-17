@@ -1,3 +1,18 @@
+<script language="javascript" type="text/javascript">
+$(document).ready(function() {
+	$("#showcashback").click(function() {
+		$('#cashbackdiv').show();		
+		$(this).hide();
+	});		
+	$("#hidecashback").click(function() {
+		$('#showcashback').show();		
+		$('#cashbackdiv').hide();		
+		$('#cashback').val("");	
+//		$(this).hide();
+	});		
+	
+});		
+</script>
     <div class="container top">
       
       <ul class="breadcrumb">
@@ -62,6 +77,15 @@
             <label for="inputError" class="control-label">Reply:</label>
             <div class="controls">
               <textarea id="reply" name="reply"><?php echo set_value('reply'); ?></textarea>
+              <br />
+              <a href="javescript:void(0);" id="showcashback">Add Cashback</a>
+              <br />
+              <div style="display:none;" id="cashbackdiv">
+              
+              	<a href="javescript:void(0);" id="hidecashback">Remove Cashback</a>
+              	<br />
+              	<input type="text" name="cashback" id="cashback" placeholder="Add Amount" />
+              </div>
             </div>
           </div>
           <div class="form-actions">

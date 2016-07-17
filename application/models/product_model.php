@@ -35,6 +35,7 @@ class Product_model extends CI_Model {
     {
 		$post_data = $this->input->post();
 		$new_data = array();
+		
 		if(isset($post_data['pid']) && $post_data['pid']!=''){
 			$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
 			$this->db->from('tbl_product as p');
@@ -42,7 +43,7 @@ class Product_model extends CI_Model {
 							   
 			$this->db->where('p.id',$post_data['pid']);
 			$this->db->where("p.selling_price > ","0");
-			$this->db->where("p.retail_price > ","0");
+		//	$this->db->where("p.retail_price > ","0");
 			$query_first = $this->db->get();
 			$old_data = $query_first->result_array(); 
 	
@@ -87,7 +88,7 @@ class Product_model extends CI_Model {
 		if(isset($post_data['pid']) && $post_data['pid']!=''){
 			$this->db->where("p.id != ",$post_data['pid']);
 		}
-		$this->db->where("p.retail_price > ","0");
+		//$this->db->where("p.retail_price > ","0");
 		$this->db->limit(18, 0);
 	    $this->db->order_by('p.id', 'desc');
 	    $this->db->order_by('p.selling_price', 'desc');

@@ -147,7 +147,7 @@ class Admin_contact extends CI_Controller {
 
 
 		$options_offer_sort1 = array();
-//		if($orderfor=='username'){
+		if($orderfor=='username'){
 	        $this->load->model('agent_model');
 			$allofferby = $this->agent_model->get_all_agent();	
 			
@@ -159,7 +159,7 @@ class Admin_contact extends CI_Controller {
 					$inarray[] = $strinval; 
 				}
 			}
-	//	}
+		}
 		if($orderfor=='status'){			
 			$options_offer_sort1 = array();
 			$options_offer_sort1['1'] = 'Replied';
@@ -249,6 +249,10 @@ class Admin_contact extends CI_Controller {
 		if($post_data['str']=='status'){			
 			echo "<option value='1'>Replied</option>";
 			echo "<option value='0'>Active</option>";
+		}
+		
+		if($post_data['str']=='no'){			
+			echo " ";
 		}
 	}
 

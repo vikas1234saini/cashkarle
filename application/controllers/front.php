@@ -202,8 +202,8 @@ class Front extends CI_Controller {
 			$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
 		}
 		echo json_encode( $arr );
-		
-	/*	$to = "vikas1234saini@gmail.com";
+		echo "<br />";
+		$to = "vikas1234saini@gmail.com";
 		$subject = "HTML email";
 		
 		$message = "
@@ -239,6 +239,6 @@ class Front extends CI_Controller {
 			echo "sent";
 		}else{
 			echo "not sent";	
-		}*/
+		}
 	}
 }

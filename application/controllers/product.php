@@ -680,7 +680,7 @@ class Product extends CI_Controller {
 			$find = array("CPRC", "CPA","CPS","CPL"," - India","-","India","india");
 			$replace = array("","","","","","","","");
 					
-			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->limit(10)->get("tbl_offer as o")->result();
+			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->where("c.coupon_expiry >= ",date('Y-m-d 23:59:59'))->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->limit(10)->get("tbl_offer as o")->result();
 		
 			foreach($result as $r){
 				$return[] = array('id'=>$r->id,'desc'=>"Up To ".$r->discount."% Cashback / ".$r->coupon_count." Coupons", 'value'=>str_replace($find,$replace,ucwords(stripslashes($r->title))), 'title'=>str_replace($find,$replace,str_replace($input,"<strong>".$input."</strong>",ucwords(stripslashes($r->$field)))));
@@ -694,7 +694,7 @@ class Product extends CI_Controller {
 //				$return[] = array('id'=>$r->$field, 'value'=>ucwords(stripslashes($r->$field)));
 			}
 			
-			$result = $this->db->select('id,title')->group_by($field)->where($field." like '%{$input}%'")->limit(15-sizeof($return))->get("tbl_product")->result();
+			$result = $this->db->select('id,title')->group_by($field)->where($field." like '%{$input}%'")->limit(15-sizeof($return))->where("status",'1')->get("tbl_product")->result();
 			foreach($result as $r){
 				$return[] = array('id'=>$r->id,'desc'=>"", 'value'=>str_replace($find,$replace,ucwords(stripslashes($r->$field))), 'title'=>str_replace($find,$replace,str_replace($input,"<strong>".$input."</strong>",ucwords(stripslashes($r->$field)))));
 //				$return[] = array('id'=>$r->$field, 'value'=>ucwords(stripslashes($r->$field)));

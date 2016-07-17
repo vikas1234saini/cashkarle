@@ -12,6 +12,7 @@ $(document).ready(function() {
 			}
 		});
 	});		
+	
 });		
 </script>
 
@@ -61,6 +62,7 @@ $(document).ready(function() {
             $attributes = array('class' => 'form-inline reset-margin', 'id' => 'myform');
            
 		   
+			$options_offer_sort['no'] = '--Select--';
 			$options_offer_sort['username'] = 'Username';
 			$options_offer_sort['status'] = 'Status';
 			

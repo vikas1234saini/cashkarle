@@ -171,6 +171,8 @@ class Admin_user extends CI_Controller {
 			$options_offer_sort1['linkedin'] 	= 'Linkedin';
 		}
 		$data['options_offer_sort1'] = $options_offer_sort1;
+		$data['total_payment'] = $this->users_model->total_payment();
+		
         //load the view
         $data['main_content'] = 'admin/user/list';
         $this->load->view('includes/template', $data);  

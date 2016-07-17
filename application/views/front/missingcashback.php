@@ -33,6 +33,7 @@ foreach($orderlist as $key=>$row){
                     <thead>
                       <tr>
                         <th class="yellow header headerSortDown">Date</th>
+                        <th class="yellow header headerSortDown">Ticket No.</th>
                         <th class="yellow header headerSortDown">Retailer Name</th>
                         <th class="yellow header headerSortDown">Amount</th>
                         <th class="yellow header headerSortDown">Transection Id</th>
@@ -48,6 +49,7 @@ foreach($orderlist as $key=>$row){
 					  ?>
                         <tr>
                         <td><?php echo date("d M Y",strtotime($row['added_date'])); ?></td>
+                        <td><?php echo $row['ticket_id']; ?></td>
                         <td><?php echo $row['retailer']; ?></td>
                         <td><?php echo $row['amount']; ?></td>
                         <td><?php echo $row['transection_id']; ?></td>

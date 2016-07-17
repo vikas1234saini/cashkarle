@@ -1,7 +1,12 @@
 <?php 
 $tdisocunt = 0.00;
+$flipkart_exist = "";
 foreach($orderlist as $key=>$row){ 
 	$tdisocunt = $tdisocunt+(($row['amount']*0.2)/100);
+	//echo $row['sitename'];
+	if(strtolower($row['sitename'])=='flipkart'){
+		$flipkart_exist = "yes";
+	}
 }
 ?>
 <style>
@@ -80,7 +85,9 @@ foreach($orderlist as $key=>$row){
               	<td align="left" style="width:70%;">
                   
               	<div>
+                <?php if($flipkart_exist==""){ ?>
                   	<a href="javascript:void(0);" rel="bankaccount" class="changepayment" ><button type="button" class="btn btn-wide btn-round btn-primary banktransfer">Bank Tansfer</button></a> 
+                    <?php } ?>
                   	<!--<a href="javascript:void(0);" style="margin:10px;" class="payumoneytransfer changepayment" rel="payumoney" ><img src="<?php echo base_url(); ?>assets/img/payumoney.png" width="80px" /></a>-->
                   	<a href="javascript:void(0);" style="margin:10px;" class="mobiwiktransfer changepayment" rel="mobiwik"><img src="<?php echo base_url(); ?>assets/img/mobikwik.png" width="80px" /></a>
                   	<a href="javascript:void(0);" style="margin:10px;" class="paytmetransfer changepayment" rel="paytm"><img src="<?php echo base_url(); ?>assets/img/paytm.png" width="80px" /></a>

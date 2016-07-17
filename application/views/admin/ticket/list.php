@@ -95,6 +95,7 @@ $(document).ready(function() {
               break;
             }*/
 			
+			$options_offer_sort['no'] = '-- Select --';
 			$options_offer_sort['offerby'] = 'Retailer';
 			$options_offer_sort['username'] = 'Username';
 			$options_offer_sort['status'] = 'Status';
@@ -134,10 +135,13 @@ $(document).ready(function() {
               <tr>
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">User Name</th>
+                <th class="yellow header headerSortDown">Ticket Id</th>
                 <th class="yellow header headerSortDown">Retailer</th>
+                <th class="yellow header headerSortDown">Unique Number</th>
                 <th class="yellow header headerSortDown">Transection Id</th>
                 <th class="yellow header headerSortDown">Status</th>
                 <th class="yellow header headerSortDown">Close Ticket</th>
+                <th class="yellow header headerSortDown">Closed Date</th>
                 <th class="yellow header headerSortDown">Username</th>
                 <th class="red header">Actions</th>
               </tr>
@@ -149,7 +153,9 @@ $(document).ready(function() {
                 echo '<tr>';
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['username'].' </td>';
+                echo '<td>'.$row['ticket_id'].' </td>';
                 echo '<td>'.$row['retailer'].' </td>';
+                echo '<td>'.$row['random'].' </td>';
                 echo '<td>'.$row['transection_id'].' </td>';
 				if($row['status']==1){
 					echo "<td>Closed</td>";
@@ -163,6 +169,7 @@ $(document).ready(function() {
 				}else{
                 	echo '<td><a href="'.site_url("admin").'/ticket/updatestatus/'.$row['id'].'/1/"><button>Close Ticket</button></a></td>';
 				}
+                echo '<td>'.date("d-M Y h:i a",strtotime($row['close_date'])).' </td>';
                 echo '<td>'.$row['admin'].' </td>';
 				if($row['status']!='1'){
                 echo '<td class="crud-actions">
