@@ -2,7 +2,12 @@
 $tdisocunt = 0.00;
 $flipkart_exist = "";
 foreach($orderlist as $key=>$row){ 
-	$tdisocunt = $tdisocunt+(($row['amount']*0.2)/100);
+	if($row['discount']>=$row['discount_by_cashkarle']){
+//		$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+		$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
+	}else{
+		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+	}
 	//echo $row['sitename'];
 	if(strtolower($row['sitename'])=='flipkart'){
 		$flipkart_exist = "yes";
@@ -205,7 +210,7 @@ foreach($orderlist as $key=>$row){
               </tr>
             </table>
           </div>
-          <input type="hidden" name="earningpayment" id="earningpayment" value="<?php echo isset($earning[0])?round($earning[0]['discount']-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00"; ?>" />
+          <input type="hidden" name="earningpayment" id="earningpayment" value="<?php echo isset($tdisocunt)?round($tdisocunt-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00"; ?>" />
           </form>
           </div>
           </div>

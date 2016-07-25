@@ -20,7 +20,7 @@ class Offer_model extends CI_Model {
 		$this->db->select('o.*');
 		$this->db->from('tbl_offer as o');
 		
-		$this->db->where("o.status",'1');
+//		$this->db->where("o.status",'1');
 		$this->db->where('o.id', $id);
 		$query = $this->db->get();
 		return $query->result_array(); 

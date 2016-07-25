@@ -436,7 +436,11 @@ footer p { text-align:justify;}
 			});
 		});*/
 		$(document).ready(function() {
-								   
+			$('.megamenu a').on('click touchend', function(e) {
+			  var el = $(this);
+			  var link = el.attr('href');
+			  window.location = link;
+		   });					   
 			var offset = 300,
 				//browser window scroll (in pixels) after which the "back to top" link opacity is reduced
 				offset_opacity = 1200,
@@ -643,21 +647,26 @@ footer p { text-align:justify;}
             });
 			
 	        $('#amount').blur(function(){
-				var oldval = $('#amountset').html();
-				var newval = parseFloat($('#earningpayment').val())-parseFloat($(this).val());
-				if(oldval<150){
-					//$('#amountset').html($('#earningpayment').val());				
-					$(this).val("");
-					$('#errormessage_text').html("<span style='color:red;'><strong>Amount must be greater than 150Rs.</strong></span>");
-					$('#errormessage_link').click();
-				}else if(newval<0){
-					$('#amountset').html($('#earningpayment').val());				
-					$(this).val("");
-					$('#errormessage_text').html("<span style='color:red;'><strong>Amount must be less than earning amount.</strong></span>");
-					$('#errormessage_link').click();
-				}else{
-					$('#amountset').html(parseFloat(newval).toFixed(2));				
-				}
+					
+				   if($(this).val()==''){
+						$(this).val("0");		
+				   }
+					var oldval = $('#amountset').html();
+					var newval = parseFloat($('#earningpayment').val())-parseFloat($(this).val());
+					if(oldval<150){
+						//$('#amountset').html($('#earningpayment').val());				
+						$(this).val("");
+						$('#errormessage_text').html("<span style='color:red;'><strong>Amount must be greater than 150Rs.</strong></span>");
+						$('#errormessage_link').click();
+					}else if(newval<0){
+						$('#amountset').html($('#earningpayment').val());				
+						$(this).val("");
+						$('#errormessage_text').html("<span style='color:red;'><strong>Amount must be less than earning amount.</strong></span>");
+						$('#errormessage_link').click();
+					}else{
+						$('#amountset').html(parseFloat(newval).toFixed(2));					
+					}
+
             });
 			
 	        $('.wihtoutlogina').click(function(){

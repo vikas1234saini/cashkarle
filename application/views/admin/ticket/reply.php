@@ -1,3 +1,4 @@
+<?php $login_user_details = $this->session->userdata('user_details'); ?>
 <script language="javascript" type="text/javascript">
 $(document).ready(function() {
 	$("#showcashback").click(function() {
@@ -10,7 +11,18 @@ $(document).ready(function() {
 		$('#cashback').val("");	
 //		$(this).hide();
 	});		
-	
+	 $("#cashback").keydown(function(event) {
+    	// Allow only backspace and delete
+    	if ( event.keyCode == 46 || event.keyCode == 8 ) {
+    		// let it happen, don't do anything
+    	}
+    	else {
+    		// Ensure that it is a number and stop the keypress
+    		if (event.keyCode < 48 || event.keyCode > 57 ) {
+    			event.preventDefault();	
+    		}	
+    	}
+    });
 });		
 </script>
     <div class="container top">
@@ -77,6 +89,8 @@ $(document).ready(function() {
             <label for="inputError" class="control-label">Reply:</label>
             <div class="controls">
               <textarea id="reply" name="reply"><?php echo set_value('reply'); ?></textarea>
+              
+	            <?php if(strtolower($login_user_details[0]['admin_login_name'])==strtolower('admin')){ ?>
               <br />
               <a href="javescript:void(0);" id="showcashback">Add Cashback</a>
               <br />
@@ -85,6 +99,7 @@ $(document).ready(function() {
               	<a href="javescript:void(0);" id="hidecashback">Remove Cashback</a>
               	<br />
               	<input type="text" name="cashback" id="cashback" placeholder="Add Amount" />
+                <?php } ?>
               </div>
             </div>
           </div>

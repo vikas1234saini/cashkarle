@@ -1,10 +1,15 @@
 <?php 
 $tdisocunt = 0.00;
 foreach($orderlist as $key=>$row){ 
-	$tdisocunt = $tdisocunt+(($row['amount']*0.2)/100);
+//echo $row['discount']."-----".$row['amount']."<br />";
+	if($row['discount']>=$row['discount_by_cashkarle']){
+//		$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+		$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
+	}else{
+		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+	}
 }
-?>
-<section class="profile">
+?><section class="profile">
     <div class="container">
       <div class="row">
         

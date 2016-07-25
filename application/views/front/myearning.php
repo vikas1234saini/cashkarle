@@ -1,7 +1,13 @@
 <?php 
 $tdisocunt = 0.00;
 foreach($orderlist as $key=>$row){ 
-	$tdisocunt = $tdisocunt+(($row['amount']*0.2)/100);
+//echo $row['discount']."-----".$row['amount']."<br />";
+	if($row['discount']>=$row['discount_by_cashkarle']){
+//		$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+		$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
+	}else{
+		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+	}
 }
 ?>
 <section class="profile">
@@ -81,10 +87,10 @@ foreach($orderlist as $key=>$row){
 <!--                        <td><?php echo $row['main_id']; ?></td>-->
                         <td><?php echo $row['sitename']; ?></td>
                         <td><?php echo round($row['amount'],2); ?></td>
-                        <td><?php echo round((($row['amount']*0.2)/100),2); ?></td>
+                        <td><?php echo round($row['discount_by_cashkarle'],2);//echo round((($row['amount']*0.2)/100),2); ?></td>
                         <td><?php echo date('d M Y',strtotime($row['date'])); ?></td>
                         <td><?php echo date('d M Y',strtotime("+90 days", strtotime($row['date']))); ?></td>
-                        <?php if(strtotime("+90 days", strtotime($row['date']))<=strtotime(date('Y-m-d')) || (strtolower($status)!='confirmed' && strtolower($status)!='approved')){ ?>
+                        <?php if(strtotime("+90 days", strtotime($row['date']))<=strtotime(date('Y-m-d')) || (strtolower($status)!='confirmed' && strtolower($status)!='approved') || $row['sitename']=='Added By Cashkarle'){ ?>
 	                        <td><?php echo $status; ?></td>
                         <?php }else{ ?>
 	                        <td>Pending</td>

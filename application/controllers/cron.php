@@ -611,7 +611,23 @@ echo $url ;
 			$this->db->where('sitename',"flipkart");
 			$query = $this->db->get();	
 			
+			$this->db->select('*');
+			$this->db->from('tbl_linkgo');
+			$this->db->where('random',$value['affExtParam2']);
+			$this->db->where('user_id',$value['affExtParam1']);
+			$this->db->where('sitename',"flipkart");
+			$golink_data_query = $this->db->get();
+			$golink_data = $golink_data_query->result_array();	
+			$new_discount = 0;
 			
+			if(sizeof($golink_data)>0){
+				$amount	= isset($value['sales'])?$value['sales']['amount']:$value['price'];
+				$discount_g = (($golink_data[0]['discount']!='')?$golink_data[0]['discount']:0);
+				$pamount = (($amount*$discount_g)/100);
+				if($pamount<$value['tentativeCommission']['amount']){
+					$new_discount = $pamount;
+				}
+			}
 			if( $query->num_rows() == 0){
 				$cdata = array();
 				$cdata['user_id'] 			= $value['affExtParam1'];
@@ -624,6 +640,7 @@ echo $url ;
 				$cdata['price']				= $value['price'];
 				$cdata['random']			= $value['affExtParam2'];
 				$cdata['orderStatus'] 		= $value['status'];
+				$cdata['discount_by_cashkarle'] 		= $new_discount;
 				
 				$this->db->insert('tbl_order', $cdata);
 				$add_count++;
@@ -631,6 +648,8 @@ echo $url ;
 				$cdata = array();
 				$cdata['orderStatus'] 		= $value['status'];
 				$cdata['amount']			= isset($value['sales'])?$value['sales']['amount']:$value['price'];
+				$cdata['discount_by_cashkarle'] 		= $new_discount;
+				
 				echo $cdata['amount']."<br />";
 				$this->db->where('random',$value['affExtParam2']);
 				$this->db->where('user_id',$value['affExtParam1']);
@@ -667,6 +686,23 @@ echo $url;
 			$this->db->where('sitename',"snapdeal");
 			$query = $this->db->get();	
 			
+			$this->db->select('*');
+			$this->db->from('tbl_linkgo');
+			$this->db->where('random',$value['affiliateSubId2']);
+			$this->db->where('user_id',$value['affiliateSubId1']);
+			$this->db->where('sitename',"snapdeal");
+			$golink_data_query = $this->db->get();
+			$golink_data = $golink_data_query->result_array();	
+			$new_discount = 0;
+			
+			if(sizeof($golink_data)>0){
+				$amount	= isset($value['sales'])?$value['sales']['amount']:$value['price'];
+				$discount_g = (($golink_data[0]['discount']!='')?$golink_data[0]['discount']:0);
+				$pamount = (($amount*$discount_g)/100);
+				if($pamount<$value['commissionEarned']){
+					$new_discount = $pamount;
+				}
+			}
 			
 			if( $query->num_rows() == 0){
 				$cdata = array();
@@ -680,12 +716,14 @@ echo $url;
 				$cdata['amount']			= $value['price'];
 				$cdata['random']			= $value['affiliateSubId2'];
 				$cdata['orderStatus'] 		= "Approved";
+				$cdata['discount_by_cashkarle'] 		= $new_discount;
 				
 				$this->db->insert('tbl_order', $cdata);
 				$add_count++;
 			}else{			
 				$cdata = array();
 				$cdata['orderStatus'] 		= "Approved";
+				$cdata['discount_by_cashkarle'] 		= $new_discount;
 				
 				$this->db->where('random',$value['affiliateSubId2']);
 				$this->db->where('user_id',$value['affiliateSubId1']);
@@ -726,7 +764,25 @@ echo $url;
 				$this->db->where('main_id',$value['Stat']['id']);
 //				$this->db->where('sitename',"hasoffer");
 				$query = $this->db->get();	
+			
 				
+				$this->db->select('*');
+				$this->db->from('tbl_linkgo');
+				$this->db->where('random',$value['Stat']['affiliate_info2']);
+				$this->db->where('user_id',$value['Stat']['affiliate_info1']);
+				$this->db->where('sitename',"hasoffer");
+				$golink_data_query = $this->db->get();
+				$golink_data = $golink_data_query->result_array();	
+				$new_discount = 0;
+				
+				if(sizeof($golink_data)>0){
+					$amount	= isset($value['sales'])?$value['sales']['amount']:$value['price'];
+					$discount_g = (($golink_data[0]['discount']!='')?$golink_data[0]['discount']:0);
+					$pamount = (($amount*$discount_g)/100);
+					if($pamount<$value['Stat']['approved_payout']){
+						$new_discount = $pamount;
+					}
+				}	
 				
 				if( $query->num_rows() == 0){
 					$cdata = array();
@@ -740,6 +796,7 @@ echo $url;
 					$cdata['amount']			= $value['Stat']['sale_amount'];
 					$cdata['random']			= $value['Stat']['affiliate_info2'];
 					$cdata['orderStatus'] 		= $value['Stat']['conversion_status'];
+					$cdata['discount_by_cashkarle'] 		= $new_discount;
 					
 					$this->db->insert('tbl_order', $cdata);
 					$add_count++;
@@ -747,6 +804,7 @@ echo $url;
 					$cdata = array();
 					$cdata['orderStatus'] 		= "Approved";
 					$cdata['sitename']			= str_replace($find,$replace,$value['Offer']['name']);
+					$cdata['discount_by_cashkarle'] 		= $new_discount;
 					
 //					$this->db->where('random',$value['Stat']['affiliate_info2']);
 	//				$this->db->where('user_id',$value['Stat']['affiliate_info1']);

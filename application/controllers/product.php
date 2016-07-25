@@ -227,7 +227,7 @@ class Product extends CI_Controller {
 					if(isset($value['discount']) && $value['discount']!=''){
 						$discount = " ".$value['discount']." ".($value['discount_type']!=''?$value['discount_type']:"%");
 					}
-					$offerdata .= '<div class="col-md-4 col-sm-6">
+					$offerdata .= '<div class="col-md-4 col-sm-6 col-xs-12">
 						<div class="product-item  coupon-item text-center " style="height:300px;">
 						
                                         	<div style="height:240px;">
@@ -323,10 +323,10 @@ class Product extends CI_Controller {
 						
 						$categoryName 		= strtolower(preg_replace("/ /", "-", ($product['categoryName']!=""?$product['categoryName']:"amazon")));
 						
-						$productdata .= '<div class="col-md-4">
+						$productdata .= '<div class="col-md-4 col-sm-6 col-xs-12">
 											<div class="product-item text-center ">
 											
-												<div style="height:370px;">
+												<div style="height:'.($productImage!=''?"370px":"350px").'">
 												<div style="height:150px; position:relative;"><a href="'.base_url($categoryName."/".$new_title."-".$product['id']).'" ><img src="'.$productImage.'" style="overflow:hidden;max-height:150px;overflow:hidden;padding-top:5px;position:absolute;    top:0;    bottom:0;  margin:auto; left:0; right:0;"></a></div>
 												<div class="product-name">
 													<p>'.mb_strimwidth($title,0,30,"...").'</p>						
@@ -387,10 +387,10 @@ class Product extends CI_Controller {
 						
 						$categoryName 		= strtolower(preg_replace("/ /", "-", ($product['categoryName']!=""?$product['categoryName']:"amazon")));
 						
-						$productdata .= '<div class="col-md-4">
+						$productdata .= '<div class="col-md-4 col-sm-6 col-xs-12">
 											<div class="product-item text-center ">
 											
-												<div style="height:370px;">
+												<div style="height:'.($productImage!=''?"370px":"350px").'">
 												<div style="height:150px; position:relative;"><a href="'.base_url($categoryName."/".$new_title."-".$product['id']).'" ><img src="'.$productImage.'" style="overflow:hidden;max-height:150px;overflow:hidden;padding-top:5px;position:absolute;    top:0;    bottom:0;  margin:auto; left:0; right:0;"></a></div>
 												<div class="product-name">
 													<p>'.mb_strimwidth($title,0,30,"...").'</p>						
@@ -626,12 +626,12 @@ class Product extends CI_Controller {
 		
 		$id_array 	= explode("-",$str);
 		$id 		= $id_array[sizeof($id_array)-1];
-		
+//		echo $id;
 		$data['offer_details']  	= $this->offer_model->get_offer_by_id($id);
 		$data['category_details'] 	= $this->category_model->get_category_by_id($data['offer_details'][0]['category']);
 		$data['couponlist'] 		= $this->offer_model->get_coupon($data['offer_details'][0]['main_id']);
-//		print_r($data['offer_details']);
-	//	die;
+		//print_r($data['offer_details']);
+		//die;
 		$data['list'] 			= $this->category_model->get_all_parent_category();
 		$data['listnew'] 		= $this->category_model->get_all_main_category();
 		$data['brandlist'] 		= $this->brand_model->get_all_parent_brand();
