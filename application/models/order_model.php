@@ -142,7 +142,7 @@ class Order_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_order($search_string=false, $order=false, $order_type='Asc', $limit_start, $limit_end)
+    public function get_order($search_string=false, $order=false, $order_type='Desc', $limit_start, $limit_end)
     {
 	    
 		$this->db->select('*');
@@ -155,7 +155,7 @@ class Order_model extends CI_Model {
 		if($order){
 			$this->db->order_by($order, $order_type);
 		}else{
-		    $this->db->order_by('id', $order_type);
+		    $this->db->order_by('id', "desc");
 		}
 
 		$this->db->limit($limit_start, $limit_end);

@@ -142,6 +142,7 @@ $(document).ready(function() {
                 <th class="yellow header headerSortDown">Status</th>
                 <th class="yellow header headerSortDown">Close Ticket</th>
                 <th class="yellow header headerSortDown">Closed Date</th>
+                <th class="yellow header headerSortDown">Added Date</th>
                 <th class="yellow header headerSortDown">Username</th>
                 <th class="red header">Actions</th>
               </tr>
@@ -169,7 +170,8 @@ $(document).ready(function() {
 				}else{
                 	echo '<td><a href="'.site_url("admin").'/ticket/updatestatus/'.$row['id'].'/1/"><button>Close Ticket</button></a></td>';
 				}
-                echo '<td>'.date("d-M Y h:i a",strtotime($row['close_date'])).' </td>';
+                echo '<td>'.(($row['close_date']!='1970-01-01 00:00:00' && $row['close_date']!='')?date("d-M Y h:i a",strtotime($row['close_date'])):" ").' </td>';
+                echo '<td>'.(($row['added_date']!='1970-01-01 00:00:00' && $row['added_date']!='')?date("d-M Y h:i a",strtotime($row['added_date'])):" ").' </td>';
                 echo '<td>'.$row['admin'].' </td>';
 				if($row['status']!='1'){
                 echo '<td class="crud-actions">

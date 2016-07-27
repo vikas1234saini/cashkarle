@@ -444,7 +444,7 @@ class Product_model extends CI_Model {
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		
-		if($search_string!=false){
+		if($search_string!=false && $search_string!=''){
 			$this->db->like('title', $search_string,"both");
 		}
 		
@@ -472,12 +472,13 @@ class Product_model extends CI_Model {
 	//	$this->db->where("p.retail_price > ","0");
 		//$this->db->where("p.selling_price > ","0");
 		
-		//$this->db->limit(30000, 0);
+		$this->db->limit(2000, 0);
 		
 		$query = $this->db->get();
-//		echo $this->db->last_query();
 		$daat = $query->result_array();
-		
+//		print_r($daat);
+	//	echo $this->db->last_query();
+		//die;
 		return  $daat;
 	}
 	

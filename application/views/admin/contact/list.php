@@ -65,6 +65,7 @@ $(document).ready(function() {
 			$options_offer_sort['no'] = '--Select--';
 			$options_offer_sort['username'] = 'Username';
 			$options_offer_sort['status'] = 'Status';
+			$options_offer_sort['topic'] = 'Topic';
 			
             echo form_open('admin/contact', $attributes);
      

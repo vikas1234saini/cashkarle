@@ -55,6 +55,9 @@ class Contact_model extends CI_Model {
 			if($orderfor=='username'){
 				$this->db->where('admin', $order);
 			}
+			if($orderfor=='topic'){
+				$this->db->where('option', $order);
+			}
 			
 			$this->db->order_by("id", $order_type);
 		}else{
@@ -96,6 +99,9 @@ class Contact_model extends CI_Model {
 			}
 			if($orderfor=='username'){
 				$this->db->where('admin', $order);
+			}
+			if($orderfor=='topic'){
+				$this->db->where('option', $order);
 			}
 		}
 		$query = $this->db->get();

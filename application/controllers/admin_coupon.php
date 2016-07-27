@@ -235,8 +235,10 @@ class Admin_coupon extends CI_Controller {
     {
         //coupon id 
         $id = $this->uri->segment(4);
+        $offer_id = $this->uri->segment(5);
+
         $this->coupon_model->delete_coupon($id);
-        redirect('admin/coupon');
+        redirect('admin/couponoffer/'.$offer_id);
     }//edit
 	
 	/**

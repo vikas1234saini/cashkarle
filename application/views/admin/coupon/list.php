@@ -112,8 +112,8 @@ height: 26px;"');
                 echo '<td class="crud-actions">
                   <a href="'.site_url().'admin/coupon/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  ';
 				  $login_user_details = $this->session->userdata('user_details');
-				 if($login_user_details[0]['admin']){
-                 	//echo '<a href="'.site_url().'admin/coupon/delete/'.$row['id'].'" class="btn btn-danger">delete</a>';
+				 if($login_user_details[0]['admin'] && $row['admin']!=''){
+                 	echo '<a href="'.site_url().'admin/coupon/delete/'.$row['id'].'" class="btn btn-danger">delete</a>';
 				 }
                 echo '</td>';
                 echo '</tr>';

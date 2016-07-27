@@ -929,6 +929,10 @@ class Fuser extends CI_Controller {
 				$post_data_new['attachment'] 	= $config['file_name'];
 			}
 			
+			$last_ticket = $this->db->select('id')->from('tbl_ticket')->order_by('id', "desc")->get()->result_array(); 
+			
+			$ticket_id = date('Ym').str_pad(($last_ticket[0]['id']+1), 4, "0", STR_PAD_LEFT);
+			
 //			$user_details	= $this->session->userdata('fuser_details');
 			$ticket_rand = explode("__",$post_data['retailer']);
 			$post_data_new['retailer'] 			= isset($ticket_rand[0])?$ticket_rand[0]:"";
@@ -938,14 +942,14 @@ class Fuser extends CI_Controller {
 			$post_data_new['transection_id'] 	= $post_data['transection_id'];
 			$post_data_new['description'] 		= $post_data['description'];
 			$post_data_new['user_id'] 			= $user_details[0]['id'];
-			$post_data_new['ticket_id'] 		= date('Ym').rand(1000,9999);
+			$post_data_new['ticket_id'] 		= $ticket_id;
 			$post_data_new['ip'] 				= $_SERVER["REMOTE_ADDR"];
 			$post_data_new['added_date']		= date('Y-m-d H:i:s');
 			
 			if($this->order_model->addticket($post_data_new)){
 				$data['success'] 	= '1';
 				$data['data'] 		= $post_data_new;
-				$config = array('mailtype' => 'html');
+		/*		$config = array('mailtype' => 'html');
 				$this->load->library('email',$config);
 				$description = "Hello ".$user_details[0]['username']."<br/><br/>";
 				$description .= "Your ticket id is:".$post_data_new['ticket_id']."<br/><br/>";
@@ -956,7 +960,29 @@ class Fuser extends CI_Controller {
 				
 				$this->email->subject("Ticket Added To Cashkarle");
 				$this->email->message($description);	
-				$this->email->send();
+				$this->email->send();*/
+				
+					
+				$subject = 'Hey '.$user_details[0]['username'].', We have Received Missing Ticket';
+				$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+				$html .= "Hey ".$user_details[0]['username'].",<br /><br />";
+				$html .= "We have received your Ticket and your Ticket no. is ".$ticket_id." . Our team will get in touch with you shortly.<br/><br/>Thanks for being a part of CashKarle.com. <br /><br />";
+				$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+				//$this->email->message($html);	
+					
+				// Always set content-type when sending HTML email
+				$headers = "MIME-Version: 1.0" . "\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+				
+				// More headers
+				$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+		//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+				$to = $user_details[0]['email'];
+				if(mail($to,$subject,$html,$headers)){
+					$arr = array('status' => 1);
+				}else{
+					$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+				}
 			}else{
 				$data['success'] = '0';
 				$data['error'] = "Not able to add ticket.";

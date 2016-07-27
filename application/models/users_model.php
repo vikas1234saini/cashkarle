@@ -89,7 +89,7 @@ class Users_model extends CI_Model {
     public function get_user($orderfor=false,$search_string=false, $order=false, $order_type='Asc',$from_date=false, $to_date=false, $limit_start, $limit_end)
     {
 	    
-		$this->db->select('c.*,sum(discount) as payment');
+		$this->db->select('c.*,sum(discount_by_cashkarle) as payment');
 		
 		$this->db->from('tbl_user as c');
 		$this->db->join('tbl_order as p', 'p.user_id = c.id', 'left');
@@ -284,7 +284,7 @@ class Users_model extends CI_Model {
 		return $query->result_array(); 
     }
 	public function total_payment(){
-		$this->db->select('c.id,sum(discount) as payment');
+		$this->db->select('c.id,sum(discount_by_cashkarle) as payment');
 		$this->db->from('tbl_user as c');
 		$this->db->join('tbl_order as p', 'p.user_id = c.id', 'left');
 		

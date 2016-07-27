@@ -87,7 +87,6 @@ $route['updateaccount'] = 'fuser/update_account';
 $route['addlink'] = 'fuser/addlink';
 $route['mailtest'] = 'front/mailtest';
 
-
 $route['facebook'] = 'fuser/facebook';
 $route['googleplus'] = 'fuser/googleplus';
 $route['linkedin'] = 'fuser/linkedin';
@@ -95,7 +94,6 @@ $route['twitter'] = 'fuser/twitter';
 $route['twitterloginlink'] = 'fuser/get_twitter_login_url';
 $route['admin/twitter_back'] = 'fuser/twitterlogin';
 $route['admin/export/(:any)'] = 'admin_export/index/$1';
-
 
 $route['admin/getofferorder'] = 'admin_offer/getofferorder';
 $route['admin/getproductorder'] = 'admin_product/getproductorder';
@@ -132,7 +130,7 @@ $route['admin/coupon/add'] = 'admin_coupon/add';
 $route['admin/coupon/update'] = 'admin_coupon/update';
 $route['admin/coupon/updatestatus/(:any)/(:any)'] = 'admin_coupon/updatestatus/$1/$2';
 $route['admin/coupon/update/(:any)'] = 'admin_coupon/update/$1';
-$route['admin/coupon/delete/(:any)'] = 'admin_coupon/delete/$1';
+$route['admin/coupon/delete/(:any)/(:any)'] = 'admin_coupon/delete/$1/$2';
 $route['admin/coupon/(:any)'] = 'admin_coupon/index/$1';
 $route['admin/couponoffer/(:any)'] = 'admin_coupon/couponoffer/$1';
 

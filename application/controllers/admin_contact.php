@@ -165,6 +165,14 @@ class Admin_contact extends CI_Controller {
 			$options_offer_sort1['1'] = 'Replied';
 			$options_offer_sort1['0'] = 'Active';
 		}
+		if($orderfor=='topic'){			
+			$options_offer_sort1 = array();
+			$options_offer_sort1['Business query'] = 'Business query';
+			$options_offer_sort1['General Query'] = "General Query";
+            $options_offer_sort1['Media'] = "Media";
+            $options_offer_sort1['Partnerships'] = "Partnerships";
+            $options_offer_sort1['Others'] = "Others";
+		}
 		$data['options_offer_sort1'] = $options_offer_sort1;
     
         //initializate the panination helper 
@@ -250,7 +258,13 @@ class Admin_contact extends CI_Controller {
 			echo "<option value='1'>Replied</option>";
 			echo "<option value='0'>Active</option>";
 		}
-		
+		if($post_data['str']=='topic'){						
+			echo '<option value="Business query" >Business query</option>';
+			echo '<option value="General Query">General Query</option>';
+			echo '<option value="Media">Media</option>';
+			echo '<option value="Partnerships">Partnerships</option>';
+			echo '<option value="Others">Others</option>';
+		}
 		if($post_data['str']=='no'){			
 			echo " ";
 		}

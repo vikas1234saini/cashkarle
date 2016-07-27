@@ -101,7 +101,7 @@
 	          <a href="<?php echo base_url(); ?>admin/log">Cron Log</a>
 	        </li>
             <?php } ?>
-            <li class="dropdown">
+           <!-- <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Export<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
 	            <li>
@@ -113,7 +113,7 @@
 	              <a href="<?php echo base_url(); ?>admin/export/ticket">Export Ticket</a>
 	            </li>
 	          </ul>
-	        </li>
+	        </li>-->
             <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown">System<b class="caret"></b></a>
 	          <ul class="dropdown-menu">
