@@ -50,11 +50,12 @@ class Offer_model extends CI_Model {
 		$this->db->select('o.*,count(c.offer_id) as coupon_count');
 		$this->db->from('tbl_offer as o');
 		$this->db->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left');
-		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+//		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 		$this->db->group_by('o.main_id');
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.status",'1');
 		$this->db->where("o.url != ",'');
+		$this->db->where("o.id != ",'138');
 		
 //		$this->db->where("title LIKE '%".$str."%'");
 
@@ -90,6 +91,7 @@ class Offer_model extends CI_Model {
 		$this->db->where("o.status",'1');
 		$this->db->where("o.sitename != ",'flipkart');
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where("o.id != ",'138');
 		
 		/*if(isset($arr['category']) && $arr['category']!=''){
 			$category = $arr['category_name'];
@@ -410,19 +412,23 @@ class Offer_model extends CI_Model {
     public function get_coupon($offer_id=false,$title=false){
 		$this->db->select('*');
 		$this->db->from('tbl_coupon');
+		
 		if($offer_id!=false){
 			$this->db->where('offer_id', $offer_id);
 		}
-		
 		if($title!=false){
 			$this->db->like('coupon_title', $title,"both");
 		}
+		
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
 		$query = $this->db->get();
-//		echo $this->db->last_query();
-	//	die;
+		
+		//echo $this->db->last_query();
+		//die;
+		
 		return $query->result_array(); 
     }
+	
     public function get_coupon_by_id($id=false){
 		$this->db->select('*');
 		$this->db->from('tbl_coupon');

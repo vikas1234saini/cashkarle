@@ -609,6 +609,7 @@ class Product extends CI_Controller {
 
         $this->load->view('front/offerprocess', $data);
 	}
+	
 	function offercouponprocess($id){
 		$data  = array();;
         $this->load->model('offer_model');
@@ -618,6 +619,7 @@ class Product extends CI_Controller {
 
         $this->load->view('front/offerprocess', $data);
 	}
+	
 	function couponlist($str=false){
 	  	$this->load->model('category_model');
         $this->load->model('product_model');
@@ -626,12 +628,19 @@ class Product extends CI_Controller {
 		
 		$id_array 	= explode("-",$str);
 		$id 		= $id_array[sizeof($id_array)-1];
-//		echo $id;
+		
+		//echo $id;
 		$data['offer_details']  	= $this->offer_model->get_offer_by_id($id);
 		$data['category_details'] 	= $this->category_model->get_category_by_id($data['offer_details'][0]['category']);
-		$data['couponlist'] 		= $this->offer_model->get_coupon($data['offer_details'][0]['main_id']);
+		if($data['offer_details'][0]['main_id']!=''){
+			$data['couponlist'] 		= $this->offer_model->get_coupon($data['offer_details'][0]['main_id']);
+		}else{
+			$data['couponlist'] 		= array();
+		}
+		
 		//print_r($data['offer_details']);
 		//die;
+		
 		$data['list'] 			= $this->category_model->get_all_parent_category();
 		$data['listnew'] 		= $this->category_model->get_all_main_category();
 		$data['brandlist'] 		= $this->brand_model->get_all_parent_brand();
@@ -639,11 +648,13 @@ class Product extends CI_Controller {
 		$data['user_details'] 	= $this->session->userdata('fuser_details');
 		
 		$this->load->helper('data');
-		$data['topuser'] = topuser();	
+		$data['topuser'] = topuser();
+		
         //load the view
         $data['main_content'] = 'front/coupon_list';
         $this->load->view('includes/front_template', $data);
 	}
+	
 	function coupondetails(){
 	  	$this->load->model('category_model');
         $this->load->model('product_model');
@@ -656,8 +667,10 @@ class Product extends CI_Controller {
 		$data['couponlist'] 		= $this->offer_model->get_coupon_by_id($id);
 		$data['offer_details']  	= $this->offer_model->get_offer_by_id_main($data['couponlist'][0]['offer_id']);
 		$data['category_details'] 	= $this->category_model->get_category_by_id($data['offer_details'][0]['category']);
-//		print_r($data['offer_details']);
-	//	die;
+		
+		//print_r($data['offer_details']);
+		//die;
+		
 		$data['list'] 			= $this->category_model->get_all_parent_category();
 		$data['listnew'] 		= $this->category_model->get_all_main_category();
 		$data['brandlist'] 		= $this->brand_model->get_all_parent_brand();
@@ -665,12 +678,14 @@ class Product extends CI_Controller {
 		$data['user_details'] 	= $this->session->userdata('fuser_details');
 		
 		$this->load->helper('data');
-		$data['topuser'] = topuser();	
+		$data['topuser'] = topuser();
+		
         //load the view
         $data['main_content'] = 'front/coupon_details';
         $this->load->view('includes/front_template', $data);
 			
 	}
+	
 	//auto suggest
 	function suggest($field='title'){
 		$input = trim($this->input->get('term', TRUE));

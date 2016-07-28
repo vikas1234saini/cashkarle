@@ -463,7 +463,8 @@ class Admin_ticket extends CI_Controller {
 						$order_insert['sitename'] 		= "Added By Cashkarle";
 						$order_insert['amount'] 		= $post_data['cashback'];
 						$order_insert['orderStatus'] 	= "Approved";
-						$order_insert['user_id'] 		= $ticket_details[0]['user_id'];
+						$order_insert['user_id'] 		= $ticket_details[0]['user_id'];				
+						$order_insert['discount_by_cashkarle'] 		= $post_data['cashback'];
 						$order_insert['date']		= date('Y-m-d H:i:s');
 						$this->db->insert("tbl_order",$order_insert);
 						

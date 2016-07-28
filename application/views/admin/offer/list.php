@@ -140,8 +140,10 @@ $(document).ready(function() {
                 	echo '<td><a href="'.site_url("admin").'/offer/updatefeatured/'.$row['id'].'/1/">De-active</a></td>';
 				}*/
                 echo '<td class="crud-actions">
-                  <a href="'.site_url().'admin/offer/update/'.$row['id'].'" class="btn btn-info">view & edit</a>
-				  <a href="'.site_url().'admin/couponoffer/'.$row['main_id'].'" class="btn btn-danger">Coupon Discount</a>';
+                  <a href="'.site_url().'admin/offer/update/'.$row['id'].'" class="btn btn-info">view & edit</a>';
+				  if($row['main_id']!=''){
+				  	echo '<a href="'.site_url().'admin/couponoffer/'.$row['main_id'].'" class="btn btn-danger">Coupon Discount</a>';
+				  }
 				  $login_user_details = $this->session->userdata('user_details');
 				 if($login_user_details[0]['admin']){
                  	//echo '<a href="'.site_url().'admin/offer/delete/'.$row['id'].'" class="btn btn-danger">delete</a>';

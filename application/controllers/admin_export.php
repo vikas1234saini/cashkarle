@@ -238,7 +238,10 @@ class Admin_export extends CI_Controller {
 									  'E1'=>'Percent Payout',
 									  'F1'=>'Default Payout',
 									  'G1'=>'Cashback',
-									  'H1'=>'Username'
+									  'H1'=>'Username',
+									  'I1'=>'Date',
+									  'J1'=>'Status'
+									  
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -253,14 +256,17 @@ class Admin_export extends CI_Controller {
 				foreach($downloaded as $key_d => $value_d){
 					$sitename = 'hasoffer';
 					$sitename = ($value_d['sitename']=='hasoffer'?"Vcommission":$value_d['sitename']);
+					$date = (date("d-M Y h:i a",strtotime($value_d['date'])));
 					$header_array1 = array('A'.$counter=>$counter-1,
 									  'B'.$counter=>$value_d['title'],
-									  'C'.$sitename,
+									  'C'.$counter=>$sitename,
 									  'D'.$counter=>$value_d['payout_type'],
 									  'E'.$counter=>$value_d['percent_payout'],
 									  'F'.$counter=>$value_d['default_payout'],
 									  'G'.$counter=>$value_d['discount']." ".$value_d['discount_type'],
-									  'H'.$counter=>$value_d['admin']
+									  'H'.$counter=>$value_d['admin'],
+									  'I'.$counter=>$date,
+									  'J'.$counter=>$value_d['status']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -513,8 +519,10 @@ class Admin_export extends CI_Controller {
 									  'F1'=>'Amount',
 									  'G1'=>'Description',
 									  'H1'=>'IP',
-									  'J1'=>'Status',
-									  'I1'=>'Date'
+									  'I1'=>'Status',
+									  'J1'=>'Added Date',
+									  'K1'=>'Closed Date',
+									  'L1'=>'Transection Date'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -535,8 +543,10 @@ class Admin_export extends CI_Controller {
 									  'F'.$counter=>$value_d['amount'],
 									  'G'.$counter=>$value_d['description'],
 									  'H'.$counter=>$value_d['ip'],
-									  'I'.$counter=>$value_d['date'],
-									  'J'.$counter=>(($value_d['status']==1)?"Closed":"Processing")
+									  'I'.$counter=>(($value_d['status']==1)?"Closed":"Processing"),
+									  'J'.$counter=>$value_d['added_date'],
+									  'K'.$counter=>$value_d['close_date'],
+									  'L'.$counter=>$value_d['date']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -555,7 +565,9 @@ class Admin_export extends CI_Controller {
 									  'E1'=>'Percent Payout',
 									  'F1'=>'Default Payout',
 									  'G1'=>'Cashback',
-									  'H1'=>'Username'
+									  'H1'=>'Username',
+									  'I1'=>'Date',
+									  'J1'=>'Status'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -571,6 +583,7 @@ class Admin_export extends CI_Controller {
 				foreach($downloaded as $key_d => $value_d){
 					$sitename = 'hasoffer';
 					$sitename = ($value_d['sitename']=='hasoffer'?"Vcommission":$value_d['sitename']);
+					$date = (date("d-M Y h:i a",strtotime($value_d['date'])));
 					$header_array1 = array('A'.$counter=>$counter-1,
 									  'B'.$counter=>$value_d['title'],
 									  'C'.$counter=>$sitename,
@@ -578,7 +591,9 @@ class Admin_export extends CI_Controller {
 									  'E'.$counter=>$value_d['percent_payout'],
 									  'F'.$counter=>$value_d['default_payout'],
 									  'G'.$counter=>$value_d['discount']." ".$value_d['discount_type'],
-									  'H'.$counter=>$value_d['admin']
+									  'H'.$counter=>$value_d['admin'],
+									  'I'.$counter=>$date,
+									  'J'.$counter=>$value_d['status']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);

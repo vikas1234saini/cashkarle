@@ -18,7 +18,7 @@ class Product_model extends CI_Model {
     public function get_product_by_id($id)
     {
 		
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		$this->db->where('p.id', $id);
@@ -37,7 +37,7 @@ class Product_model extends CI_Model {
 		$new_data = array();
 		
 		if(isset($post_data['pid']) && $post_data['pid']!=''){
-			$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+			$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 			$this->db->from('tbl_product as p');
 			$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 							   
@@ -55,7 +55,29 @@ class Product_model extends CI_Model {
 			}
 		}
 		
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+//		if(isset($post_data['pid']) && $post_data['pid']!=''){
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
+		$this->db->from('tbl_product as p');
+		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
+		
+		$this->db->where("c.categoryName",$str);
+		if(isset($post_data['pid']) && $post_data['pid']!=''){
+			$this->db->where("p.id != ",$post_data['pid']);
+		}					   
+		//$this->db->where('p.id',$post_data['pid']);
+		$this->db->where("p.selling_price > ","0");
+		//$this->db->where("p.retail_price > ","0");
+		$query_first = $this->db->get();
+		$old_data = $query_first->result_array(); 
+
+		//echo $this->db->last_query();		
+		//print_r($old_data);
+		//die;
+		foreach($old_data as $key=>$value){
+			$new_data[] =  $value;
+		}
+//		}
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		//$this->db->where("(p.title LIKE '%".$str."%' OR p.description LIKE '%".$str."%')");
@@ -88,6 +110,7 @@ class Product_model extends CI_Model {
 		if(isset($post_data['pid']) && $post_data['pid']!=''){
 			$this->db->where("p.id != ",$post_data['pid']);
 		}
+		$this->db->where("p.category != ",$str);
 		//$this->db->where("p.retail_price > ","0");
 		$this->db->limit(18, 0);
 	    $this->db->order_by('p.id', 'desc');
@@ -111,7 +134,7 @@ class Product_model extends CI_Model {
     * @return array
     */
     public function get_product_by_category($id) {
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		$this->db->where("p.category",$id);
@@ -126,7 +149,7 @@ class Product_model extends CI_Model {
     }
 	
     public function get_product_by_brand($str) {
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		//$this->db->like("p.brand",$str,"both");
@@ -145,7 +168,7 @@ class Product_model extends CI_Model {
     * @return array
     */
     public function get_product_search($arr) {
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		if(isset($arr['byprice'])){
@@ -161,9 +184,9 @@ class Product_model extends CI_Model {
 			$cashback_array = explode("-",$arr['bycashback']);
 			if(isset($cashback_array[0])){
 				if($cashback_array[0]==0 && !isset($cashback_array[1])){
-					$this->db->where("c.amazon_discount",$cashback_array[0]);
-					$this->db->where("c.snapdeal_discount",$cashback_array[0]);
-					$this->db->where("c.flipkart_discount",$cashback_array[0]);
+					$this->db->where("((c.snapdeal_discount='0' && snapdealUrl!='') || (c.flipkart_discount='0' && flipkartUrl!=''))");
+					//$this->db->where("(c.snapdeal_discount","0");
+					//$this->db->where("(c.flipkart_discount","0");
 					//$this->db->where("c.snapdeal_discount_2500",$cashback_array[0]);					
 				}else{
 					$where_cashback = "(";
@@ -195,7 +218,7 @@ class Product_model extends CI_Model {
 		}
 		
 		if(isset($arr['search_for']) && $arr['search_for']=='top_product'){
-			$this->db->where("p.featured",'1');
+	//		$this->db->where("p.featured",'1');
 		}
 		if(isset($arr['bybrand'])){
 			$brand = $arr['bybrand'];
@@ -252,6 +275,7 @@ class Product_model extends CI_Model {
 					//$search_list .= " OR p.title LIKE '%".$value."%' OR p.description LIKE '%".$value."%' OR p.brand LIKE '%".$value."%' OR c.categoryName LIKE '%".$value."%' OR p.sitename LIKE '%".$value."%'";		
 					$search_list .= " OR p.title LIKE '%".$value."%' ";		
 				}
+				$search_list .= " OR c.categoryName = '".$value."' ";
 				$this->db->where($search_list.")");
 			}
 		}
@@ -343,7 +367,7 @@ class Product_model extends CI_Model {
 		
 	//	$this->db->from('tbl_product as o');
 	
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		
@@ -425,7 +449,7 @@ class Product_model extends CI_Model {
 		return $query->num_rows();        
     }
 	function get_featured_product(){
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		$this->db->where("p.featured",'1');
@@ -484,7 +508,7 @@ class Product_model extends CI_Model {
 	
     public function get_product_by_relation($str,$id,$catname=false)
     {
-		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500');
+		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
 		//$this->db->where("(p.title LIKE '%".$str."%' OR p.description LIKE '%".$str."%')");

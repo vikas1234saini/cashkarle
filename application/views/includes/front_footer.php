@@ -635,7 +635,7 @@ footer p { text-align:justify;}
 		});
         $(document).ready(function() {
 			<?php if(isset($popshow) && $popshow!=''){					   ?>
-				$('#frontpopbtn').click();
+				//$('#frontpopbtn').click();
 			<?php } ?>
 			
 	        $('.buybutton').click(function(){

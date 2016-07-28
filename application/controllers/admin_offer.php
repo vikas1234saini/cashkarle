@@ -196,7 +196,8 @@ class Admin_offer extends CI_Controller {
                     'percent_payout' => $this->input->post('percent_payout'),
                     'payout_type' => $this->input->post('payout_type'),
                     'default_payout' => $this->input->post('default_payout'),
-                    'sitename' => 'hasoffer'
+                    'main_id' => rand(100000,999999),
+                    'sitename' => 'custom'
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];

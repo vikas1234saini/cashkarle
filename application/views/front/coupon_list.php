@@ -50,6 +50,8 @@
 		                 		<img src="<?php echo $offer_details[0]['image']!=''?$offer_details[0]['image']:base_url("assets/img/noimage.png"); ?>" style="position:absolute;    top:0;    bottom:0;    margin:auto; max-height:110px; padding-top:10px; left:0; right:0; cursor:pointer;" ></a>
 		                 </div>
 		                 <div id="product_name_img" class="product-name" style="height:auto; padding-bottom:10px; text-align:center; font-weight:bold;">
+                         
+		                            <a href="<?php echo $offer_details[0]['url']; ?>" class="sign-in-btn buybutton">
 								<?php
 									if(isset($offer_details[0]['discount']) && $offer_details[0]['discount']!=''){
 										$discount = " ".$offer_details[0]['discount']." ".($offer_details[0]['discount_type']!=''?$offer_details[0]['discount_type']:"%");
@@ -63,6 +65,7 @@
 									}
 									
 								?>
+                                </a>
 		                        <div style="text-align:left; width:100%; font-weight:normal;">
 		                        <br />                        
 									<?php 
@@ -75,6 +78,9 @@
 	            </div>
             
                 <div class="col-sm-8 col-xs-12" >
+                	<?php if(sizeof($couponlist)==0){ ?>
+                    	<div style="text-align:center; border:solid 2px;"><strong>There are no coupons available for this store.</strong></div>
+                    <?php } ?>
 		            <?php 
 						$old_dis  = $discount;
 						foreach($couponlist as $key => $value){ 					

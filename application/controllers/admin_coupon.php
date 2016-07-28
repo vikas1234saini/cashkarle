@@ -139,6 +139,7 @@ class Admin_coupon extends CI_Controller {
                     'offer_name' => $this->input->post('offer_name'),
                     'coupon_description' => $this->input->post('coupon_description'),
                     'added' => date("Y-m-d",strtotime($this->input->post('added'))),
+                    'date' => date("Y-m-d"),
                     'coupon_expiry' => date("Y-m-d",strtotime($this->input->post('coupon_expiry'))),
                     'link' => $this->input->post('link')
 					

@@ -35,7 +35,7 @@ class Ticket_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_ticket($orderfor=false,$search_string=false, $order=false, $order_type='Asc',$from_date=false, $to_date=false, $limit_start, $limit_end)
+    public function get_ticket($orderfor=false,$search_string=false, $order=false, $order_type='desc',$from_date=false, $to_date=false, $limit_start, $limit_end)
     {
 	    
 		$this->db->select('t.*,u.username');
@@ -46,7 +46,7 @@ class Ticket_model extends CI_Model {
 		}
 
 		if($from_date != false && $from_date != 0){
-			$this->db->where('(date(t.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+			$this->db->where('(date(t.added_date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
 		}
 		if($order || $order==0){			
 			if($orderfor=='offerby'){
@@ -57,6 +57,9 @@ class Ticket_model extends CI_Model {
 			}
 			if($orderfor=='username'){
 				$this->db->where('t.admin', $order);
+			}
+			if($order_type==""){
+				$order_type="desc";
 			}
 			$this->db->order_by("t.id", $order_type);
 

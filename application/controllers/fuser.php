@@ -1433,17 +1433,18 @@ class Fuser extends CI_Controller {
 		$this->load->model('ticket_model');
 		$ticketdetails = $this->ticket_model->get_ticket_by_id($post_data['id']);
 		$data_html = "<div><strong>Ticket No:  ".$ticketdetails[0]['ticket_id']."</strong></div>";
-		$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
-		$data_html .= "<div><strong>Description:  ".$ticketdetails[0]['description']."</strong></div>";
+		$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['added_date']))."</strong></div>";
+		$data_html .= "<div style='word-wrap: break-word;'><strong>Description:  ".$ticketdetails[0]['description']."</strong></div>";
 		$data_html .= "<div><strong>Retailer:  ".$ticketdetails[0]['retailer']."</strong></div>";
 		$data_html .= "<div><strong>Transection Id:  ".$ticketdetails[0]['transection_id']."</strong></div>";
+		$data_html .= "<div><strong>Transection Date:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
 		
         $prev_reply = $this->ticket_model->get_all_reply_by_ticket($ticketdetails[0]['id']);
 		if(sizeof($prev_reply)>0){
 			$data_html .= "<div style='margin-bottom:10px;margin-top:20px;'><strong>Response:</strong></div>";
 		}
 		foreach($prev_reply as $key=>$value){
-			$data_html .= "<div style='border:solid 1px; padding:10px; margin:10px;'><div>".$value['reply']."</div>";
+			$data_html .= "<div style='border:solid 1px; padding:10px; margin:10px;word-wrap: break-word;'><div>".$value['reply']."</div>";
 			$data_html .= "<div><strong>Dated:  ".date("d M Y h:i a",strtotime($value['date']))."</strong></div>";
 			$data_html .= "<div><strong>By:  ".$value['user']."</strong></div></div></div>";
 			

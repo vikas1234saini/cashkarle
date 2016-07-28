@@ -11,7 +11,7 @@ $(document).ready(function() {
 		$('#cashback').val("");	
 //		$(this).hide();
 	});		
-	 $("#cashback").keydown(function(event) {
+	 /*$("#cashback").keydown(function(event) {
     	// Allow only backspace and delete
     	if ( event.keyCode == 46 || event.keyCode == 8 ) {
     		// let it happen, don't do anything
@@ -22,6 +22,21 @@ $(document).ready(function() {
     			event.preventDefault();	
     		}	
     	}
+    });*/
+	 $("#cashback").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl+A, Command+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) || 
+             // Allow: home, end, left, right, down, up
+            (e.keyCode >= 35 && e.keyCode <= 40)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
     });
 });		
 </script>
@@ -82,7 +97,7 @@ $(document).ready(function() {
       <fieldset>
       		<div><strong>Replied Before:</strong><br /></div>
             <?php foreach($prev_reply as $key=>$value){ ?>    	
-		          <div class="control-group" style="border:solid 1px #999; background:#F3F3F3; padding:10px; width:400px;"><?php echo $value['reply']; ?><br  /><strong>Dated:</strong> <?php echo date("d M Y h:i a",strtotime($value['date'])); ?><br  /><strong>By:</strong> <?php echo $value['user']; ?></div>
+		          <div class="control-group" style="border:solid 1px #999; background:#F3F3F3; padding:10px; width:400px;word-wrap: break-word;"><?php echo $value['reply']; ?><br  /><strong>Dated:</strong> <?php echo date("d M Y h:i a",strtotime($value['date'])); ?><br  /><strong>By:</strong> <?php echo $value['user']; ?></div>
             <?php  } ?>
           
           <div class="control-group">

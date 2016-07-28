@@ -770,13 +770,13 @@ echo $url;
 				$this->db->from('tbl_linkgo');
 				$this->db->where('random',$value['Stat']['affiliate_info2']);
 				$this->db->where('user_id',$value['Stat']['affiliate_info1']);
-				$this->db->where('sitename',"hasoffer");
+				//$this->db->where('sitename',"hasoffer");
 				$golink_data_query = $this->db->get();
 				$golink_data = $golink_data_query->result_array();	
 				$new_discount = 0;
 				
 				if(sizeof($golink_data)>0){
-					$amount	= isset($value['sales'])?$value['sales']['amount']:$value['price'];
+					$amount	= isset($value['sales'])?$value['sales']['amount']:$value['Stat']['sale_amount'];
 					$discount_g = (($golink_data[0]['discount']!='')?$golink_data[0]['discount']:0);
 					$pamount = (($amount*$discount_g)/100);
 					if($pamount<$value['Stat']['approved_payout']){
