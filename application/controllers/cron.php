@@ -602,20 +602,20 @@ echo $url ;
 		print_r($fdetails);
 		$add_count = 0 ;
 		foreach($fdetails['orderList'] as $key=>$value){
-						
+//		if($value['affExtParam1']=='26'){				
 			$this->db->select('id');
 			$this->db->from('tbl_order');
 			$this->db->where('random',$value['affExtParam2']);
 			$this->db->where('user_id',$value['affExtParam1']);
-			$this->db->where('main_id',$value['productId']);
-			$this->db->where('sitename',"flipkart");
+	//		$this->db->where('main_id',$value['productId']);
+		//	$this->db->where('sitename',"flipkart");
 			$query = $this->db->get();	
 			
 			$this->db->select('*');
 			$this->db->from('tbl_linkgo');
 			$this->db->where('random',$value['affExtParam2']);
 			$this->db->where('user_id',$value['affExtParam1']);
-			$this->db->where('sitename',"flipkart");
+			//$this->db->where('sitename',"flipkart");
 			$golink_data_query = $this->db->get();
 			$golink_data = $golink_data_query->result_array();	
 			$new_discount = 0;
@@ -657,6 +657,7 @@ echo $url ;
 				$this->db->where('sitename',"flipkart");
 				$this->db->update('tbl_order', $cdata);
 			}
+	//	}
 		}
 		
 		$add_data = array();

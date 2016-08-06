@@ -243,8 +243,9 @@ class Product extends CI_Controller {
 									  $offerdata .=       ' <a href="'.$value['url'].'" class="sign-in-btn">';
 								} 
 							}*/
-								
-							$offerdata .= '<img src="'.$value['image'].'" style="position:absolute;    top:0;    bottom:0;    margin:auto; max-height:110px; padding-top:10px; left:0; right:0;"></a></div>
+							
+							$couponImage 		= $value['image']!=''?$value['image']:base_url("assets/img/noimage.png");	
+							$offerdata .= '<img src="'.$couponImage.'" style="position:absolute;    top:0;    bottom:0;    margin:auto; max-height:110px; padding-top:10px; left:0; right:0;"></a></div>
 							<div class="product-name" style="height:40px;">
 								<p>';
 								$offerdata .= '<a href="'.base_url("couponlist/".$new_title."-".$value['id']).'">';
@@ -331,8 +332,6 @@ class Product extends CI_Controller {
 												<div class="product-name">
 													<p>'.mb_strimwidth($title,0,30,"...").'</p>						
 													<p>By: <img src="'.base_url("assets/img/".$product['sitename'].".png").'" width="70" /></p>
-													
-			
 												</div>
 												<p class="actual-price"> ACTUAL PRICE RS '.$maximumRetailPrice.'</p>
 												<p class="fw-400 price" style="text-align:center !important;"> Rs '.$sellingPrice.'</p>

@@ -605,50 +605,68 @@ class Admin_export extends CI_Controller {
 			//echo $for;
 			if($for=='product'){
 				set_time_limit(0);
-				$header_array = array('A1'=>'S.No',
-									  'B1'=>'Title',
-									  'C1'=>'Category',
-									  'D1'=>'Description',
-									  'E1'=>'Selling Price',
-									  'F1'=>'Retail Price',
-									  'G1'=>'Brand',
-									  'H1'=>'Sitename',
-									  'I1'=>'In Stock'
-									  );
-				foreach($header_array as $key => $value){
-					$this->excel->getActiveSheet()->setCellValue($key, $value);
-					$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
-					$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
-				}
+				ini_set('memory_limit', '1024M');
 				
-				$counter = 2;
-			
-				//echo "test";
-				$this->load->model('product_model');	
-				$downloaded 	= $this->product_model->get_all_product($get_data['key'], $get_data['order'], $get_data['order_type'],$get_data['orderfor']);
+				/*try {
+					$error = 'Always throw this error';
+					throw new Exception($error);
 				
-				//echo "test";
-				//print_r($downloaded);
-				//die;
-				foreach($downloaded as $key_d => $value_d){
-					$header_array1 = array('A'.$counter=>$counter-1,
-									  'B'.$counter=>$value_d['title'],
-									  'C'.$counter=>$value_d['categoryName'],
-									  'D'.$counter=>$value_d['description'],
-									  'E'.$counter=>$value_d['selling_price'],
-									  'F'.$counter=>$value_d['retail_price'],
-									  'G'.$counter=>$value_d['brand'],
-									  'H'.$counter=>$value_d['sitename'],
-									  'I'.$counter=>$value_d['instock']
-									  );
-					foreach($header_array1 as $key => $value){
+					// Code following an exception is not executed.
+					echo 'Never executed';*/
+
+				
+					$header_array = array('A1'=>'S.No',
+										  'B1'=>'Title',
+										  'C1'=>'Category',
+										  'D1'=>'Description',
+										  'E1'=>'Selling Price',
+										  'F1'=>'Retail Price',
+										  'G1'=>'Brand',
+										  'H1'=>'Sitename',
+										  'I1'=>'In Stock'
+										  );
+					foreach($header_array as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
 						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
+						$this->excel->getActiveSheet()->getStyle($key)->getFont()->setBold(true);
 					}
-					$counter++;
-				}
+					
+					$counter = 2;
+				
+					//echo "test";
+					$this->load->model('product_model');	
+					$downloaded 	= $this->product_model->get_all_product($get_data['key'], $get_data['order'], $get_data['order_type'],$get_data['orderfor']);
+					
+					//echo "test";
+					//print_r($downloaded);
+					//die;
+					foreach($downloaded as $key_d => $value_d){
+						$header_array1 = array('A'.$counter=>$counter-1,
+										  'B'.$counter=>$value_d['title'],
+										  'C'.$counter=>$value_d['categoryName'],
+										  'D'.$counter=>$value_d['description'],
+										  'E'.$counter=>$value_d['selling_price'],
+										  'F'.$counter=>$value_d['retail_price'],
+										  'G'.$counter=>$value_d['brand'],
+										  'H'.$counter=>$value_d['sitename'],
+										  'I'.$counter=>$value_d['instock']
+										  );
+						foreach($header_array1 as $key => $value){
+							$this->excel->getActiveSheet()->setCellValue($key, $value);
+							$this->excel->getActiveSheet()->getStyle($key)->getFont()->setSize(12);
+						}
+						$counter++;
+						//error_log($value_d['id']);
+					}
+				
+				/*} catch (Exception $e) {
+					echo "<pre>";
+					print_r($e);
+					echo 'Caught exception: ',  $e->getMessage(), "\n";
+				}	*/
 			}
 		}
+//		die;
 		$filename = $for."_".date("dMy").'.xls'; //save our workbook as this file name
 		header('Content-Type: application/vnd.ms-excel'); //mime type
 		header('Content-Disposition: gattachment;filename="'.$filename.'"'); //tell browser what's the file name
