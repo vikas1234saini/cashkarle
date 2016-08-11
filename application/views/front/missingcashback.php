@@ -1,15 +1,4 @@
-<?php 
-$tdisocunt = 0.00;
-foreach($orderlist as $key=>$row){ 
-//echo $row['discount']."-----".$row['amount']."<br />";
-	if($row['discount']>=$row['discount_by_cashkarle']){
-//		$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
-		$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
-	}else{
-		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
-	}
-}
-?><section class="profile">
+<section class="profile">
     <div class="container">
       <div class="row">
         
@@ -69,36 +58,12 @@ foreach($orderlist as $key=>$row){
                 </div>
                 <?php } ?>
           </div>
-          
           <div class="wallet-content ft-16 col-md-3">
             <div class="card-block">
-          	<div class="profile-box">
-            	<h4 class="green">Cashback Earnings</h4>
-                <table class="mini">
-                  <tr>
-                    <td>Total Earnings</td>
-                    <td><span class="indianRs">Rs.</span><?php echo isset($tdisocunt)?round($tdisocunt,2):"0.00"; ?></td>
-                  </tr>
-                  <tr>
-                    <td>Paid Earnings</td>
-                    <td><span class="indianRs">Rs.</span>0.00</td>
-                  </tr>
-                  <tr>
-                    <td>Cashback Available for payment</td>
-                    <td>Rs. 0.00</td>
-                  </tr>
-                  <tr>
-                    <td>Cashback for retailer approval</td>
-                    <td>Rs. <?php echo isset($tdisocunt)?round($tdisocunt-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00"; ?></td>
-                  </tr>
-                </table>
-          	</div>
-            <div class="clearfix"></div>
-          </div>
+          <?php include('payment_right.php'); ?>
           <div class="my-favourite-content">
           </div>
           </div>
-
         </div>
       </div>
     </div>

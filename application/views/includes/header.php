@@ -93,6 +93,9 @@
 	        <li <?php if($this->uri->segment(3) == 'order'){echo 'class="active"';}?>>
 	          <a href="<?php echo base_url(); ?>admin/order">Order</a>
 	        </li>
+	        <li <?php if($this->uri->segment(3) == 'payment'){echo 'class="active"';}?>>
+	          <a href="<?php echo base_url(); ?>admin/payment">Bank Transection</a>
+	        </li>
             <?php if(strtolower($login_user_details[0]['admin_login_name'])==strtolower('admin')){ ?>
 	        <li <?php if($this->uri->segment(3) == 'agent'){echo 'class="active"';}?>>
 	          <a href="<?php echo base_url(); ?>admin/agent">Admin User</a>

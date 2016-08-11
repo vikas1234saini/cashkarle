@@ -14,7 +14,7 @@
        <div class="page-header users-header">
        <h2>
           <?php echo ucfirst($this->uri->segment(2));?> 
-          <a  href="<?php echo site_url()."admin/coupon"; ?>/add" class="btn btn-success">Add a new</a>
+          <a  href="<?php echo site_url()."admin/coupon/add/".$offer_id; ?>" class="btn btn-success">Add a new</a>
         </h2>
       </div>
 	 <?php
@@ -46,8 +46,9 @@
                 <th class="yellow header headerSortDown">Coupon Name</th>
                 <th class="yellow header headerSortDown">Offer</th>
                 <th class="yellow header headerSortDown">Cashback</th>
+                <th class="yellow header headerSortDown">Start Date</th>
                 <th class="yellow header headerSortDown">Exp Date</th>
-                <th class="yellow header headerSortDown">Date</th>
+                <th class="yellow header headerSortDown">Added Date</th>
                 <th class="red header">Actions</th>
               </tr>
             </thead>
@@ -62,7 +63,8 @@
                 echo '<td>'.$row['coupon_title'].' </td>';
                 echo '<td>'.$row['offer_name'].' </td>';
                 echo '<td>'.$row['discount']." ".$row['discount_type'].' </td>';
-                echo '<td>'.date("d-m-Y h:i a",strtotime($row['coupon_expiry'])).' </td>';
+                echo '<td>'.date("d-m-Y",strtotime($row['added'])).' </td>';
+                echo '<td>'.date("d-m-Y",strtotime($row['coupon_expiry'])).' </td>';
                 echo '<td>'.date('d-M Y h:i a',strtotime($row['date'])).' </td>';
 				/*if($row['status']==1){
                 	echo '<td><a href="'.site_url("admin").'/coupon/updatestatus/'.$row['id'].'/0/">Active</a></td>';
@@ -70,7 +72,7 @@
                 	echo '<td><a href="'.site_url("admin").'/coupon/updatestatus/'.$row['id'].'/1/">De-active</a></td>';
 				}*/
                 echo '<td class="crud-actions">
-                  <a href="'.site_url().'admin/coupon/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  ';
+                  <a href="'.site_url().'admin/coupon/update/'.$row['id'].'/'.$row['offer_id'].'" class="btn btn-info">view & edit</a>  ';
 				  $login_user_details = $this->session->userdata('user_details');
 
 				// if($login_user_details[0]['admin'] && $row['admin']!=''){

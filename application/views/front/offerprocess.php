@@ -11,12 +11,18 @@
 		}
 	}
 //	print_r($offer_details);
+	$title_new = isset($offer_details[0]['title'])?$offer_details[0]['title']:(isset($product_details[0]['coupon_title'])?$product_details[0]['coupon_title']:"");
+	
 ?>
 <!DOCTYPE html>
 	<html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-       	<meta http-equiv="refresh" content="3;<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" />
+		<?php if (strpos(strtolower($title_new), 'freecharge') != false) { ?>
+       		<meta http-equiv="refresh" content="3;<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id']."-".$this->session->userdata('random_no').$para2;?>" />
+		<?php }else{ ?>
+       		<meta http-equiv="refresh" content="3;<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" />
+        <?php } ?>
         <title>CashKarle</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -67,8 +73,14 @@
                         <br /><br />
                         <span style="font-size:36px; font-family:cursive; color:#000; font-weight:bolder;">Enjoy Savings</span>
                     </div>
-                    <!--<h1>CONGRATULATIONS, NOTHING MORE TO DO!</h1><h2>Enjoy saving on <?php echo isset($product_details[0]['title'])?$product_details[0]['title']:(isset($product_details[0]['coupon_title'])?$product_details[0]['coupon_title']:"") ?> via CashKarle.com, India's No.1 Coupon &amp; Cashback website!</h2>-->
-                    <p class="mt mb text-center"><a class="link" href="<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" rel="nofollow" title="Click to earn cashback" style="text-decoration:none; color:#57A4F4;">Click here</a>&nbsp;&nbsp;if you are not automatically redirected within few seconds.</p></div>
+                    <!--<h1>CONGRATULATIONS, NOTHING MORE TO DO!</h1><h2>Enjoy saving on <?php echo isset($product_details[0]['title'])?$product_details[0]['title']:(isset($product_details[0]['coupon_title'])?$product_details[0]['coupon_title']:""); ?> via CashKarle.com, India's No.1 Coupon &amp; Cashback website!</h2>-->
+                    
+				<?php if (strpos(strtolower($title_new), 'reecharge') != false) { ?>
+			  		<p class="mt mb text-center"><a class="link" href="<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id']."-".$this->session->userdata('random_no').$para2;?>" rel="nofollow" title="Click to earn cashback" style="text-decoration:none; color:#57A4F4;">Click here</a>&nbsp;&nbsp;if you are not automatically redirected within few seconds.</p></div>
+				<?php }else{ ?>
+				  	<p class="mt mb text-center"><a class="link" href="<?php echo isset($product_details[0]['url'])?$product_details[0]['url']:(isset($product_details[0]['link'])?$product_details[0]['link']:"") ?><?php echo "&".$extraval."=".$user_details[0]['id'].$para2;?>" rel="nofollow" title="Click to earn cashback" style="text-decoration:none; color:#57A4F4;">Click here</a>&nbsp;&nbsp;if you are not automatically redirected within few seconds.</p></div>
+		        <?php } ?>
+                  
                     </div>
                  </div>
              </div>

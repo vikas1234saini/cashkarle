@@ -17,9 +17,11 @@ class Ticket_model extends CI_Model {
     */
     public function get_ticket_by_id($id)
     {
-		$this->db->select('*');
-		$this->db->from('tbl_ticket');
-		$this->db->where('id', $id);
+		$this->db->select('t.*,u.username');
+		
+		$this->db->from('tbl_ticket as t');
+		$this->db->join('tbl_user as u', 'u.id = t.user_id', 'left');
+		$this->db->where('t.id', $id);
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
@@ -42,7 +44,7 @@ class Ticket_model extends CI_Model {
 		
 		$this->db->from('tbl_ticket as t');
 		if($search_string){
-			$this->db->like('t.retailer', $search_string,"both");
+			$this->db->where("(t.retailer LIKE '%".$search_string."%' OR t.ticket_id LIKE '%".$search_string."%' OR t.transection_id LIKE '%".$search_string."%' OR t.random LIKE '%".$search_string."%')");
 		}
 
 		if($from_date != false && $from_date != 0){
@@ -210,7 +212,7 @@ class Ticket_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
-    public function get_all_ticket($search_string=false,$from_date=false,$to_date=false)
+    public function get_all_ticket($search_string=false,$from_date=false,$to_date=false,$order=false,$orderfor=false)
     {
 		
 		$this->db->select('t.*,u.username');
@@ -222,6 +224,18 @@ class Ticket_model extends CI_Model {
 		}
 		if($from_date != false && $from_date != 0){
 			$this->db->where('(date(t.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+		}
+		if($order || $order==0){			
+			if($orderfor=='offerby'){
+				$this->db->like('t.retailer', $order,"both");
+			}
+			if($orderfor=='status'){
+				$this->db->where('t.status', $order);
+			}
+			if($orderfor=='username'){
+				$this->db->where('t.admin', $order);
+			}
+			
 		}
 		$query = $this->db->get();
 		return $query->result_array(); 

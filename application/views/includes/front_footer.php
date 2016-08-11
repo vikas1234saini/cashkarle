@@ -103,7 +103,7 @@ footer p { text-align:justify;}
                                     </div>                                    
 						            <button type="submit" class="btn btn-warning btn-round" style="width:70%;height:35px;font-size:15px;" id="login_btn">Sign In</button><br>
                                     <div class="wihtoutlogin" style="display:none;">
-						            <a href="#" class="wihtoutlogina" target="_blank"><button type="button" class="btn btn-warning btn-round" style="width:100%; margin-top:10px;height:40px;font-size:16px;">CONTINUE WITHOUT CASHBACK</button></a>
+						            <a href="#" class="wihtoutlogina" target="_blank"><button type="button" class="btn btn-warning btn-round" style="width:100%; margin-top:10px;height:40px;font-size:13px;">CONTINUE WITHOUT CASHBACK</button></a>
                                     </div>
                                     <div class="singuplink">
                                         <p class="ft-11" style="margin-bottom:0;margin-top:10px;">Forgot Passowrd <a class="forgot-password-btn"> Click Here</a></p>
@@ -210,18 +210,24 @@ footer p { text-align:justify;}
                             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                             <li data-target="#myCarousel" data-slide-to="1"></li>
                             <li data-target="#myCarousel" data-slide-to="2"></li>
-                            <li data-target="#myCarousel" data-slide-to="3"></li>
                         </ol>
         
                         <div class="carousel-inner" role="listbox">
                             <div class="item active">
-                            	<?php for($i=0;$i<sizeof($topuser);$i++){ ?>
+                            	<?php 
+									for($i=0;$i<sizeof($topuser);$i++){ 
+								?>
                                 <div class="col-md-4">
                                     <img src="<?php echo ($topuser[$i]['image']!='')?base_url('assets/uploads/user/'.$topuser[$i]['image']):base_url('assets/img/user.png'); ?>" alt="polandha" style="max-height:166px; max-width:166px;">
                                     <h3 class="fw-700 green"> <?php echo $topuser[$i]['username']; ?></h3>
                                     <p class="quote" style="color:#4e4e4e">"I have saved Rs <?php echo round((($topuser[$i]['tamount']*0.2)/100),2); ?> from cashkarle" just for the last month. i love this website a lot and i have suggested thid to all my friends"</p>
                                 </div>
-                                <?php } ?>
+                                <?php 
+										if(!(($i+1)%3) && $i<6){
+											echo '</div><div class="item">';
+										}
+									} 
+								?>
                             </div>
         
                         </div>
@@ -939,9 +945,13 @@ footer p { text-align:justify;}
 						if(data.status=='0'){
 							plist = 0;		
 						}
+						if(data.status=='1'){
+							flag=0;
+						}
                     //    $('#pageno').val(parseInt($('#pageno').val())+1);
-
-						$('#pageno').val("0");
+//console.log($('#pageno').val());
+						$('#pageno').val("1");
+						//console.log($('#pageno').val());
 					}
 				});									 
 				return false;
@@ -961,6 +971,9 @@ footer p { text-align:justify;}
 							$('#productlist').append('<div style="width:100%; text-align:center;" class="loader"><img src="<?php echo base_url(); ?>assets/img/loading.gif" /></div>');
 						},
 						success: function(data) {
+							
+							$('#pageno').val(parseInt($('#pageno').val())+1);
+						//	console.log(flag+"----"+plist);
 							if(data.status=='1'){
 								flag=0;
 							}
@@ -983,7 +996,6 @@ footer p { text-align:justify;}
 								plist = 0;		
 							}
 							$('.loader').hide();
-							$('#pageno').val(parseInt($('#pageno').val())+1);
 							
 						}
 					});			

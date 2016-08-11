@@ -64,9 +64,10 @@
             <?php		
 				$find = array("CPRC", "CPA","CPS","CPL"," - India"," - UAE"," - Qatar");
 				$replace = array("","","","","");
+				$offer_set = set_value('offer_id')!=false?set_value('offer_id'):$old_offer_id;
 				foreach ($alloffer as $row){
 					if($row['main_id']!=''){
-						if(set_value('offer_id')==$row['main_id']){
+						if($offer_set==$row['main_id']){
 							echo '<option value="'.$row['main_id'].'" selected="selected">'.str_replace($find,$replace,$row['title']).'</option>';
 						}else{
 							echo '<option value="'.$row['main_id'].'">'.str_replace($find,$replace,$row['title']).'</option>';
@@ -94,7 +95,7 @@
            <div class="control-group">
             <label for="inputError" class="control-label">Start Date</label>
             <div class="controls">
-             	<div id='datetimepicker1'><input name="added" id="added" type="text"  value="<?php echo set_value('date'); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('added','DDMMYYYY')" /></div>
+             	<div id='datetimepicker1'><input name="added" id="added" type="text"  value="<?php echo set_value('added'); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('added','DDMMYYYY')" /></div>
             </div>
           </div>
            <div class="control-group">

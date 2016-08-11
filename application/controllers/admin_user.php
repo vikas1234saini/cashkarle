@@ -163,6 +163,13 @@ class Admin_user extends CI_Controller {
 			$options_offer_sort1['1'] = 'Active';
 			$options_offer_sort1['0'] = 'Deactive';
 		}
+		
+		if($orderfor=='payment'){
+			$options_offer_sort1['earned'] = 'Earned';
+		}
+		if($orderfor=='earnedamount'){
+			$options_offer_sort1['earned'] = 'Earned';
+		}
 		if($orderfor=='signup'){			
 			$options_offer_sort1['email'] 		= 'Email';
 			$options_offer_sort1['facebook'] 	= 'Facebook';
@@ -312,11 +319,14 @@ class Admin_user extends CI_Controller {
 	function getuseroption(){
 		$post_data = $this->input->post();	
 		if($post_data['str']=='earnedamount'){
-			echo "";
+			echo "<option value='earned'>Earned</option>";
 		}
 		if($post_data['str']=='status'){			
 			echo "<option value='1'>Active</option>";
 			echo "<option value='0'>Deactive</option>";
+		}
+		if($post_data['str']=='payment'){			
+			echo "<option value='earned'>Earned</option>";
 		}
 		if($post_data['str']=='signup'){			
 			echo "<option value='email'>Email</option>";

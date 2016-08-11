@@ -102,8 +102,8 @@ $(document).ready(function() {
 			
             echo form_open('admin/ticket', $attributes);
      
-             // echo form_label('Search:', 'search_string');
-           //   echo form_input('search_string', $search_string, 'style="width: 170px;height: 26px;"');
+              echo form_label('Search:', 'search_string');
+             echo form_input('search_string', $search_string, 'style="width: 170px;height: 26px;"');
 
               
 ?>
@@ -176,10 +176,11 @@ $(document).ready(function() {
 				if($row['status']!='1'){
                 echo '<td class="crud-actions">
                  <!--<a href="'.site_url().'admin/ticket/update/'.$row['id'].'" class="btn btn-info">view & edit</a> -->
-                 <a href="'.site_url().'admin/ticket/reply/'.$row['id'].'" class="btn btn-danger">Reply</a>';
+                 <a href="'.site_url().'admin/ticket/reply/'.$row['id'].'" class="btn btn-danger">Reply</a>
+                 <a href="'.site_url().'admin/ticket/view/'.$row['id'].'" class="btn btn-danger">View</a>';
 				}else{
 //                echo '<td class="crud-actions">                <a href="'.site_url().'admin/ticket/reply/'.$row['id'].'" class="btn btn-danger">Reply</a>';
-					echo '<td class="crud-actions">&nbsp;</td>';
+					echo '<td class="crud-actions"><a href="'.site_url().'admin/ticket/view/'.$row['id'].'" class="btn btn-danger">View</a></td>';
 					
 				}
 				  $login_user_details = $this->session->userdata('user_details');

@@ -109,7 +109,7 @@ height: 26px;"');
               <tr>
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Title</th>
-                <th class="yellow header headerSortDown">Description</th>
+                <th class="yellow header headerSortDown" >Description</th>
                 <th class="yellow header headerSortDown">Username</th>
                <!-- <th class="yellow header headerSortDown">Status</th>
                 <th class="red header">Actions</th>-->
@@ -122,7 +122,7 @@ height: 26px;"');
                 echo '<tr>';
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['title'].' </td>';
-                echo '<td>'.$row['description'].' </td>';
+                echo '<td><div style="width:600px;word-wrap: break-word;">'.$row['description'].'</div> </td>';
                 echo '<td>'.$row['admin'].' </td>';
 				/*if($row['status']==1){
                 	echo '<td><a href="'.site_url("admin").'/newsletter/updatestatus/'.$row['id'].'/0/">Active</a></td>';

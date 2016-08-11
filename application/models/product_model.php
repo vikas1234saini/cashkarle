@@ -73,6 +73,7 @@ class Product_model extends CI_Model {
 		//echo $this->db->last_query();		
 		//print_r($old_data);
 		//die;
+		
 		foreach($old_data as $key=>$value){
 			$new_data[] =  $value;
 		}
@@ -116,6 +117,7 @@ class Product_model extends CI_Model {
 	    $this->db->order_by('p.id', 'desc');
 	    $this->db->order_by('p.selling_price', 'desc');
 	    $this->db->order_by('p.image', 'desc');
+	    $this->db->group_by('p.product_main_id');
 		
 		$this->db->where('p.status', '1');
 		$query = $this->db->get();
@@ -123,9 +125,14 @@ class Product_model extends CI_Model {
 //		return $query->result_array(); 
 
 		$final_data = $query->result_array();
+		$serach_id = array();
+		$new_data = array();
 		foreach($final_data as $key=>$value){
+			$serach_id[] = $value['id'];
 			$new_data[] =  $value;
 		}
+		$set_check = array('searchproduct'=>$serach_id);
+		$this->session->set_userdata($set_check);
 		return $new_data; 
     }
     /**
@@ -143,9 +150,21 @@ class Product_model extends CI_Model {
 		$this->db->limit(18, 0);
 	    $this->db->order_by('p.image', 'desc');
 	    $this->db->where('p.status', '1');
+	    $this->db->group_by('p.product_main_id');
+		
 		$query = $this->db->get();
+		$final_data = $query->result_array();
+		$serach_id = array();
+		$new_data = array();
+		foreach($final_data as $key=>$value){
+			$serach_id[] = $value['id'];
+			$new_data[] =  $value;
+		}
+		$set_check = array('searchproduct'=>$serach_id);
+		$this->session->set_userdata($set_check);
+		return $new_data;
 //		echo $this->db->last_query();
-		return $query->result_array();
+//		return $query->result_array();
     }
 	
     public function get_product_by_brand($str) {
@@ -158,9 +177,21 @@ class Product_model extends CI_Model {
 		$this->db->where("p.retail_price > ","0");
 	    $this->db->order_by('p.image', 'desc');
 	    $this->db->where('p.status', '1');
+	    $this->db->group_by('p.product_main_id');
 		$this->db->limit(18, 0);
 		$query = $this->db->get();
-		return $query->result_array(); 
+		
+		$final_data = $query->result_array();
+		$serach_id = array();
+		$new_data = array();
+		foreach($final_data as $key=>$value){
+			$serach_id[] = $value['id'];
+			$new_data[] =  $value;
+		}
+		$set_check = array('searchproduct'=>$serach_id);
+		$this->session->set_userdata($set_check);
+		return $new_data;
+//		return $query->result_array(); 
     }
     /**
     * Get product by his is
@@ -168,6 +199,11 @@ class Product_model extends CI_Model {
     * @return array
     */
     public function get_product_search($arr) {
+		
+		if($arr['pageno']==0 || $arr['pageno']==""){
+			$set_check = array('searchproduct'=>array());
+			$this->session->set_userdata($set_check);	
+		}
 		$this->db->select('p.*,c.categoryName,c.discount,c.amazon_discount,c.snapdeal_discount,c.flipkart_discount,c.snapdeal_discount_2500,c.amazon_discount_mobile,c.snapdeal_discount_mobile,c.flipkart_discount_mobile');
 		$this->db->from('tbl_product as p');
 		$this->db->join('tbl_category as c', 'c.id = p.category', 'left');
@@ -286,14 +322,21 @@ class Product_model extends CI_Model {
 			$this->db->where("p.image != ","");
 		}
 	    $this->db->where('p.status', '1');
+		$serach_id = $this->session->userdata('searchproduct');
+//		print_r($serach_id);
+		if(sizeof($serach_id)>0){
+			$this->db->where_not_in('p.id', $serach_id);
+		}
 		$this->db->limit(18, $arr['pageno']*18);
+		
+	    $this->db->group_by('p.product_main_id');
 	//    $this->db->order_by('p.image', 'IS NOT NULL');
 	    $this->db->order_by('p.id', 'desc');
 	    $this->db->order_by('p.selling_price', 'desc');
 		$query = $this->db->get();
 		
 	//	echo $this->db->last_query();
-		return $query->result_array(); 
+		return $query->result_array();
     }
 
     /**

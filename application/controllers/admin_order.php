@@ -25,8 +25,10 @@ class Admin_order extends CI_Controller {
 
         //all the posts sent by the view
         $search_string 	= $this->input->post('search_string');        
-        $order 			= $this->input->post('order'); 
+        $orderfor 			= $this->input->post('orderfor'); 
         $order_type 	= $this->input->post('order_type'); 
+        $from_date 	= $this->input->post('from_date');           
+        $to_date 	= $this->input->post('to_date');     
 
         //pagination settings
         $config['per_page'] = 30;
@@ -48,7 +50,8 @@ class Admin_order extends CI_Controller {
         if ($limit_end < 0){
             $limit_end = 0;
         } 
-		if($search_string !== false || $order !== false || $page != ''){ 
+		$filter_session_data = array();
+		if($search_string !== false || $orderfor !== false || $page != ''){ 
 
 
             if($search_string != false){
@@ -61,15 +64,15 @@ class Admin_order extends CI_Controller {
             }
             $data['search_string'] = $search_string;
 			
-            if($order != false){
-                $filter_session_data['order'] = $order;
+            if($orderfor != false){
+                $filter_session_data['orderfor'] = $orderfor;
             }else{
 				if($page!=''){
-                	$order = $this->session->userdata('order');
-	                $filter_session_data['order'] = $order;
+                	$orderfor = $this->session->userdata('orderfor');
+	                $filter_session_data['orderfor'] = $orderfor;
 				}
             }
-            $data['order'] = $order;
+            $data['orderfor'] = $orderfor;
 	
             if($order_type != false){
                 $filter_session_data['order_type'] = $order_type;
@@ -80,34 +83,59 @@ class Admin_order extends CI_Controller {
 				}
             }
             $data['order_type'] = $order_type;
+			if($from_date != false){
+                $filter_session_data['from_date'] = $from_date;
+            }else{
+				if($page!=''){
+                	$from_date = $this->session->userdata('from_date');
+	                $filter_session_data['from_date'] = $from_date;
+				}
+            }
+            $data['from_date'] = $from_date;
 			
+            if($to_date != false){
+                $filter_session_data['to_date'] = $to_date;
+            }else{
+				if($page!=''){
+                	$to_date = $this->session->userdata('to_date');
+	                $filter_session_data['to_date'] = $to_date;
+				}
+            }
+            $data['to_date'] = $to_date;
+
             //save session data into the session
             $this->session->set_userdata($filter_session_data);
 
             //fetch agency data into arrays
            
-            $data['count_order']= $this->order_model->count_order($search_string, $order,null);
+            $data['count_order']= $this->order_model->count_order($from_date, $to_date,$search_string, $orderfor,null);
             $config['total_rows'] = $data['count_order'];
-            $data['order'] = $this->order_model->get_order($search_string, $order, $order_type, $config['per_page'],$limit_end);        
+            $data['order'] = $this->order_model->get_order($from_date, $to_date,$search_string, $orderfor, $order_type, $config['per_page'],$limit_end);        
 
         }else{
 
             //clean filter data inside section
 			
             $filter_session_data['search_string'] = '';
-            $filter_session_data['order'] = '';
+            $filter_session_data['orderfor'] = '';
             $filter_session_data['order_type'] = '';
+			
+            $filter_session_data['to_date'] = '';
+            $filter_session_data['from_date'] = '';
             $this->session->set_userdata($filter_session_data);
 
             //pre selected options
             $data['search_string'] = '';
-            $data['order'] 		= 'id';
+            $data['orderfor'] 		= 'id';
             $data['order_type'] = '';
+			
+            $data['to_date'] = '';
+            $data['from_date'] = '';
 
             //fetch sql data into arrays
-            $data['count_order']	= $this->order_model->count_order();
+            $data['count_order']	= $this->order_model->count_order($from_date, $to_date);
 			
-            $data['order'] 			= $this->order_model->get_order('', '', $order_type, $config['per_page'],$limit_end);        
+            $data['order'] 			= $this->order_model->get_order($from_date, $to_date,'', '', $order_type, $config['per_page'],$limit_end);        
             $config['total_rows'] 	= $data['count_order'];
 
         }//!isset($agencyId) && !isset($search_string) && !isset($order)

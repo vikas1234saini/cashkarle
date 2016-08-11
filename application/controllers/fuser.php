@@ -1034,7 +1034,8 @@ class Fuser extends CI_Controller {
 				'accountno' => $post_data['accountno'],
 				'branch' => $post_data['branch'],
 				'ifsc' => $post_data['ifsc'],
-				'user_id' => $user_details[0]['id']
+				'user_id' => $user_details[0]['id'],
+				'date' => date('Y-m-d H:i:s')
 			);
 			
 			$this->db->insert('tbl_payment', $post_data_new);
@@ -1437,7 +1438,17 @@ class Fuser extends CI_Controller {
 		$data_html .= "<div style='word-wrap: break-word;'><strong>Description:  ".$ticketdetails[0]['description']."</strong></div>";
 		$data_html .= "<div><strong>Retailer:  ".$ticketdetails[0]['retailer']."</strong></div>";
 		$data_html .= "<div><strong>Transection Id:  ".$ticketdetails[0]['transection_id']."</strong></div>";
-		$data_html .= "<div><strong>Transection Date:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
+		if($ticketdetails[0]['random']!=''){
+			$data_data = $this->db->select('date')->from('tbl_linkgo')->where('random', $ticketdetails[0]['random'])->get()->result_array();
+			if(sizeof($data_data)>0){
+				//$data_html .=  date("d-M Y H:i a",strtotime($data_data[0]['date'])); 
+				$data_html .= "<div><strong>Transection Date:  ".date("d M Y h:i a",strtotime($data_data[0]['date']))."</strong></div>";
+			}else{
+			$data_html .= "<div><strong>Transection Date:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
+			}
+		}else{
+			$data_html .= "<div><strong>Transection Date:  ".date("d M Y h:i a",strtotime($ticketdetails[0]['date']))."</strong></div>";
+		}
 		
         $prev_reply = $this->ticket_model->get_all_reply_by_ticket($ticketdetails[0]['id']);
 		if(sizeof($prev_reply)>0){

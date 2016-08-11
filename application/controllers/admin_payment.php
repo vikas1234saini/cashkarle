@@ -1,5 +1,5 @@
 <?php
-class Admin_log extends CI_Controller {
+class Admin_payment extends CI_Controller {
  
     /**
     * Responsable for auto load the model
@@ -11,7 +11,7 @@ class Admin_log extends CI_Controller {
         if(!$this->session->userdata('is_logged_in')){
             redirect('admin/login');
         }		
-        $this->load->model('log_model');
+        $this->load->model('payment_model');
     }
 	 public function index()
     {
@@ -19,10 +19,11 @@ class Admin_log extends CI_Controller {
         //all the posts sent by the view
         $search_string 	= $this->input->post('search_string');        
         $order 			= $this->input->post('order'); 
-        $order_type 	= $this->input->post('order_type');
+        $order_type 	= $this->input->post('order_type'); 
+        $orderfor 			= $this->input->post('orderfor'); 
         $from_date 	= $this->input->post('from_date');           
         $to_date 	= $this->input->post('to_date');     
-		
+
         //pagination settings
         $config['per_page'] = 30;
         $config['base_url'] = base_url().'admin/'.$this->uri->segment(2);
@@ -44,6 +45,8 @@ class Admin_log extends CI_Controller {
             $limit_end = 0;
         } 
 		if($search_string !== false || $order !== false || $page != ''){ 
+		
+			$filter_session_data['page'] = $page;
             if($search_string != false){
                 $filter_session_data['search_string'] = $search_string;
             }else{
@@ -64,16 +67,6 @@ class Admin_log extends CI_Controller {
             }
             $data['order'] = $order;
 	
-            if($order_type != false){
-                $filter_session_data['order_type'] = $order_type;
-            }else{
-				if($page!=''){
-                	$order_type = $this->session->userdata('order_type');
-	                $filter_session_data['order_type'] = $order_type;
-				}
-            }
-            $data['order_type'] = $order_type;
-			
             if($from_date != false){
                 $filter_session_data['from_date'] = $from_date;
             }else{
@@ -94,46 +87,92 @@ class Admin_log extends CI_Controller {
             }
             $data['to_date'] = $to_date;
 			
+            if($orderfor != false){
+                $filter_session_data['orderfor'] = $orderfor;
+            }else{
+				if($page!=''){
+                	$orderfor = $this->session->userdata('orderfor');
+	                $filter_session_data['orderfor'] = $orderfor;
+				}
+            }
+            $data['orderfor'] = $orderfor;
+			
+            if($order_type != false){
+                $filter_session_data['order_type'] = $order_type;
+            }else{
+				if($page!=''){
+                	$order_type = $this->session->userdata('order_type');
+	                $filter_session_data['order_type'] = $order_type;
+				}
+            }
+            $data['order_type'] = $order_type;
+			
             //save session data into the session
             $this->session->set_userdata($filter_session_data);
 
             //fetch agency data into arrays
            
-            $data['count_log']= $this->log_model->count_log($search_string, $from_date, $to_date, $order,null);
-            $config['total_rows'] = $data['count_log'];
-            $data['log'] = $this->log_model->get_log($search_string, $order, $order_type, $from_date, $to_date, $config['per_page'],$limit_end);        
+            $data['count_payment']= $this->payment_model->count_payment($orderfor, $from_date, $to_date,$search_string, $order,null);
+            $config['total_rows'] = $data['count_payment'];
+            $data['payment'] = $this->payment_model->get_payment($search_string, $order, $order_type, $from_date, $to_date, $config['per_page'],$limit_end,$orderfor);        
 
         }else{
 
             //clean filter data inside section
 			
+            $filter_session_data['page'] = '';
             $filter_session_data['search_string'] = '';
             $filter_session_data['order'] = '';
-            $filter_session_data['order_type'] = '';
-            $filter_session_data['to_date'] = '';
+            $filter_session_data['orderfor'] = '';
+            $filter_session_data['order_type'] = 'desc';
             $filter_session_data['from_date'] = '';
+            $filter_session_data['to_date'] = '';
             $this->session->set_userdata($filter_session_data);
 
             //pre selected options
             $data['search_string'] = '';
             $data['order'] 		= 'id';
-            $data['order_type'] = '';
-            $data['to_date'] = '';
+            $data['orderfor'] 		= '';
+            $data['order_type'] = 'desc';
             $data['from_date'] = '';
+            $data['to_date'] = '';
 
             //fetch sql data into arrays
-            $data['count_log']	= $this->log_model->count_log($from_date, $to_date);
+            $data['count_payment']	= $this->payment_model->count_payment($orderfor, $from_date, $to_date);
 			
-            $data['log'] 			= $this->log_model->get_log('', '', $order_type, $from_date, $to_date, $config['per_page'],$limit_end);
-            $config['total_rows'] 	= $data['count_log'];
+            $data['payment'] 		= $this->payment_model->get_payment('', '', 'desc', $from_date, $to_date, $config['per_page'],$limit_end,$orderfor);        
+            $config['total_rows'] 	= $data['count_payment'];
 
         }//!isset($agencyId) && !isset($search_string) && !isset($order)
 
+
+		$options_offer_sort1 = array();
+		if($orderfor=='username'){
+	        $this->load->model('agent_model');
+			$allofferby = $this->agent_model->get_all_agent();	
+			
+			$inarray = array();
+			foreach($allofferby as $key=>$value){
+				$strinval = $value['admin_login_name'];
+				if(!in_array($strinval,$inarray)){
+					$options_offer_sort1[$strinval]= $strinval;
+					$inarray[] = $strinval; 
+				}
+			}
+		}
+		if($orderfor=='status'){			
+			$options_offer_sort1 = array();
+			$options_offer_sort1['1'] = 'Replied';
+			$options_offer_sort1['0'] = 'Active';
+		}
+		
+		$data['options_offer_sort1'] = $options_offer_sort1;
+    
         //initializate the panination helper 
         $this->pagination->initialize($config);   
 
         //load the view
-        $data['main_content'] = 'admin/log/list';
+        $data['main_content'] = 'admin/payment/list';
         $this->load->view('includes/template', $data);  
 
     }//index
@@ -160,7 +199,7 @@ class Admin_log extends CI_Controller {
         //the code below wel reload the current data
 
         //order data 
-        $data['order'] = $this->log_model->get_order_by_id($id);
+        $data['order'] = $this->payment_model->get_order_by_id($id);
 		
         //fetch agency data to populate the select field
 	//	print_r($data['supervisor']);
@@ -169,4 +208,78 @@ class Admin_log extends CI_Controller {
         $data['main_content'] = 'admin/order/edit';
         $this->load->view('includes/template', $data);
     }//update
+		/**
+    * Update product status by id
+    * @return void
+    */
+    public function updatestatus(){
+        $id 	= $this->uri->segment(4);
+        $status = $this->uri->segment(5);
+		
+		$data_to_store = array(
+			'status' => $status
+		);
+		$login_user_details = $this->session->userdata('user_details');
+		$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
+		$data_to_store['admin_id'] = $login_user_details[0]['admin_auto_id'];
+		$data_to_store['rdate'] = date('Y-m-d H:i:s');
+		
+		//if the insert has returned true then we show the flash message
+		if($this->payment_model->update_payment($id, $data_to_store) == TRUE){
+			$this->session->set_flashdata('flash_message', 'updated');
+			redirect('admin/payment/');
+			die;
+		}
+//		echo $id."---".$status;
+	}
+	function getpaymentorder(){
+		$post_data = $this->input->post();	
+		if($post_data['str']=='username'){
+	        $this->load->model('agent_model');
+			$allofferby = $this->agent_model->get_all_agent();	
+			
+			$inarray = array();
+			foreach($allofferby as $key=>$value){
+				$strinval = $value['admin_login_name'];
+				if(!in_array($strinval,$inarray)){
+					echo "<option value='".$strinval."'>".$strinval."</option>";
+					$inarray[] = $strinval; 
+				}
+			}
+		}
+		if($post_data['str']=='status'){			
+			echo "<option value='1'>Replied</option>";
+			echo "<option value='0'>Active</option>";
+		}
+		
+		if($post_data['str']=='no'){			
+			echo " ";
+		}
+	}
+
+
+    /**
+    * Update item by his id
+    * @return void
+    */
+    public function view()
+    {
+        //product id 
+        $id = $this->uri->segment(4);
+  
+        //if we are updating, and the data did not pass trough the validation
+        //the code below wel reload the current data
+
+        //product data 
+        $data['payment'] = $this->payment_model->get_payment_by_id($id);
+		
+        //fetch agency data to populate the select field
+	//	print_r($data['supervisor']);
+//		echo $data['product'][0]['supervisorId'];
+        //load the view
+        $data['main_content'] = 'admin/payment/view';
+        $this->load->view('includes/template', $data);            
+
+    }//update
+
 }

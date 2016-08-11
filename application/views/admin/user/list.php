@@ -96,9 +96,11 @@ $(document).ready(function() {
               break;
             }*/
 			
+			$options_offer_sort['select'] 		= '--Select--';
 			$options_offer_sort['earnedamount'] = 'Earned Amount';
 			$options_offer_sort['signup'] 		= 'Signup';
 			$options_offer_sort['status'] 		= 'Status';
+		//	$options_offer_sort['payment'] 		= 'Payment';
 			
             echo form_open('admin/user', $attributes);
      

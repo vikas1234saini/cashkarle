@@ -93,6 +93,9 @@ $(document).ready(function() {
 			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/product?for=product&key=<?php echo $search_string; ?>&orderfor=<?php echo $orderfor; ?>&order=<?php echo $order; ?>&order_type=<?php echo $order_type; ?>">Export Data</a></div>
           </div>
 
+			<div style="padding-top:20px;padding-bottom:20px; font-size:14px;">
+            	<strong>Total Products: <?php echo $count_product; ?></strong>
+            </div>
           <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>

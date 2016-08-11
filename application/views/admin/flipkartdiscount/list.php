@@ -83,11 +83,11 @@ height: 26px;"');
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Cashkarle Category</th>
                 <th class="yellow header headerSortDown">Category</th>
-                <th class="yellow header headerSortDown">Discount By Flipkart</th>
-                <th class="yellow header headerSortDown">Discount By Flipkart For Mobile</th>
+                <th class="yellow header headerSortDown">Discount By Flipkart(%)</th>
+                <th class="yellow header headerSortDown">Discount By Flipkart For Mobile(%)</th>
                 <!--<th  style="width:200px; word-wrap: break-word;" class="yellow header headerSortDown">Site Url</th>-->
-                <th class="yellow header headerSortDown">Discount By CashKarle</th>
-                <th class="yellow header headerSortDown">Discount By CashKarle For Moblie</th>
+                <th class="yellow header headerSortDown">Discount By CashKarle(%)</th>
+                <th class="yellow header headerSortDown">Discount By CashKarle For Moblie(%)</th>
                 <th class="yellow header headerSortDown">Username</th>
                <!-- <th class="yellow header headerSortDown">Featured</th>-->
                 <th class="red header">Actions</th>

@@ -1,18 +1,44 @@
 <?php 
 $tdisocunt = 0.00;
 $flipkart_exist = "";
+
+$tdisocunt = 0.00;
+$cdisocunt = 0.00;
+$pdisocunt = 0.00;
+$condisocunt = 0.00;
 foreach($orderlist as $key=>$row){ 
+
 	if($row['discount']>=$row['discount_by_cashkarle']){
-//		$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
-		$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
+		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+		//$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];	
 	}else{
 		//$tdisocunt = $tdisocunt+(($row['amount']*($row['discount']))/100);	
+	}
+	$status = '';
+
+	$tdisocunt = $tdisocunt+$row['discount_by_cashkarle'];
+	if(strtolower($row['orderStatus'])=='tentative'){
+		$status = 'Pending';
+		$pdisocunt = $pdisocunt+$row['discount_by_cashkarle'];
+	}elseif(strtolower($row['orderStatus'])=='approved'){
+		$condisocunt = $condisocunt+$row['discount_by_cashkarle'];
+		$status = 'Confirmed';
+	}elseif(strtolower($row['orderStatus'])=='failed'){
+		$cdisocunt = $cdisocunt+$row['discount_by_cashkarle'];
+		$status = 'Cancelled';
+	}
+	if(strtotime("+90 days", strtotime($row['date']))<=strtotime(date('Y-m-d')) || (strtolower($status)!='confirmed' && strtolower($status)!='approved') || $row['sitename']=='Added By Cashkarle'){}else{
+		$pdisocunt = $pdisocunt+$row['discount_by_cashkarle'];
 	}
 	//echo $row['sitename'];
 	if(strtolower($row['sitename'])=='flipkart'){
 		$flipkart_exist = "yes";
 	}
 }
+$totalpayment = isset($tdisocunt)?round($tdisocunt,2):"0.00";
+$paidpayment = isset($payment[0])?round($payment[0]['payment'],2):"0.00";
+$avilpayment = isset($tdisocunt)?round($tdisocunt-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00";
+$pandingpayment = isset($pdisocunt)?round($pdisocunt,2):"0.00";
 ?>
 <style>
 .payumoneydetails{ display:none;}
@@ -43,7 +69,7 @@ foreach($orderlist as $key=>$row){
            <div class="userheadername" style="margin-top:40px;">
               <div class="card-block">
                 <!--Confirmed Cashback (Rs.100.00)-->
-                Cashback Savings (Rs. <span id="amountset"><?php echo isset($tdisocunt)?round($tdisocunt-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00"; ?></span>)
+                Cashback Savings (Rs. <span id="amountset"><?php echo round(($avilpayment-$cdisocunt-$pandingpayment),2); ?></span>)
               </div>
             </div>
           <div class="card-block">
@@ -210,7 +236,7 @@ foreach($orderlist as $key=>$row){
               </tr>
             </table>
           </div>
-          <input type="hidden" name="earningpayment" id="earningpayment" value="<?php echo isset($tdisocunt)?round($tdisocunt-(isset($payment[0])?$payment[0]['payment']:0),2):"0.00"; ?>" />
+          <input type="hidden" name="earningpayment" id="earningpayment" value="<?php echo round(($avilpayment-$cdisocunt-$pandingpayment),2); ?>" />
           </form>
           </div>
           </div>

@@ -125,7 +125,7 @@ class Admin_offer extends CI_Controller {
         }//!isset($agencyId) && !isset($search_string) && !isset($order)
 //		$data['options_offer_sort1'] = array();
 		$options_offer_sort1 = array();
-	//	if($orderfor=='offerby'){
+		if($orderfor=='offerby'){
 			$allofferby = $this->offer_model->get_just_all_offer();	
 			
 			$find = array("CPRC", "CPA","CPS","CPL"," - India"," - UAE"," - Qatar");
@@ -138,7 +138,7 @@ class Admin_offer extends CI_Controller {
 					$inarray[] = $strinval; 
 				}
 			}
-		//}
+		}
 		if($orderfor=='username'){
 	        $this->load->model('agent_model');
 			$allofferby = $this->agent_model->get_all_agent();	

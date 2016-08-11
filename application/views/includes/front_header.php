@@ -3,7 +3,9 @@
    <head>
       <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
       <link rel="icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
-      <title>Cash Karle</title>
+     <title>CashKarle - Cashback offers, Discount codes, promo codes &amp; Fresh offers </title>
+      <meta name="Description" content="Get Cashback offers, Promo Codes on all shopping like Flipkart, OYO, Amazon, Myntra, Paytm, Jabong, Snapdeal &amp; more. Join Us!"/>
+      <meta name="keywords" content="cashback, discounts, vouchers, coupons, offers, deals, discount coupons, offers for online sites, promo codes, online shopping, best online shopping sites" />
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="<?php echo base_url(); ?>assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
@@ -288,7 +290,7 @@
                 <ul class="dropdown-menu megamenu row">
                 <?php 
                   foreach ($list as $key => $data) {
-                    if($data['parentId']==0){
+                    if($data['parentId']==0 && $data['status']==1){
                       
                   ?>
                <li class="col-sm-3">

@@ -116,6 +116,7 @@ class Admin_coupon extends CI_Controller {
 
         $this->load->model('offer_model');
 		$data['alloffer'] = $this->offer_model->get_just_all_offer();	
+		
         //load the view
         $data['main_content'] = 'admin/coupon/list';
         $this->load->view('includes/template', $data);  
@@ -164,6 +165,8 @@ class Admin_coupon extends CI_Controller {
 		
         $this->load->model('offer_model');
 		$data['alloffer'] = $this->offer_model->get_just_all_offer();	
+		
+        $data['old_offer_id'] 	= $this->uri->segment(4);
        // $data['parentcat'] = $this->coupon_model->get_all_coupon();
         //load the view
         $data['main_content'] = 'admin/coupon/add';
@@ -186,12 +189,16 @@ class Admin_coupon extends CI_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
-    
+
                 $data_to_store = array(
-                    'discount_type' => $this->input->post('discount_type'),
+                    'coupon_title' => $this->input->post('coupon_title'),
                     'discount' => $this->input->post('discount'),
                     'offer_id' => $this->input->post('offer_id'),
-                    'offer_name' => $this->input->post('offer_name')
+                    'offer_name' => $this->input->post('offer_name'),
+                    'coupon_description' => $this->input->post('coupon_description'),
+                    'added' => date("Y-m-d",strtotime($this->input->post('added'))),
+                    'coupon_expiry' => date("Y-m-d",strtotime($this->input->post('coupon_expiry'))),
+                    'link' => $this->input->post('link')
                 );
 				$login_user_details = $this->session->userdata('user_details');
 				$data_to_store['admin'] = $login_user_details[0]['admin_login_name'];
@@ -265,6 +272,7 @@ class Admin_coupon extends CI_Controller {
 	function couponoffer($offer){
 		
         $data['coupon'] 		= $this->coupon_model->get_all_coupon_offer($offer);
+        $data['offer_id'] 		= $offer;
         $data['main_content'] = 'admin/coupon/listview';
         $this->load->view('includes/template', $data);
 	}

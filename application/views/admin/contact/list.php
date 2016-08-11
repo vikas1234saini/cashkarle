@@ -94,6 +94,7 @@ $(document).ready(function() {
 	          echo form_close();
             ?>
 
+			<div style="float:right"><a href="<?php echo base_url(); ?>admin/export/contact?for=contact&key=<?php echo $search_string; ?>&from=<?php echo $from_date; ?>&to=<?php echo $to_date; ?>&order=<?php echo $order; ?>&orderfor=<?php echo $orderfor; ?>">Export Data</a></div>
           </div>
           <table class="table table-striped table-bordered table-condensed">
             <thead>

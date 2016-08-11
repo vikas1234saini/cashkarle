@@ -50,9 +50,10 @@ class Offer_model extends CI_Model {
 		$this->db->select('o.*,count(c.offer_id) as coupon_count');
 		$this->db->from('tbl_offer as o');
 		$this->db->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left');
-//		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
-		$this->db->group_by('o.main_id');
+		$this->db->where('c.coupon_expiry >= ', date('Y-m-d 23:59:59'));
+		$this->db->group_by('o.main_id,c.offer_id');
 	    $this->db->order_by('coupon_count', "desc");
+		$this->db->where("o.sitename != ",'flipkart');
 		$this->db->where("o.status",'1');
 		$this->db->where("o.url != ",'');
 		$this->db->where("o.id != ",'138');
@@ -72,8 +73,17 @@ class Offer_model extends CI_Model {
 		$this->db->limit(18, 0);
 		$query = $this->db->get();
 		//echo $this->db->last_query();
-		
-		return $query->result_array(); 
+		$final_data = $query->result_array();
+		$serach_id = array();
+		$new_data = array();
+		foreach($final_data as $key=>$value){
+			$serach_id[] = $value['id'];
+			$new_data[] =  $value;
+		}
+		$set_check = array('searchoffer'=>$serach_id);
+		$this->session->set_userdata($set_check);
+		return $new_data;
+	//	return $query->result_array(); 
     }
 	
     /**
@@ -82,17 +92,40 @@ class Offer_model extends CI_Model {
     * @return array
     */
     public function get_offer_search($arr) {
-		
+		if($arr['pageno']==0 || $arr['pageno']==""){
+			$set_check = array('searchproduct'=>array());
+			$this->session->set_userdata($set_check);	
+		}		
 		$this->db->select('o.*,count(c.offer_id) as coupon_count');
 		$this->db->from('tbl_offer as o');
 		$this->db->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left');
-		$this->db->group_by('o.main_id');
+		$this->db->group_by('o.main_id,c.offer_id');
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.status",'1');
 		$this->db->where("o.sitename != ",'flipkart');
-		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('c.coupon_expiry >= ', date('Y-m-d 23:59:59'));
 		$this->db->where("o.id != ",'138');
-		
+		$str = "";
+		//print_r($arr);
+		if(isset($arr['category']) && $arr['category']!=''){
+			$str = str_replace("-"," ",$arr['category_name']);
+//			$this->db->like("c.category",$category,"both");
+		}
+		if(isset($arr['search_key']) && $arr['search_key']!=''){
+			$str = $arr['search_key'];
+		}
+		if($str!=''){
+			$search_list = "(title LIKE '%".$str."%' ";
+			$str_new = explode(" ",$str);
+			$find = array("CPRC", "CPA","CPS","CPL"," - India","India","for","For","Offer","offer","Coupons","Coupon","coupons","coupon","a","from","an","at","the");
+			foreach($str_new as $key=>$value){
+	//			$search_list .= " OR p.title LIKE '%".$value."%' OR p.description LIKE '%".$value."%' OR p.brand LIKE '%".$value."%' OR c.categoryName LIKE '%".$value."%' OR p.sitename LIKE '%".$value."%'";
+				if(!in_array($value,$find) && $value!=''){
+					$search_list .= " OR o.title LIKE '%".$value."%' OR c.coupon_title LIKE '%".$value."%' OR c.coupon_description LIKE '%".$value."%'";
+				}
+			}
+			$this->db->where($search_list.")");
+		}
 		/*if(isset($arr['category']) && $arr['category']!=''){
 			$category = $arr['category_name'];
 			$this->db->like("c.category",$category,"both");
@@ -119,16 +152,26 @@ class Offer_model extends CI_Model {
 				$this->db->where("o.discount <= ",$cahsback_array[1]);
 			}
 		}else{
-			$where = "c.offer_id is  NULL";
-			$this->db->or_where($where);	
+			//$where = "c.offer_id is  NULL";
+			//$this->db->or_where($where);	
 		}
 		$this->db->limit(18, $arr['pageno']*18);
 
 		$query = $this->db->get();
 		
-		//echo $this->db->last_query();
+	//	echo $this->db->last_query();
 		//die;
-		return $query->result_array(); 
+//		return $query->result_array(); 
+		$final_data = $query->result_array();
+		$serach_id = array();
+		$new_data  = array();
+		foreach($final_data as $key=>$value){
+			$serach_id[] = $value['id'];
+			$new_data[] =  $value;
+		}
+		$set_check = array('searchoffer'=>$serach_id);
+		$this->session->set_userdata($set_check);
+		return $new_data;
     }
 	/**
     * Get offer by his is

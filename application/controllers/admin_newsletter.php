@@ -223,7 +223,7 @@ class Admin_newsletter extends CI_Controller {
 
     public function add($for='all'){
 		
-		$path = '../js/ckfinder';
+		$path = '../../../assets/js/ckfinder/';
 		$width = '850px';
 		$this->editor($path, $width);
 //echo $this->input->server('REQUEST_METHOD');

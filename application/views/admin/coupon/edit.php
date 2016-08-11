@@ -1,3 +1,8 @@
+	<script src="<?php echo  base_url('assets/js/calendar/DateTimePicker.js'); ?>" type="text/javascript"></script>
+    <style>
+	#calBorder{ z-index:100000 !important;}
+	select{ width:100px !important;}
+	</style>
     <div class="container top">
       
       <ul class="breadcrumb">
@@ -53,7 +58,6 @@
       echo form_open('admin/coupon/update/'.$this->uri->segment(4).'', $attributes);
       ?>
       <fieldset>
-     	
           <div class="control-group">
             <label for="inputError" class="control-label">Retailer</label>
             <div class="controls">
@@ -64,7 +68,6 @@
 				$replace = array("","","","","");
 				foreach ($alloffer as $row){
 					if($row['main_id']!=''){
-						
 						if($coupon[0]['offer_id']==$row['main_id']){
 							echo '<option value="'.$row['main_id'].'" selected="selected">'.str_replace($find,$replace,$row['title']).'</option>';
 						}else{
@@ -76,34 +79,55 @@
             </select>
             <input type="hidden" name="offer_name" id="offer_name" value="<?php echo $coupon[0]['offer_name']; ?>" />
             </div>
-          </div> 
+          </div>     
+          
           <div class="control-group">
             <label for="inputError" class="control-label">Coupon</label>
             <div class="controls">
-              <?php echo $coupon[0]['coupon_title']; ?>
+              <input type="text" id="coupon_title" name="coupon_title" value="<?php echo $coupon[0]['coupon_title']; ?>" >
             </div>
-          </div> 
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Coupon Description</label>
+            <div class="controls">
+              <input type="text" id="coupon_description" name="coupon_description" value="<?php echo $coupon[0]['coupon_description']; ?>" >
+            </div>
+          </div>
+           <div class="control-group">
+            <label for="inputError" class="control-label">Start Date</label>
+            <div class="controls">
+             	<div id='datetimepicker1'><input name="added" id="added" type="text"  value="<?php echo date("d-m-Y",strtotime($coupon[0]['added'])); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('added','DDMMYYYY')" /></div>
+            </div>
+          </div>
+           <div class="control-group">
+            <label for="inputError" class="control-label">Coupon Expiry</label>
+            <div class="controls">
+             	<div id='datetimepicker1'><input name="coupon_expiry" id="coupon_expiry" type="text"  value="<?php echo date("d-m-Y",strtotime($coupon[0]['coupon_expiry'])); ?>" readonly="readonly" onclick="DisableBeforeToday = false; NewCssCal('coupon_expiry','DDMMYYYY')" /></div>
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Link</label>
+            <div class="controls">
+              <input type="text" id="link" name="link" value="<?php echo $coupon[0]['link']; ?>" >
+            </div>
+          </div>
           <div class="control-group">
             <label for="inputError" class="control-label">Cashback</label>
             <div class="controls">
-              <input type="text" id="discount" name="discount" value="<?php echo $coupon[0]['discount']; ?>" />
-              <select name="discount_type" id="discount_type">
+              <input type="text" id="discount" name="discount" value="<?php echo $coupon[0]['discount']; ?>" >
+                <select name="discount_type" id="discount_type">
               	<option value="%" <?php if($coupon[0]['discount_type']=='%'){ ?> selected="selected" <?php }?>>%</option>
                 <option value="Rs" <?php if($coupon[0]['discount_type']=='Rs'){ ?> selected="selected" <?php }?>>Rs</option>
                 <option value="$" <?php if($coupon[0]['discount_type']=='$'){ ?> selected="selected" <?php }?>>$</option>
               </select>
             </div>
           </div>
-          
-          
-          
-
           <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save changes</button>
             <a href="<?php echo site_url()."admin/couponoffer/".$coupon[0]['offer_id']; ?>"><button class="btn" type="button">Cancel</button></a>
           </div>
         </fieldset>
-		<input type="hidden" name="offer_id" value="<?php echo $coupon[0]['offer_id']; ?>" />      
+		<input type="hidden" name="old_offer_id" value="<?php echo $coupon[0]['offer_id']; ?>" />      
     	<?php echo form_close(); ?>
 
     </div>

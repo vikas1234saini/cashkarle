@@ -35,8 +35,8 @@
                             <div><input type="radio" name="byprice" id="b100" value="1-100" /><label for="b100">Below 100</label></div>
                             <div><input type="radio" name="byprice" id="100500" value="100-500" /><label for="100500">100-500</label></div>
                             <div><input type="radio" name="byprice" id="5001000" value="500-1000" /><label for="5001000">500-1000</label></div>
-                            <div><input type="radio" name="byprice" id="10005000" value="1000-5000" /><label for="5001000">1000-5000</label></div>
-                            <div><input type="radio" name="byprice" id="5000" value="5000-200000" /><label for="5001000">Above 5000</label></div>
+                            <div><input type="radio" name="byprice" id="10005000" value="1000-5000" /><label for="10005000">1000-5000</label></div>
+                            <div><input type="radio" name="byprice" id="50001" value="5000-200000" /><label for="50001">Above 5000</label></div>
                         </div>
                         <?php } ?>
                         

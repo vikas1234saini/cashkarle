@@ -8,7 +8,7 @@ function topuser(){
 	$CI->db->join('tbl_order as o', 'o.user_id = u.id');
 	$CI->db->group_by('o.user_id');
 	$CI->db->order_by('tamount',"desc");
-	$CI->db->limit(3);
+	$CI->db->limit(9);
 	$query = $CI->db->get();
 	return $query->result_array(); 
 }

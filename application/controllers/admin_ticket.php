@@ -183,7 +183,7 @@ class Admin_ticket extends CI_Controller {
 			
 			$inarray = array();
 			foreach($allofferby as $key=>$value){
-				$strinval = $value['admin_login_name'];
+				$strinval = $value['admin_first_name'];
 				if(!in_array($strinval,$inarray)){
 					$options_offer_sort1[$strinval]= $strinval;
 					$inarray[] = $strinval; 
@@ -251,7 +251,7 @@ class Admin_ticket extends CI_Controller {
 				$post_data_new['ticket_id'] 		= date('Ym').rand(1000,9999);;
 				
 				$login_user_details = $this->session->userdata('user_details');
-				$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
+				$post_data_new['admin'] = $login_user_details[0]['admin_first_name'];
 				$post_data_new['admin_id'] = $login_user_details[0]['admin_auto_id'];
 				
 				if($this->order_model->store_ticket($post_data_new)){
@@ -341,7 +341,7 @@ class Admin_ticket extends CI_Controller {
 			//	print_r($post_data_new);
 				//die;
 				$login_user_details = $this->session->userdata('user_details');
-				$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
+				$post_data_new['admin'] = $login_user_details[0]['admin_first_name'];
 				$post_data_new['admin_id'] = $login_user_details[0]['admin_auto_id'];
 				
                 //if the insert has returned true then we show the flash message
@@ -374,6 +374,28 @@ class Admin_ticket extends CI_Controller {
         $this->load->view('includes/template', $data);            
 
     }//update
+	 /**
+    * Update item by his id
+    * @return void
+    */
+    public function view()
+    {
+        //ticket id 
+        $id = $this->uri->segment(4);
+  
+
+        //if we are updating, and the data did not pass trough the validation
+        //the code below wel reload the current data
+
+        //ticket data 
+        $data['ticket'] = $this->ticket_model->get_ticket_by_id($id);
+        $data['prev_reply'] = $this->ticket_model->get_all_reply_by_ticket($id);
+        $this->load->model('offer_model');
+        
+        $data['main_content'] = 'admin/ticket/view';
+        $this->load->view('includes/template', $data);            
+
+    }//view
 
     /**
     * Delete ticket by his id
@@ -400,7 +422,7 @@ class Admin_ticket extends CI_Controller {
 			'close_date' => date('Y-m-d H:i:s')
 		);
 		$login_user_details = $this->session->userdata('user_details');
-		$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
+		$post_data_new['admin'] = $login_user_details[0]['admin_first_name'];
 		$post_data_new['admin_id'] = $login_user_details[0]['admin_auto_id'];
 		
 		//if the insert has returned true then we show the flash message
@@ -434,8 +456,8 @@ class Admin_ticket extends CI_Controller {
 //				$post_data_new['status'] 			= "1";
 				
 				$login_user_details 		= $this->session->userdata('user_details');
-				$post_data_new['admin'] 	= $login_user_details[0]['admin_login_name'];
-				$post_data_new['user'] 		= $login_user_details[0]['admin_login_name'];
+				$post_data_new['admin'] 	= $login_user_details[0]['admin_first_name'];
+				$post_data_new['user'] 		= $login_user_details[0]['admin_first_name'];
 				$post_data_new['admin_id'] 	= $login_user_details[0]['admin_auto_id'];
 				
 				if($this->db->insert("tbl_reply",$post_data_new)){
@@ -450,7 +472,7 @@ class Admin_ticket extends CI_Controller {
 					
 					$login_user_details = $this->session->userdata('user_details');
 					
-					$post_data_new['admin'] = $login_user_details[0]['admin_login_name'];
+					$post_data_new['admin'] = $login_user_details[0]['admin_first_name'];
 					$post_data_new['admin_id'] = $login_user_details[0]['admin_auto_id'];
 					
 					//if the insert has returned true then we show the flash message
@@ -529,7 +551,7 @@ class Admin_ticket extends CI_Controller {
 			
 			$inarray = array();
 			foreach($allofferby as $key=>$value){
-				$strinval = $value['admin_login_name'];
+				$strinval = $value['admin_first_name'];
 				if(!in_array($strinval,$inarray)){
 					echo "<option value='".$strinval."'>".$strinval."</option>";
 					$inarray[] = $strinval; 

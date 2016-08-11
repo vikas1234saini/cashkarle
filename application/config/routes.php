@@ -96,6 +96,7 @@ $route['admin/twitter_back'] = 'fuser/twitterlogin';
 $route['admin/export/(:any)'] = 'admin_export/index/$1';
 
 $route['admin/getofferorder'] = 'admin_offer/getofferorder';
+$route['admin/getpaymentorder'] = 'admin_payment/getpaymentorder';
 $route['admin/getproductorder'] = 'admin_product/getproductorder';
 $route['admin/getcontactorder'] = 'admin_contact/getcontactorder';
 $route['admin/getuseroption'] = 'admin_user/getuseroption';
@@ -127,9 +128,11 @@ $route['admin/brand/(:any)'] = 'admin_brand/index/$1';
 
 $route['admin/coupon'] = 'admin_coupon/index';
 $route['admin/coupon/add'] = 'admin_coupon/add';
+$route['admin/coupon/add/(:any)'] = 'admin_coupon/add/$1';
 $route['admin/coupon/update'] = 'admin_coupon/update';
 $route['admin/coupon/updatestatus/(:any)/(:any)'] = 'admin_coupon/updatestatus/$1/$2';
 $route['admin/coupon/update/(:any)'] = 'admin_coupon/update/$1';
+$route['admin/coupon/update/(:any)/(:any)'] = 'admin_coupon/update/$1/$2';
 $route['admin/coupon/delete/(:any)/(:any)'] = 'admin_coupon/delete/$1/$2';
 $route['admin/coupon/(:any)'] = 'admin_coupon/index/$1';
 $route['admin/couponoffer/(:any)'] = 'admin_coupon/couponoffer/$1';
@@ -139,6 +142,7 @@ $route['admin/ticket/add'] = 'admin_ticket/add';
 $route['admin/ticket/update'] = 'admin_ticket/update';
 $route['admin/ticket/updatestatus/(:any)/(:any)'] = 'admin_ticket/updatestatus/$1/$2';
 $route['admin/ticket/update/(:any)'] = 'admin_ticket/update/$1';
+$route['admin/ticket/view/(:any)'] = 'admin_ticket/view/$1';
 $route['admin/ticket/delete/(:any)'] = 'admin_ticket/delete/$1';
 $route['admin/ticket/reply/(:any)'] = 'admin_ticket/reply/$1';
 $route['admin/ticket/(:any)'] = 'admin_ticket/index/$1';
@@ -181,6 +185,17 @@ $route['admin/contact/update/(:any)'] = 'admin_contact/update/$1';
 $route['admin/contact/view/(:any)'] = 'admin_contact/view/$1';
 $route['admin/contact/delete/(:any)'] = 'admin_contact/delete/$1';
 $route['admin/contact/(:any)'] = 'admin_contact/index/$1';
+
+$route['admin/payment'] = 'admin_payment/index';
+$route['admin/payment/add'] = 'admin_payment/add';
+$route['admin/payment/update'] = 'admin_payment/update';
+$route['admin/payment/view'] = 'admin_payment/view';
+$route['admin/payment/updatestatus/(:any)/(:any)'] = 'admin_payment/updatestatus/$1/$2';
+$route['admin/payment/updatefeatured/(:any)/(:any)'] = 'admin_payment/updatefeatured/$1/$2';
+$route['admin/payment/update/(:any)'] = 'admin_payment/update/$1';
+$route['admin/payment/view/(:any)'] = 'admin_payment/view/$1';
+$route['admin/payment/delete/(:any)'] = 'admin_payment/delete/$1';
+$route['admin/payment/(:any)'] = 'admin_payment/index/$1';
 
 $route['admin/log'] = 'admin_log/index';
 $route['admin/log/add'] = 'admin_log/add';

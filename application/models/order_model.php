@@ -31,7 +31,7 @@ class Order_model extends CI_Model {
     public function get_order_by_title($str) {
 		$this->db->select('*');
 		$this->db->from('tbl_order');
-		$this->db->where("title LIKE '%".$str."%'");
+		$this->db->where("sitename LIKE '%".$str."%'");
 		$this->db->limit(18, 0);
 		$query = $this->db->get();
 		return $query->result_array(); 
@@ -91,15 +91,24 @@ class Order_model extends CI_Model {
     * @param int $brand_id 
     * @return array
     */
-    public function get_all_order($user_id=false)
+    public function get_all_order($user_id=false,$search_string=false,$from_date=false,$to_date=false,$orderfor=false)
     {
-		$this->db->select('*');
-		$this->db->from('tbl_order');
+		
+		$this->db->select('o.*,u.username');
+		
+		$this->db->from('tbl_order as o');
+		$this->db->join('tbl_user as u', 'u.id = o.user_id', 'left');
 //		$this->db->where('withdraw', '0');
 		if($user_id!=false){
-			$this->db->where('user_id', $user_id);
+			$this->db->where('o.user_id', $user_id);
 		}
-	    $this->db->order_by('date', 'desc');
+		if($search_string){
+			$this->db->like('o.sitename', $search_string,"both");
+		}
+		if($from_date != false && $from_date != 0){
+			$this->db->where('(date(o.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+		}
+	    $this->db->order_by('o.date', 'desc');
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
@@ -142,16 +151,19 @@ class Order_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_order($search_string=false, $order=false, $order_type='Desc', $limit_start, $limit_end)
+    public function get_order($from_date=false, $to_date=false,$search_string=false, $order=false, $order_type='Desc', $limit_start, $limit_end)
     {
 	    
-		$this->db->select('*');
+		$this->db->select('o.*,u.username');
 		
 		$this->db->from('tbl_order as o');
+		$this->db->join('tbl_user as u', 'u.id = o.user_id', 'left');
 		if($search_string){
-			$this->db->like('o.title', $search_string,"both");
+			$this->db->like('o.sitename', $search_string,"both");
 		}
-
+		if($from_date != false && $from_date != 0){
+			$this->db->where('(date(o.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+		}
 		if($order){
 			$this->db->order_by($order, $order_type);
 		}else{
@@ -173,12 +185,19 @@ class Order_model extends CI_Model {
     * @param int $order
     * @return int
     */
-    function count_order($search_string=false, $order=false, $status=false)
+    function count_order($from_date=false, $to_date=false,$search_string=false, $order=false, $status=false)
     {
-		$this->db->select('*');
-		$this->db->from('tbl_order');
+		
+		$this->db->select('c.*,u.username');
+		
+		$this->db->from('tbl_order as c');
+		$this->db->join('tbl_user as u', 'u.id = c.user_id', 'left');
+		
 		if($search_string!=false){
-			$this->db->like('title', $search_string,"both");
+			$this->db->like('c.sitename', $search_string,"both");
+		}
+		if($from_date != false && $from_date != 0){
+			$this->db->where('(date(c.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
 		}
 		$query = $this->db->get();
 		return $query->num_rows();        

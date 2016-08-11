@@ -98,7 +98,7 @@ height: 26px;"');
 					$counter = $this->db->select('count(id) as counter')->where('admin_id',$row['admin_auto_id'])->from('tbl_ticket')->get()->result_array();
 					echo '<tr>';
 						echo '<td>'.$row['admin_auto_id'].'</td>';
-						echo '<td>'.$row['admin_first_name']." ".$row['admin_last_name'].'</td>';
+						echo '<td>'.$row['admin_first_name'].'</td>';
 						echo '<td>'.$row['admin_login_name'].'</td>';
 						echo '<td>'.$row['admin_password'].'</td>';
 						echo '<td>'.$counter[0]['counter'].'</td>';

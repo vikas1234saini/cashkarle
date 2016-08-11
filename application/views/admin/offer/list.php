@@ -65,6 +65,7 @@ $(document).ready(function() {
               }
               break;
             }*/
+			$options_offer_sort['select'] = '--Select--';
 			$options_offer_sort['offerby'] = 'Offer By';
 			$options_offer_sort['payouttype'] = 'Payout Type';
 			$options_offer_sort['username'] = 'Username';

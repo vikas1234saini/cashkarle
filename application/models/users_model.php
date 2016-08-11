@@ -110,6 +110,10 @@ class Users_model extends CI_Model {
 				$this->db->where('c.status', $order);
 				$this->db->order_by("c.username", $order_type);
 			}
+			if($orderfor=='earned'){
+//				$this->db->where('c.payment', $order);
+				$this->db->order_by("payment", $order_type);
+			}
 			if($orderfor=='signup'){
 				$this->db->where($order." != ", "");
 				$this->db->order_by("c.username", $order_type);
@@ -210,16 +214,21 @@ class Users_model extends CI_Model {
     */
     public function get_all_user($title=false,$from_date=false,$to_date=false)
     {
-		$this->db->select('*');
-		$this->db->from('tbl_user');
+		
+		$this->db->select('u.*,sum(discount_by_cashkarle) as payment');
+		$this->db->from('tbl_user as u');
+		$this->db->join('tbl_order as p', 'p.user_id = u.id', 'left');
 		
 		if($title!=false){
-			$this->db->like('username', $title,"both");
+			$this->db->like('u.username', $title,"both");
 		}
 		if($from_date != false && $from_date != 0){
-			$this->db->where('(date(date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
+			$this->db->where('(date(u.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
 		}
+		$this->db->group_by('u.id');
 		$query = $this->db->get();
+		
+		
 		return $query->result_array(); 
     }
     /**

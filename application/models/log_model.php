@@ -35,7 +35,7 @@ class Log_model extends CI_Model {
     * @param int $limit_end
     * @return array
     */
-    public function get_log($search_string=false, $order=false, $order_type='Asc', $limit_start, $limit_end)
+    public function get_log($search_string=false, $order=false, $order_type='Asc',$from_date=false, $to_date=false, $limit_start, $limit_end)
     {
 	    
 		$this->db->select('*');
@@ -43,6 +43,9 @@ class Log_model extends CI_Model {
 		$this->db->from('tbl_log as c');
 		if($search_string){
 			$this->db->where("(c.for like '%".$search_string."%')");
+		}
+		if($from_date != false && $from_date != 0){
+			$this->db->where('(date(c.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
 		}
 		if($order){
 			$this->db->order_by($order, $order_type);
@@ -67,12 +70,15 @@ class Log_model extends CI_Model {
     * @param int $order
     * @return int
     */
-    function count_log($search_string=false, $order=false, $status=false)
+    function count_log($from_date=false, $to_date=false,$search_string=false, $order=false, $status=false)
     {
 		$this->db->select('*');
 		$this->db->from('tbl_log as c');
 		if($search_string){
 			$this->db->where("(c.for like '%".$search_string."%')");
+		}
+		if($from_date != false && $from_date != 0){
+			$this->db->where('(date(c.date) between "'.date('Y-m-d',strtotime($from_date)).'" and "'.date('Y-m-d',strtotime($to_date)).'" )');
 		}
 		$query = $this->db->get();
 		return $query->num_rows();        

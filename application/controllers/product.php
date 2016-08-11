@@ -102,6 +102,66 @@ class Product extends CI_Controller {
 			$skey = $data['category_name'] 	= $data['cskey'] 	= substr(str_replace("-"," ",$str),0,-2);
 			$data['category_name'] = str_replace("catsearch ","",$data['category_name']);
 			
+			if($this->product_model->count_searchkey($skey)==0 && $_SERVER['HTTP_HOST']!='localhost'){
+//			echo $askey;
+				$amazon_response  = $client->category('All')->responseGroup('Large')->search($skey);
+				
+	//		$counter = 0;
+				if(isset($amazon_response->Items) && isset($amazon_response->Items->Item)){
+					foreach($amazon_response->Items->Item as $product){
+						
+						$cdata = array();	
+						$cdata['product_main_id']	= $product->ASIN;
+						$cdata['title'] 			= $product->ItemAttributes->Title;
+						$cdata['description'] 		= $product->ItemAttributes->Title;
+				
+						$cdata['image'] 			= isset($product->MediumImage->URL)?$product->MediumImage->URL:"";
+						$cdata['selling_price'] 	= isset($product->OfferSummary->LowestNewPrice)?($product->OfferSummary->LowestNewPrice->Amount/100):(isset($product->ItemAttributes->ListPrice) ? ($product->ItemAttributes->ListPrice->Amount/100):0);
+						$cdata['url'] 				= isset($product->DetailPageURL)?$product->DetailPageURL:"";
+						$cdata['brand'] 			= isset($product->ItemAttributes->Manufacturer)?$product->ItemAttributes->Manufacturer:"";
+						$cdata['retail_price']		= isset($product->ItemAttributes->ListPrice) ? ($product->ItemAttributes->ListPrice->Amount/100):0;
+						$cdata['sitename']			= "amazon";
+						//$category					= isset($product->BrowseNodes)?(isset($product->BrowseNodes->BrowseNode)?(isset($product->BrowseNodes->BrowseNode->Ancestors)?(isset($product->BrowseNodes->BrowseNode->Ancestors->BrowseNode)?(isset($product->BrowseNodes->BrowseNode->Ancestors->BrowseNode->Ancestors)?():$product->BrowseNodes->BrowseNode->Ancestors->BrowseNode->Name):""):""):""):"";
+						
+						$this->load->helper('data');
+						$topcat = array();
+						
+						if(isset($product->BrowseNodes)){
+							if(sizeof($product->BrowseNodes->BrowseNode)==1){
+								if(isset($product->BrowseNodes->BrowseNode)){
+									$topcat = getAmazonCategory($product->BrowseNodes->BrowseNode);
+								}
+							}else{
+								if(sizeof($product->BrowseNodes->BrowseNode)>0 && isset($product->BrowseNodes->BrowseNode[0])){
+									$topcat = getAmazonCategory($product->BrowseNodes->BrowseNode[0]);
+								}
+							}
+						}
+						
+						$cdata['category']	= $cat_id;
+						if(isset($topcat['Root'])){
+							$allcat = $this->category_model->get_category_by_title($topcat['Root']);
+							if(sizeof($allcat)>0){
+								$cdata['category']	= $allcat[0]['id'];
+							}else{
+								$cdata['category']	= $cat_id;
+							}
+						}
+						
+						$this->db->select('id');
+						$this->db->from('tbl_product');
+						$this->db->where('title',$product->ItemAttributes->Title);
+						$this->db->where('url',$product->DetailPageURL);
+						$query = $this->db->get();
+						if( $query->num_rows()==0){
+							$this->db->insert('tbl_product', $cdata);
+						}
+					}
+				}				
+				$searchdata = array();
+				$searchdata['title'] = $skey;
+				$insert = $this->db->insert('tbl_searchkey', $searchdata);
+			}
 			$data['offerlist']  = $this->offer_model->get_offer_by_title($skey);
 		}elseif($skey_array[0]=='brand'){
 			$data['brand'] = str_replace("-"," ",str_replace("brand-","",$str));
@@ -284,7 +344,9 @@ class Product extends CI_Controller {
 			}else {
 				$offerdata .= '<div class="col-md-12 aligncenter fontbold" style="border: solid 1px #ccc; margin:10px; padding:10px;">No More Offer Found.</div>';				
 			}
+			
 			if(sizeof($productlist)>0){
+				$search_id = $data['search_id'] 	= $this->session->userdata('searchproduct');
 				$counter = 0;
 				foreach($productlist as $product){
 					if($product['image']!=''){
@@ -292,6 +354,7 @@ class Product extends CI_Controller {
 						if($counter>24){
 							break;
 						}
+						$search_id[] 		= $product['id'];
 						$productId 			= $product['product_main_id'];
 						$title 				= $product['title'];
 						$productDescription = $product['description'];
@@ -354,6 +417,8 @@ class Product extends CI_Controller {
 						if($counter>24){
 							break;
 						}
+						
+						$search_id[] 		= $product['id'];
 						$productId 			= $product['product_main_id'];
 						$title 				= $product['title'];
 						$productDescription = $product['description'];
@@ -412,6 +477,9 @@ class Product extends CI_Controller {
 									</div>';			
 					}
 				}
+				
+				$set_check = array('searchproduct'=>$search_id);
+				$this->session->set_userdata($set_check);
 			}else {
 				$productdata .= '<div class="col-md-12 aligncenter fontbold" style="border: solid 1px #ccc; margin:10px; padding:10px;">No More Product Found.</div>';				
 			}
@@ -694,8 +762,8 @@ class Product extends CI_Controller {
 			$find = array("CPRC", "CPA","CPS","CPL"," - India","-","India","india");
 			$replace = array("","","","","","","","");
 					
-			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->where("c.coupon_expiry >= ",date('Y-m-d 23:59:59'))->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->limit(10)->get("tbl_offer as o")->result();
-		
+			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->where("o.url != ",'')->where("c.coupon_expiry >= ",date('Y-m-d 23:59:59'))->where("o.sitename != ",'flipkart')->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->group_by('o.main_id,c.offer_id')->limit(10)->get("tbl_offer as o")->result();
+
 			foreach($result as $r){
 				$return[] = array('id'=>$r->id,'desc'=>"Up To ".$r->discount."% Cashback / ".$r->coupon_count." Coupons", 'value'=>str_replace($find,$replace,ucwords(stripslashes($r->title))), 'title'=>str_replace($find,$replace,str_replace($input,"<strong>".$input."</strong>",ucwords(stripslashes($r->$field)))));
 //				$return[] = array('id'=>$r->$field, 'value'=>ucwords(stripslashes($r->$field)));

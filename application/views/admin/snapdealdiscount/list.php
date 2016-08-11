@@ -82,10 +82,10 @@ height: 26px;"');
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Cashkarle Category</th>
                 <th class="yellow header headerSortDown">Category</th>
-                <th class="yellow header headerSortDown">Discount By Snapdeal</th>
-                <th class="yellow header headerSortDown">Discount By Snapdeal For Mobile</th>
-                <th class="yellow header headerSortDown">Discount By CashKarle</th>
-                <th class="yellow header headerSortDown">Discount By CashKarle For Mobile</th>
+                <th class="yellow header headerSortDown">Discount By Snapdeal(%)</th>
+                <th class="yellow header headerSortDown">Discount By Snapdeal For Mobile(%)</th>
+                <th class="yellow header headerSortDown">Discount By CashKarle(%)</th>
+                <th class="yellow header headerSortDown">Discount By CashKarle For Mobile(%)</th>
 <!--                <th class="yellow header headerSortDown">Discount By CashKarle For More than 2500</th>-->
                 <th class="yellow header headerSortDown">Username</th>
                <!-- <th class="yellow header headerSortDown">Featured</th>-->
