@@ -17,7 +17,7 @@ class Ticket_model extends CI_Model {
     */
     public function get_ticket_by_id($id)
     {
-		$this->db->select('t.*,u.username');
+		$this->db->select('t.*,u.username,u.email');
 		
 		$this->db->from('tbl_ticket as t');
 		$this->db->join('tbl_user as u', 'u.id = t.user_id', 'left');

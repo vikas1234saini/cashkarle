@@ -484,12 +484,36 @@ class Admin_ticket extends CI_Controller {
 						$order_insert = array();
 						$order_insert['sitename'] 		= "Added By Cashkarle";
 						$order_insert['amount'] 		= $post_data['cashback'];
-						$order_insert['orderStatus'] 	= "Approved";
-						$order_insert['user_id'] 		= $ticket_details[0]['user_id'];				
+						if(isset($post_data['cashback_now']) && $post_data['cashback_now']=="now"){
+							$order_insert['orderStatus'] 	= "Approved";
+						}else{
+							$order_insert['orderStatus'] 	= "tentative";
+						}
+						$order_insert['user_id'] 		= $ticket_details[0]['user_id'];
 						$order_insert['discount_by_cashkarle'] 		= $post_data['cashback'];
 						$order_insert['date']		= date('Y-m-d H:i:s');
 						$this->db->insert("tbl_order",$order_insert);
 						
+						$subject = 'Hey '.$ticket_details[0]['username'].', Your Ticket no- '.$ticket_details[0]['ticket_id'].' is resolved';
+						$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+						$html .= "Hey ".$ticket_details[0]['username'].",<br /><br />";
+						$html .= "We have added ".$post_data['cashback']." Rs. Cashback for Paytm transaction on the response of your Ticket No- ".$ticket_details[0]['ticket_id']."<br /> This amount is Pending now but it will be confirmed within 90 Days. Once we received confirmation from Paytm.<br /><br />Thanks for being a part of CashKarle.com.<br /><br />";
+						$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
+						//$this->email->message($html);	
+							
+						// Always set content-type when sending HTML email
+						$headers = "MIME-Version: 1.0" . "\r\n";
+						$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+						
+						// More headers
+						$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+				//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+						$to = $ticket_details[0]['email'];
+						if(mail($to,$subject,$html,$headers)){
+							$arr = array('status' => 1);
+						}else{
+							$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
+						}
 					}
 					
 					/*$config = array('mailtype' => 'html');

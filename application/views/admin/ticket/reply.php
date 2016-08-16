@@ -113,7 +113,9 @@ $(document).ready(function() {
               
               	<a href="javescript:void(0);" id="hidecashback">Remove Cashback</a>
               	<br />
-              	<input type="text" name="cashback" id="cashback" placeholder="Add Amount" />
+                    <input type="text" name="cashback" id="cashback" placeholder="Add Amount" />
+                    <br />
+                    <input type="checkbox" name="cashback_now" id="cashback_now" value="now" /> <label for="cashback_now" style="display:inline;">Cashback auto confirm now or later</label>
                 <?php } ?>
               </div>
             </div>

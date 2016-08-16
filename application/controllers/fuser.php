@@ -107,11 +107,11 @@ class Fuser extends CI_Controller {
 					$data['error']	 = 'User created successful.';
 							
 					$subject = 'Hey '.$this->input->post('username').', CashKarle Welcomes you.';
-					$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+					$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
 					$html .= "Hey ".$this->input->post('username').",<br /><br />";
 					$html .= "Congratulations! Now you are the part of Biggest Saving Community. <br/>Come on our website whenever you want to shop anything from Snapdeal,Flipkart Paytm and Many more.we will give you Coupons, Cashbacks and rewards points for your shopping.<br/><br/>";
 					$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
-					$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+					$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
 					//$this->email->message($html);	
 						
 					// Always set content-type when sending HTML email
@@ -125,7 +125,7 @@ class Fuser extends CI_Controller {
 					if(mail($to,$subject,$html,$headers)){
 						$arr = array('status' => 1);
 					}else{
-						$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+						$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
 					}
 					echo json_encode($data);
 					die;
@@ -175,12 +175,12 @@ class Fuser extends CI_Controller {
 			
 			$this->email->subject();*/
 			$subject = 'Hey '.$password_data[0]->username.',Your CashKarle account password';
-			$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+			$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center; '><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
 			$html .= "Hey ".$password_data[0]->username.",<br /><br />";
 			$html .= "Your CashKarle account password is:   ".$password_data[0]->password."<br /><br />";
 			$html .= "<a href='".base_url()."'>Click here</a> to sign in to your CashKarle.com account with your existing password.<br /><br />";
 			$html .= "If you have any Concern  <a href='".base_url('contact')."'>Click Here</a> to contact our support team.<br /><br />";
-			$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+			$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
 			//$this->email->message($html);	
 				
 			// Always set content-type when sending HTML email
@@ -194,7 +194,7 @@ class Fuser extends CI_Controller {
 			if(mail($to,$subject,$html,$headers)){
 				$arr = array('status' => 1);
 			}else{
-				$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+				$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
 			}
 			echo json_encode( $arr );
 			die;
@@ -964,10 +964,10 @@ class Fuser extends CI_Controller {
 				
 					
 				$subject = 'Hey '.$user_details[0]['username'].', We have Received Missing Ticket';
-				$html = "<div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+				$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center; '><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
 				$html .= "Hey ".$user_details[0]['username'].",<br /><br />";
 				$html .= "We have received your Ticket and your Ticket no. is ".$ticket_id." . Our team will get in touch with you shortly.<br/><br/>Thanks for being a part of CashKarle.com. <br /><br />";
-				$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong>";
+				$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
 				//$this->email->message($html);	
 					
 				// Always set content-type when sending HTML email
@@ -981,7 +981,7 @@ class Fuser extends CI_Controller {
 				if(mail($to,$subject,$html,$headers)){
 					$arr = array('status' => 1);
 				}else{
-					$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+					$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
 				}
 			}else{
 				$data['success'] = '0';
@@ -1354,7 +1354,32 @@ class Fuser extends CI_Controller {
 			if($this->db->insert('tbl_newsletteruser', $post_data_new)){
 				$data['success'] 	= '1';
 				$data['data'] 		= $post_data;
-				$this->load->library('email');
+			
+				
+				$subject = 'Thanks you for updates';
+				$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+				//$html .= "Hey ".$this->input->post('username').",<br /><br />";
+				$html .= "Hey There ,<br /><br />Thanks for being a part of CashKarle. We would like to welcome you to our earning Community, From now you will get Offers and Cashback updates on your email.<br />We are India’s top cash back & coupons website. We have tied up with all websites like Snapdeal, Amazon, Flipkart & many more. <br />Every time when you visit our partnered sites via CashKarle and shopped, you will get extra Cashback.<br />";
+			//	$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
+				$html .= "To get Cashback <a href='".base_url()."' style='text-decoration:none;' ><div style='   font-size: 24px;    font-weight: bold;    padding: 5px;'>Click Here</div></a><br />";
+				$html .= "If you have any query, Kindly <a href='".base_url('contact')."'  style='text-decoration:none;'><div style='font-size: 24px;    font-weight: bold;    padding: 5px;'>Contact Us</div></a>.<br /><br />";
+				$html .= "<strong>Warm Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
+				//$this->email->message($html);	
+				
+				// Always set content-type when sending HTML email
+				$headers = "MIME-Version: 1.0" . "\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+				
+				// More headers
+				$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+		//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+				$to = $post_data['txtEmail'];
+				if(mail($to,$subject,$html,$headers)){
+					$arr = array('status' => 1);
+				}else{
+					$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
+				}
+			/*	$this->load->library('email');
 				$this->email->set_mailtype('html');
 				$this->email->from('info@cashkarle.com', 'cashkarle');
 				$this->email->to($post_data['txtEmail']); 
@@ -1364,7 +1389,7 @@ class Fuser extends CI_Controller {
 				$this->email->subject('Thanks For newsletter subscription');
 				$this->email->message("<br /><br />Welcome to <a href='".base_url()."'>cashkarle.com</a> !<br />You will recive latest updates form our side");	
 				
-				$this->email->send();
+				$this->email->send();*/
 			}else{
 				$data['success'] = '2';
 				$data['error'] = "Not able to add email.";

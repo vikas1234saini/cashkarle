@@ -256,7 +256,7 @@ class Admin_newsletter extends CI_Controller {
 				
                 	//if the insert has returned true then we show the flash message
 					if($this->newsletter_model->store_newsletter($data_to_store)){
-						$config = array('mailtype' => 'html');
+						/*$config = array('mailtype' => 'html');
 						$this->load->library('email',$config);
 	
 						$this->email->from('info@cashkale.com', 'cashkale');
@@ -267,7 +267,31 @@ class Admin_newsletter extends CI_Controller {
 						
 						$this->email->subject($this->input->post('title'));
 						$this->email->message($this->input->post('description'));	
-						$this->email->send();
+						$this->email->send();*/
+						
+						$subject = $this->input->post('title');
+						$html = $this->input->post('description');
+						//$this->email->message($html);	
+							
+						// Always set content-type when sending HTML email
+						$headers = "MIME-Version: 1.0" . "\r\n";
+						$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+						
+						// More headers
+						$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+				//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+						$to = $email_list[0];
+						for($i=1;$i<sizeof($email_list);$i++){							
+							if($i==1){
+								$headers .= 'BCC:';
+							}
+							$headers .= $email_list[$i].'\r\n';
+						}
+						if(mail($to,$subject,$html,$headers)){
+							$arr = array('status' => 1);
+						}else{
+							$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.','errorinfo'=>$this->email->print_debugger());
+						}
 						//echo $this->email->print_debugger();
 						$data['flash_message'] = TRUE; 
 						$this->session->set_flashdata('flash_message', 'added');
