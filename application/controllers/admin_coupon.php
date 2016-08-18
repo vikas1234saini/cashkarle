@@ -135,7 +135,10 @@ class Admin_coupon extends CI_Controller {
             if ($this->form_validation->run()){
                 $data_to_store = array(
                     'coupon_title' => $this->input->post('coupon_title'),
+                    'coupon_code' => $this->input->post('coupon_code'),
                     'discount' => $this->input->post('discount'),
+                    'discount_type' => $this->input->post('discount_type'),
+                    'coupon_type' => "Coupon",
                     'offer_id' => $this->input->post('offer_id'),
                     'offer_name' => $this->input->post('offer_name'),
                     'coupon_description' => $this->input->post('coupon_description'),
@@ -192,7 +195,10 @@ class Admin_coupon extends CI_Controller {
 
                 $data_to_store = array(
                     'coupon_title' => $this->input->post('coupon_title'),
+                    'coupon_code' => $this->input->post('coupon_code'),
                     'discount' => $this->input->post('discount'),
+                    'discount_type' => $this->input->post('discount_type'),
+                    'coupon_type' => "Coupon",
                     'offer_id' => $this->input->post('offer_id'),
                     'offer_name' => $this->input->post('offer_name'),
                     'coupon_description' => $this->input->post('coupon_description'),

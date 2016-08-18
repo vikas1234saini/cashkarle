@@ -275,7 +275,7 @@ class Product extends CI_Controller {
 			$data['productlistsize']  	= sizeof($productlist);
 			$offerlist  	= $this->offer_model->get_offer_search($post_data);
 
-			$user_details = $data['user_details'] 	= $this->session->userdata('fuser_details');
+//			$user_details = $data['user_details'] 	= $this->session->userdata('fuser_details');
 			if(sizeof($offerlist)>0){
 				foreach($offerlist as $key => $value){
 					

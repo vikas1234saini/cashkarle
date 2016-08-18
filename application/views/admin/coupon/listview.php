@@ -43,7 +43,9 @@
               <tr>
                 <th class="header">#</th>
                 <th class="header">Id</th>
-                <th class="yellow header headerSortDown">Coupon Name</th>
+                <th class="yellow header headerSortDown">Coupon Title</th>
+                <th class="yellow header headerSortDown" width="150px">Description</th>
+                <th class="yellow header headerSortDown">Coupon Code</th>
                 <th class="yellow header headerSortDown">Offer</th>
                 <th class="yellow header headerSortDown">Cashback</th>
                 <th class="yellow header headerSortDown">Start Date</th>
@@ -61,6 +63,8 @@
                 echo '<td>'.$counter.'</td>';
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['coupon_title'].' </td>';
+                echo '<td>'.$row['coupon_description'].' </td>';
+                echo '<td>'.$row['coupon_code'].' </td>';
                 echo '<td>'.$row['offer_name'].' </td>';
                 echo '<td>'.$row['discount']." ".$row['discount_type'].' </td>';
                 echo '<td>'.date("d-m-Y",strtotime($row['added'])).' </td>';

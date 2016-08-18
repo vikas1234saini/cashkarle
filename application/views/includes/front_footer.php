@@ -18,7 +18,7 @@ footer p { text-align:justify;}
         <div class="container">
             <div class="top-footer" style="margin-top:20px;padding-bottom:20px;border-bottom:1px solid #dbdbdb;overflow:hidden;">
                 <div class="col-md-4 text-left">
-                    <img src="<?php echo base_url(); ?>assets/img/logo.png" width=150px>
+                    <a href="<?php echo base_url(); ?>"><img src="<?php echo base_url(); ?>assets/img/logo.png" width=150px></a>
                     <p style="margin-top:10px;">
                     </p>
                 </div>
@@ -43,7 +43,9 @@ footer p { text-align:justify;}
             </div>
             <div class="middle-footer">
                 <div class="col-md-12">
-                   Cashkarle
+ CashKarle.com - 
+                                               India's Coolest Cashback site. Our aim is to help our Customers to earn  extra cashback through CashKarle and shop with the brands like Snapdeal,
+                                              Myntra,amazon,flipkart and 500 more. Whenever you are doing online shopping anywhere so visit on merchant site via CashKarle.com to earn extra cashback.
                 </div>                
             </div>
             <div class="col-md-12" style="padding-bottom:10px;">
@@ -940,10 +942,14 @@ footer p { text-align:justify;}
 							$('#couponlist').html(data.couponlist);
 						 //}
 						if(data.ostatus=='0'){
-							olist = 0;		
+							olist = 0;
+						}else{
+							olist = 1;
 						}
 						if(data.status=='0'){
-							plist = 0;		
+							plist = 0;
+						}else{
+							plist = 1;
 						}
 						if(data.status=='1'){
 							flag=0;
@@ -973,7 +979,7 @@ footer p { text-align:justify;}
 						success: function(data) {
 							
 							$('#pageno').val(parseInt($('#pageno').val())+1);
-						//	console.log(flag+"----"+plist);
+							console.log(flag+"----"+plist);
 							if(data.status=='1'){
 								flag=0;
 							}

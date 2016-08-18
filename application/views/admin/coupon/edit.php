@@ -82,7 +82,7 @@
           </div>     
           
           <div class="control-group">
-            <label for="inputError" class="control-label">Coupon</label>
+            <label for="inputError" class="control-label">Coupon Title</label>
             <div class="controls">
               <input type="text" id="coupon_title" name="coupon_title" value="<?php echo $coupon[0]['coupon_title']; ?>" >
             </div>
@@ -91,6 +91,12 @@
             <label for="inputError" class="control-label">Coupon Description</label>
             <div class="controls">
               <input type="text" id="coupon_description" name="coupon_description" value="<?php echo $coupon[0]['coupon_description']; ?>" >
+            </div>
+          </div>
+          <div class="control-group">
+            <label for="inputError" class="control-label">Coupon Code</label>
+            <div class="controls">
+              <input type="text" id="coupon_code" name="coupon_code" value="<?php echo $coupon[0]['coupon_code']; ?>" >
             </div>
           </div>
            <div class="control-group">

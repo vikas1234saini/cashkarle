@@ -32,6 +32,7 @@ class Offer_model extends CI_Model {
 		$this->db->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left');
 		$this->db->group_by('o.main_id');
 	    $this->db->order_by('coupon_count', "desc");
+		$this->db->where("o.id != ",'56');
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 		
 		$this->db->where("o.status",'1');
@@ -54,6 +55,7 @@ class Offer_model extends CI_Model {
 		$this->db->group_by('o.main_id,c.offer_id');
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.sitename != ",'flipkart');
+		$this->db->where("o.id != ",'56');
 		$this->db->where("o.status",'1');
 		$this->db->where("o.url != ",'');
 		$this->db->where("o.id != ",'138');
@@ -103,6 +105,7 @@ class Offer_model extends CI_Model {
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.status",'1');
 		$this->db->where("o.sitename != ",'flipkart');
+		$this->db->where("o.id != ",'56');
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d 23:59:59'));
 		$this->db->where("o.id != ",'138');
 		$str = "";
@@ -188,6 +191,7 @@ class Offer_model extends CI_Model {
 		$this->db->group_by('o.main_id');
 	    $this->db->order_by('id', 'RANDOM');
 		$this->db->where("o.status",'1');
+		$this->db->where("o.id != ",'56');
 	
 		$this->db->limit(20, 0);
 		
@@ -206,6 +210,7 @@ class Offer_model extends CI_Model {
 		$this->db->where("o.url != ",'');
 		$this->db->where("o.status",'1');
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where("o.id != ",'56');
 		$this->db->limit(10, 0);
 		
 		$query = $this->db->get();
@@ -228,6 +233,7 @@ class Offer_model extends CI_Model {
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 		$this->db->where("o.status",'1');
+		$this->db->where("o.id != ",'56');
 
 		$query = $this->db->get();
 		return $query->result_array(); 
@@ -404,6 +410,7 @@ class Offer_model extends CI_Model {
 	    $this->db->order_by('coupon_count', "desc");
 		$this->db->where("o.status",'1');
 		$this->db->where("o.sitename != ",'flipkart');
+		$this->db->where("o.id != ",'56');
 //		$where = "c.offer_id is  NULL";
 	//	$this->db->or_where($where);
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));

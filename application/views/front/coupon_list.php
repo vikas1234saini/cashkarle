@@ -51,7 +51,11 @@
 		                 </div>
 		                 <div id="product_name_img" class="product-name" style="height:auto; padding-bottom:10px; text-align:center; font-weight:bold;">
                          
+		                            <?php  if(isset($user_details) && sizeof($user_details)>0){ ?>
+		  				      <a href="<?php echo base_url('oprocess/'.$offer_details[0]['id']."/".rand(1000,9999).date('ymdhis')); ?>" class="signinuseroffer" rel="<?php echo $offer_details[0]['id']; ?>" data-url="<?php echo $offer_details[0]['url']; ?>" title="<?php echo html_entity_decode($offer_details[0]['title']); ?>" target="_blank" >
+						<?php }else{ ?>
 		                            <a href="<?php echo $offer_details[0]['url']; ?>" class="sign-in-btn buybutton">
+		                <?php } ?>
 								<?php
 									if(isset($offer_details[0]['discount']) && $offer_details[0]['discount']!=''){
 										$discount = " ".$offer_details[0]['discount']." ".($offer_details[0]['discount_type']!=''?$offer_details[0]['discount_type']:"%");
