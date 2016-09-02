@@ -1,4 +1,23 @@
 	<script src="<?php echo  base_url('assets/js/calendar/DateTimePicker.js'); ?>" type="text/javascript"></script>
+    <script>
+
+	$(document).ready(function(){
+		$( "#mysubmit" ).click(function() {
+			var added =$('#added').val();
+			var coupon_expiry = $('#coupon_expiry').val();
+			var fromdate = added.split('-');
+			added = new Date();
+			added.setFullYear(fromdate[2],fromdate[1]-1,fromdate[0]);
+			var todate = coupon_expiry.split('-');
+			coupon_expiry = new Date();
+			coupon_expiry.setFullYear(todate[2],todate[1]-1,todate[0]);
+			if (added > coupon_expiry ) {
+				alert("Invalid Date Range! \nStart Date cannot be after End Date!")
+				return false;
+			}							
+		});
+	});
+	</script>
     <style>
 	#calBorder{ z-index:100000 !important;}
 	select{ width:100px !important;}
@@ -45,7 +64,7 @@
       
       <?php
       //form data
-      $attributes = array('class' => 'form-horizontal', 'id' => '');
+      $attributes = array('class' => 'form-horizontal', 'id' => 'mysubmit');
    
       //form validation
       echo validation_errors();

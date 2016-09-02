@@ -61,7 +61,7 @@ Examples:
 ATTENTION: The trailing slash is required.
 */
 //$baseUrl = '/codeigniter_new/js/image/';
-$baseUrl = '/ci/userfiles/';
+$baseUrl = "http://".$_SERVER["HTTP_HOST"].'/ci/userfiles/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -80,7 +80,8 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = resolveUrl($baseUrl);
+//$baseDir = resolveUrl($baseUrl);
+$baseDir = resolveUrl('/ci/userfiles/');
 
 /*
  * ### Advanced Settings

@@ -15,7 +15,7 @@
 
 .carousel-control {
     position: absolute;
-    top: 50%; /* pushes the icon in the middle of the height */
+    top: 35%; /* pushes the icon in the middle of the height */
      z-index: 5;
     display: inline-block;
 }

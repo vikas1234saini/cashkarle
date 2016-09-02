@@ -207,15 +207,15 @@ footer p { text-align:justify;}
                 <div class="container text-center">
                     <h2 class="fw-300">People who have saved money from Cashkarle</h2>
                     <h1 style="font-weight:700">TOP <span style="color:#16A75A">Users</span></h1>
-                    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="margin-top:50px;margin-bottom:10px;">
-                        <ol class="carousel-indicators">
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                    <div id="myCarouselTopUser" class="carousel slide" data-ride="carousel" style="margin-top:50px;margin-bottom:10px;">
+                        <ol class="carousel-indicators" style="display:none;">
+                            <li data-target="#myCarouselTopUser" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarouselTopUser" data-slide-to="1"></li>
+                            <li data-target="#myCarouselTopUser" data-slide-to="2"></li>
                         </ol>
         
                         <div class="carousel-inner" role="listbox">
-                            <div class="item active">
+                            <div class="item active" style="padding-left:50px; padding-right:50px;">
                             	<?php 
 									for($i=0;$i<sizeof($topuser);$i++){ 
 								?>
@@ -226,12 +226,22 @@ footer p { text-align:justify;}
                                 </div>
                                 <?php 
 										if(!(($i+1)%3) && $i<6){
-											echo '</div><div class="item">';
+											echo '</div><div class="item" style="padding-left:50px; padding-right:50px;">';
 										}
 									} 
 								?>
                             </div>
         
+                        </div>
+                         <div href="#myCarouselTopUser" class="left carousel-control" data-slide="prev">
+                            <span>
+                                <img src="<?php echo site_url('assets/img/left.png'); ?>" />
+                            </span>
+                        </div>
+                        <div href="#myCarouselTopUser" class="right carousel-control" data-slide="next">
+                            <span>
+                                <img src="<?php echo site_url('assets/img/right.png'); ?>" />
+                            </span>
                         </div>
         
                     </div>
@@ -420,9 +430,14 @@ footer p { text-align:justify;}
     <script type="text/javascript">
 		$('.carousel-control').hide();
 		$('#myCarousel').carousel();
+		$('#myCarouselTopUser').carousel();
 		$('#myCarousel').mouseover(function() {
-			$('.carousel-control').toggle();}).mouseout(function() {
-				$('.carousel-control').toggle();});
+			$('#myCarousel .carousel-control').toggle();}).mouseout(function() {
+				$('#myCarousel .carousel-control').toggle();});
+		
+		$('#myCarouselTopUser').mouseover(function() {
+			$('#myCarouselTopUser .carousel-control').toggle();}).mouseout(function() {
+				$('#myCarouselTopUser .carousel-control').toggle();});
 		</script>
         
     <script type='text/javascript'>
@@ -444,6 +459,22 @@ footer p { text-align:justify;}
 			});
 		});*/
 		$(document).ready(function() {
+			
+			
+			/*$('#myCarouselTopUser ol.carousel-indicators  li').on("click",function(){ 
+				e.stopPropagation();																			
+				$('ol.carousel-indicators li.active').removeClass("active");
+				$(this).addClass("active");
+				var goTo = $(this).data('slide-to');
+				$('#myCarouselTopUser .carousel-inner .item').each(function(index){
+					if($(this).data('id') == goTo){
+						goTo = index;
+						return false;
+					}
+				});
+		
+				$('#myCarouselTopUser').carousel(goTo); 
+			});*/
 			$('.megamenu a').on('click touchend', function(e) {
 			  var el = $(this);
 			  var link = el.attr('href');
@@ -501,8 +532,9 @@ footer p { text-align:justify;}
 					type: "POST",
 					url: "<?php echo base_url('ticket_info'); ?>",
 					data: "id="+new_id,
-					beforeSubmit:function(res) {
-						jQuery("#ticketdetailsdiv").html("loading");
+					beforeSend:function(res) {
+//						jQuery("#ticketdetailsdiv").html("loading");
+						$('#ticketdetailsdiv').html('<div style="width:100%; text-align:center;" class="loader"><img src="<?php echo base_url(); ?>assets/img/loading.gif" /></div>');
 					},
 					success: function(res) {
 						if (res){
@@ -623,7 +655,9 @@ footer p { text-align:justify;}
 					var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span><a href="" class="morelink">' + moretext + '</a></span>';
 		 
 					$(this).html(html);
-					$('.more').show();
+					$(this).show();
+				}else{
+					$(this).show();	
 				}
 		 
 			});
@@ -974,7 +1008,7 @@ footer p { text-align:justify;}
 							 
 							flag=1;
 							// Code to display spinner
-							$('#productlist').append('<div style="width:100%; text-align:center;" class="loader"><img src="<?php echo base_url(); ?>assets/img/loading.gif" /></div>');
+							$('#loaderlist').append('<div style="width:100%; text-align:center;" class="loader"><img src="<?php echo base_url(); ?>assets/img/loading.gif" /></div>');
 						},
 						success: function(data) {
 							

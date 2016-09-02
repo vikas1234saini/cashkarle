@@ -175,7 +175,15 @@ class Flipkart
 									'Stat.datetime',
 									'Goal.name'
 								),
-								'data_start' => '2016-03-25'
+								'filters' => array(
+									'Stat.date' => array(
+										'conditional' => 'BETWEEN',
+										'values' => array(
+											'2016-06-25',
+											date('Y-m-d')
+										)
+									)
+								)
 					);	
 				}else{
 					$args = array(

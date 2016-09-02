@@ -21,6 +21,7 @@ class Coupon_model extends CI_Model {
 		$this->db->from('tbl_coupon');
 		$this->db->where('id >= ', $id);
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
@@ -54,6 +55,7 @@ class Coupon_model extends CI_Model {
 //	    $this->db->where('c.parentId != ', '0');
 
 		$this->db->limit($limit_start, $limit_end);
+		$this->db->where('c.added <= ', date('Y-m-d'));
 		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
 		//$this->db->limit('4', '4');
 
@@ -79,6 +81,7 @@ class Coupon_model extends CI_Model {
 		}
 		
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 		$query = $this->db->get();
 		return $query->num_rows();        
     }
@@ -136,6 +139,7 @@ class Coupon_model extends CI_Model {
 		$this->db->where('parentId', $parentId);
 		
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
@@ -154,6 +158,7 @@ class Coupon_model extends CI_Model {
 		$this->db->where('status', '1');
 		
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 //		$this->db->where('parentId != ', '0');
 	    $this->db->order_by('id', 'RANDOM');
 	
@@ -174,6 +179,7 @@ class Coupon_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_coupon');
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 		$this->db->where('parentId', '0');
 		$query = $this->db->get();
 		return $query->result_array(); 
@@ -191,7 +197,8 @@ class Coupon_model extends CI_Model {
 		$this->db->join('tbl_coupon as cp', 'cp.id = c.parentId', 'left');
 		$this->db->where('c.parentId != ', '0');
 		$this->db->where('c.status', '1');
-		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('c.coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('c.added <= ', date('Y-m-d'));
 		$query = $this->db->get();
 		return $query->result_array();
     }
@@ -206,6 +213,7 @@ class Coupon_model extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_coupon');
 		$this->db->where('coupon_expiry >= ', date('Y-m-d'));
+		$this->db->where('added <= ', date('Y-m-d'));
 		$this->db->where('offer_id', $offer_id);
 		$query = $this->db->get();
 		return $query->result_array(); 

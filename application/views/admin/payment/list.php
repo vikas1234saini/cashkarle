@@ -100,6 +100,7 @@ $(document).ready(function() {
               <tr>
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Name</th>
+                <th class="yellow header headerSortDown">Amount</th>
                 <th class="yellow header headerSortDown">Name in Bank</th>
                 <th class="yellow header headerSortDown">Bank Name</th>
                 <th class="yellow header headerSortDown">Account Number</th>
@@ -118,6 +119,7 @@ $(document).ready(function() {
                 echo '<tr>';
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['username'].' </td>';
+                echo '<td>'.$row['amount'].' </td>';
                 echo '<td>'.$row['bankusername'].' </td>';
                 echo '<td>'.$row['bankname'].' </td>';
                 echo '<td>'.$row['accountno'].' </td>';

@@ -762,7 +762,7 @@ class Product extends CI_Controller {
 			$find = array("CPRC", "CPA","CPS","CPL"," - India","-","India","india");
 			$replace = array("","","","","","","","");
 					
-			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->where("o.url != ",'')->where("c.coupon_expiry >= ",date('Y-m-d 23:59:59'))->where("o.sitename != ",'flipkart')->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->group_by('o.main_id,c.offer_id')->limit(10)->get("tbl_offer as o")->result();
+			$result = $this->db->select('o.id,o.title,o.discount,count(c.offer_id) as coupon_count')->where("title like '%{$input}%'")->group_by('o.main_id')->order_by('coupon_count', "desc")->where("o.status",'1')->where("o.url != ",'')->where("c.coupon_expiry >= ",date('Y-m-d 23:59:59'))->where("c.added <= ",date('Y-m-d'))->where("o.sitename != ",'flipkart')->join('tbl_coupon as c', 'o.main_id = c.offer_id', 'left')->group_by('o.main_id,c.offer_id')->limit(10)->get("tbl_offer as o")->result();
 
 			foreach($result as $r){
 				$return[] = array('id'=>$r->id,'desc'=>"Up To ".$r->discount."% Cashback / ".$r->coupon_count." Coupons", 'value'=>str_replace($find,$replace,ucwords(stripslashes($r->title))), 'title'=>str_replace($find,$replace,str_replace($input,"<strong>".$input."</strong>",ucwords(stripslashes($r->$field)))));

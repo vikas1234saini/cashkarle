@@ -964,9 +964,9 @@ class Fuser extends CI_Controller {
 				
 					
 				$subject = 'Hey '.$user_details[0]['username'].', We have Received Missing Ticket';
-				$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center; '><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+				$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center; '><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
 				$html .= "Hey ".$user_details[0]['username'].",<br /><br />";
-				$html .= "We have received your Ticket and your Ticket no. is ".$ticket_id." . Our team will get in touch with you shortly.<br/><br/>Thanks for being a part of CashKarle.com. <br /><br />";
+				$html .= "We have received your Ticket and your Ticket no. is <strong>".$ticket_id."</strong> . Our team will get in touch with you shortly.<br/><br/>Thanks for being a part of CashKarle.com. <br /><br />";
 				$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
 				//$this->email->message($html);	
 					

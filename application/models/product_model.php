@@ -539,7 +539,7 @@ class Product_model extends CI_Model {
 	//	$this->db->where("p.retail_price > ","0");
 		//$this->db->where("p.selling_price > ","0");
 		
-		$this->db->limit(1500, 0);
+	//	$this->db->limit(1500, 0);
 		
 		$query = $this->db->get();
 		$daat = $query->result_array();

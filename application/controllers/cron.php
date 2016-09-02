@@ -42,11 +42,15 @@ class Cron extends CI_Controller {
 			if($data['snapdealUrl']!=''){
 				$sdetails = $flipkart->snapdeal_call_url($data['snapdealUrl']);	
 			}
+//			echo "<pre>";
+	//		print_r($fdetails);
+		//	echo "</pre>";
+		//	die;
 			if(isset($fdetails['productInfoList'])){
 				foreach($fdetails['productInfoList'] as $product){
 					$cdata['product_main_id'] 	= $product['productBaseInfo']['productIdentifier']['productId'];
 					$cdata['title'] 			= $product['productBaseInfo']['productAttributes']['title'];
-					$cdata['description'] 		= $product['productBaseInfo']['productAttributes']['productDescription'];
+					$cdata['description'] 		= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $product['productBaseInfo']['productAttributes']['productDescription']);
 			
 					$cdata['image'] 			= array_key_exists('200x200', $product['productBaseInfo']['productAttributes']['imageUrls'])?$product['productBaseInfo']['productAttributes']['imageUrls']['200x200']:'';
 					$cdata['selling_price'] 	= $product['productBaseInfo']['productAttributes']['sellingPrice']['amount'];
@@ -55,8 +59,9 @@ class Cron extends CI_Controller {
 					$cdata['retail_price']		= $product['productBaseInfo']['productAttributes']['maximumRetailPrice']['amount'];
 					$cdata['sitename']			= "flipkart";
 					$cdata['category']			= $data['id'];
+					$cdata['instock']			= $product['productBaseInfo']['productAttributes']['inStock']==1?"In Stock":"Not In Stock";
 					
-					$this->db->select('id');
+					$this->db->select('id,updatecount');
 					$this->db->from('tbl_product');
 					$this->db->where('product_main_id',$product['productBaseInfo']['productIdentifier']['productId']);
 					$this->db->where('sitename',"flipkart");
@@ -68,6 +73,20 @@ class Cron extends CI_Controller {
 						$this->db->insert('tbl_product', $cdata);
 						$add_count++;
 					}else{
+						$old_data = $query->result_array();
+						$cdata['updated_on'] = date('Y-m-d H:i:s');
+						if($cdata['instock']=="Not In Stock"){
+//							$this->db->set('updatecount', 'updatecount+1', FALSE);
+							if($old_data[0]['updatecount']==""){
+								$old_data[0]['updatecount'] = 0;
+							}
+							$cdata['updatecount'] = $old_data[0]['updatecount']+1;
+							if($old_data[0]['updatecount']>=6){
+								$cdata['status'] = "0";
+							}
+						}else{
+							$cdata['updatecount'] = 0;
+						}
 						$this->db->where('product_main_id',$product['productBaseInfo']['productIdentifier']['productId']);
 						$this->db->where('sitename',"flipkart");
 						$this->db->update('tbl_product', $cdata);
@@ -80,19 +99,20 @@ class Cron extends CI_Controller {
 				foreach($sdetails['products'] as $product){
 					$cdata['product_main_id']	= $product['id'];
 					$cdata['title'] 			= $product['title'];
-					$cdata['description'] 	= $product['description'];
+					$cdata['description'] 		= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $product['description']);
 			
 					$cdata['image'] 			= $product['imageLink'];
 					$cdata['selling_price'] 	= $product['offerPrice'];
-					$cdata['url'] 			= $product['link'];
+					$cdata['url'] 				= $product['link'];
 					$cdata['brand'] 			= $product['brand'];
-					$cdata['retail_price']	= $product['mrp'];
-					$cdata['sitename']		= "snapdeal";
-					$cdata['category']		= $data['id'];
+					$cdata['retail_price']		= $product['mrp'];
+					$cdata['sitename']			= "snapdeal";
+					$cdata['category']			= $data['id'];
+					$cdata['instock']			= $product['availability']=="in stock"?"In Stock":"Not In Stock";
 					
 					//$this->db->insert('tbl_product', $cdata);
 					
-					$this->db->select('id');
+					$this->db->select('id,updatecount');
 					$this->db->from('tbl_product');
 					$this->db->where('product_main_id',$product['id']);
 					$this->db->where('sitename',"snapdeal");
@@ -104,6 +124,20 @@ class Cron extends CI_Controller {
 						$this->db->insert('tbl_product', $cdata);
 						$add_count++;
 					}else{
+						$old_data = $query->result_array();
+						$cdata['updated_on'] = date('Y-m-d H:i:s');
+						if($cdata['instock']=="Not In Stock"){
+//							$this->db->set('updatecount', 'updatecount+1', FALSE);
+							if($old_data[0]['updatecount']==""){
+								$old_data[0]['updatecount'] = 0;
+							}
+							$cdata['updatecount'] = $old_data[0]['updatecount']+1;
+							if($old_data[0]['updatecount']>=6){
+								$cdata['status'] = "0";
+							}
+						}else{
+							$cdata['updatecount'] = 0;
+						}
 						$this->db->where('product_main_id',$product['id']);
 						$this->db->where('sitename',"snapdeal");
 						$this->db->update('tbl_product', $cdata);
@@ -149,7 +183,7 @@ class Cron extends CI_Controller {
 		echo "<pre>";
 		print_r($offerdetails);
 		echo "</pre>";
-		die;
+		//die;
 		// Print out the response details
 		if($offerdetails['response']['status'] === 1) {
 			$offer = $offerdetails['response']['data'];
@@ -171,7 +205,7 @@ class Cron extends CI_Controller {
 						
 					$cdata['main_id']						= $value['Offer']['id'];
 					$cdata['title'] 						= $value['Offer']['name'];
-					$cdata['description'] 					= $value['Offer']['description'];
+					$cdata['description'] 					= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $value['Offer']['description']);
 					$cdata['payout_type'] 					= $value['Offer']['payout_type'];
 					$cdata['percent_payout'] 				= $value['Offer']['percent_payout'];
 					$cdata['expiration_date'] 				= $value['Offer']['expiration_date'];
@@ -370,9 +404,9 @@ class Cron extends CI_Controller {
 		$add_count = 0 ;
 		if(isset($fdetails['dotdList'])){
 			foreach($fdetails['dotdList'] as $key=>$value){
-				echo "<pre>";
+				/*echo "<pre>";
 				print_r($value);
-				echo "</pre>";
+				echo "</pre>";*/
 				/*$cdata['main_id']		= "";
 				$cdata['title'] 		= $value['title'];
 				$cdata['description'] 	= $value['description'];
@@ -385,7 +419,7 @@ class Cron extends CI_Controller {
 				$cdata['offer_id'] 				= '412';
 				$cdata['offer_name'] 			= $value['title'];
 				$cdata['coupon_title'] 			= $value['title'];
-				$cdata['coupon_description'] 	= $value['description'];
+				$cdata['coupon_description'] 	= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $value['description']);
 				$cdata['link'] 					= $value['url'];
 				$cdata['category'] 				= isset($value['category'])?$value['category']:"";
 				$cdata['coupon_expiry'] 		= date('Y-m-d',strtotime("+15 day"));
@@ -477,7 +511,7 @@ class Cron extends CI_Controller {
 				$cdata['offer_name'] 			= $value['offer_name'];
 				$cdata['coupon_title'] 			= $value['coupon_title'];
 				$cdata['category'] 				= $value['category'];
-				$cdata['coupon_description'] 	= $value['coupon_description'];
+				$cdata['coupon_description'] 	= preg_replace('/[^a-zA-Z0-9_ %\[\]\.\(\)%&-]/s', '', $value['coupon_description']);
 				$cdata['coupon_type'] 			= $value['coupon_type'];
 				$cdata['coupon_code'] 			= $value['coupon_code'];
 				$cdata['link'] 					= $value['link'];
@@ -597,9 +631,9 @@ class Cron extends CI_Controller {
 		$this->load->library('Flipkart', $params1);
 		$flipkart = new Flipkart($params1);
 		$url = 'https://affiliate-api.flipkart.net/affiliate/report/orders/detail/json?startDate='.date('Y-m-d',strtotime('-30 days')).'&endDate='.date('Y-m-d').'&status='.$status.'&offset=0';
-echo $url ;
+echo $url;
 		$fdetails = $flipkart->call_url($url);
-		print_r($fdetails);
+		//print_r($fdetails);
 		$add_count = 0 ;
 		foreach($fdetails['orderList'] as $key=>$value){
 //		if($value['affExtParam1']=='26'){				
@@ -644,6 +678,35 @@ echo $url ;
 				
 				$this->db->insert('tbl_order', $cdata);
 				$add_count++;
+				if($cdata['user_id']!=0 && $cdata['user_id']!=""){
+					$this->load->model('fuser_model');
+					$user_data = $this->fuser_model->get_user_by_id($cdata['user_id']);
+					if(sizeof($user_data)>0 && $user_data[0]['email']!=''){
+						$subject = 'Hey '.$user_data[0]['username'].', Notification about your cashback.';
+						$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+						$html .= "Hey ".$user_data[0]['username'].",<br /><br />";
+						
+						$html .= "Happy to know that you have earned ".$new_discount."Rs Cashback from CashKarle for your flipkart Transaction which you did on (Date of transaction). Now it's showing as Pending but this Amount we will automatically update as Confirmed Cashback once we received confirmation from Paytm. It will take maximum 90 Days to confirm.<br /> Thank you for being a part of it you’ll find many more deals or coupons always. <br />For any Query you can contact us with the help of this link <a href='".base_url('contact')."'>Contact us</a><br /><br />";
+	//					$html .= "Congratulations! Now you are the part of Biggest Saving Community. <br/>Come on our website whenever you want to shop anything from Snapdeal,Flipkart Paytm and Many more.we will give you Coupons, Cashbacks and rewards points for your shopping.<br/><br/>";
+//						$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
+						$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
+						//$this->email->message($html);	
+							
+						// Always set content-type when sending HTML email
+						$headers = "MIME-Version: 1.0" . "\r\n";
+						$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+						
+						// More headers
+						$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+				//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+						$to = $user_data[0]['email'];
+						if(mail($to,$subject,$html,$headers)){
+							$arr = array('status' => 1);
+						}else{
+							$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
+						}
+					}
+				}
 			}else{			
 				$cdata = array();
 				$cdata['orderStatus'] 		= $value['status'];
@@ -666,7 +729,7 @@ echo $url ;
 		$add_data['added'] = $add_count;
 		$this->db->insert('tbl_log',$add_data);
 		echo "<pre>";
-		print_r($fdetails);
+	//	print_r($fdetails);
 		echo "</pre>";
 	}
 	function snapdealorder(){
@@ -721,6 +784,35 @@ echo $url;
 				
 				$this->db->insert('tbl_order', $cdata);
 				$add_count++;
+				if($cdata['user_id']!=0 && $cdata['user_id']!=""){
+					$this->load->model('fuser_model');
+					$user_data = $this->fuser_model->get_user_by_id($cdata['user_id']);
+					if(sizeof($user_data)>0 && $user_data[0]['email']!=''){
+						$subject = 'Hey '.$user_data[0]['username'].', Notification about your cashback.';
+						$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+						$html .= "Hey ".$user_data[0]['username'].",<br /><br />";
+						
+						$html .= "Happy to know that you have earned ".$new_discount."Rs Cashback from CashKarle for your snapdeal Transaction which you did on (Date of transaction). Now it's showing as Pending but this Amount we will automatically update as Confirmed Cashback once we received confirmation from Paytm. It will take maximum 90 Days to confirm.<br /> Thank you for being a part of it you’ll find many more deals or coupons always. <br />For any Query you can contact us with the help of this link <a href='".base_url('contact')."'>Contact us</a><br /><br />";
+	//					$html .= "Congratulations! Now you are the part of Biggest Saving Community. <br/>Come on our website whenever you want to shop anything from Snapdeal,Flipkart Paytm and Many more.we will give you Coupons, Cashbacks and rewards points for your shopping.<br/><br/>";
+//						$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
+						$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
+						//$this->email->message($html);	
+							
+						// Always set content-type when sending HTML email
+						$headers = "MIME-Version: 1.0" . "\r\n";
+						$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+						
+						// More headers
+						$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+				//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+						$to = $user_data[0]['email'];
+						if(mail($to,$subject,$html,$headers)){
+							$arr = array('status' => 1);
+						}else{
+							$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
+						}
+					}
+				}
 			}else{			
 				$cdata = array();
 				$cdata['orderStatus'] 		= "Approved";
@@ -741,7 +833,7 @@ echo $url;
 		$this->db->insert('tbl_log',$add_data);
 		echo "test";
 		echo "<pre>";
-		print_r($sdetails);
+//		print_r($sdetails);
 		echo "</pre>";
 		echo "test1";
 	}
@@ -787,7 +879,7 @@ echo $url;
 				
 				if( $query->num_rows() == 0){
 					$cdata = array();
-					$cdata['user_id'] 			= $value['Stat']['affiliate_info1'];
+					$cdata['user_id'] 			= $value['Stat']['affiliate_info1']!=''?$value['Stat']['affiliate_info1']:0;
 					$cdata['main_id'] 			= $value['Stat']['id'];
 					$cdata['date'] 				= $value['Stat']['datetime'];
 					$cdata['sitename']			= str_replace($find,$replace,$value['Offer']['name']);
@@ -800,7 +892,37 @@ echo $url;
 					$cdata['discount_by_cashkarle'] 		= $new_discount;
 					
 					$this->db->insert('tbl_order', $cdata);
+					
 					$add_count++;
+					if($cdata['user_id']!=0 && $cdata['user_id']!=""){
+						$this->load->model('fuser_model');
+						$user_data = $this->fuser_model->get_user_by_id($cdata['user_id']);
+						if(sizeof($user_data)>0 && $user_data[0]['email']!=''){
+							$subject = 'Hey '.$user_data[0]['username'].', Notification about your cashback.';
+							$html = "<div style='font-family: \"Bodoni MT\", Didot, \"Didot LT STD\", \"Hoefler Text\", Garamond, \"Times New Roman\", serif; font-size:20px;'><i><div style='width:100%; text-align:center;'><img src='". base_url()."assets/img/plogo.png' width='200'  alt='CashKarle.com' align='center' /></div>";
+							$html .= "Hey ".$user_data[0]['username'].",<br /><br />";
+							
+							$html .= "Happy to know that you have earned ".$new_discount."Rs Cashback from CashKarle for your ".$cdata['sitename']." Transaction which you did on (Date of transaction). Now it's showing as Pending but this Amount we will automatically update as Confirmed Cashback once we received confirmation from Paytm. It will take maximum 90 Days to confirm.<br /> Thank you for being a part of it you’ll find many more deals or coupons always. <br />For any Query you can contact us with the help of this link <a href='".base_url('contact')."'>Contact us</a><br /><br />";
+		//					$html .= "Congratulations! Now you are the part of Biggest Saving Community. <br/>Come on our website whenever you want to shop anything from Snapdeal,Flipkart Paytm and Many more.we will give you Coupons, Cashbacks and rewards points for your shopping.<br/><br/>";
+	//						$html .= "<a href='".base_url()."' style='text-decoration:none;' ><div style='width:200px; color:#fff; text-align:center; height:30px;line-height:30px; background: #449d44;    font-size: 16px;    font-weight: bold;    padding: 5px;'>Sign in to your account</div></a><br /><br />";
+							$html .= "<strong>Regards,<br />CashKarle.com<br />Enjoy Savings</strong></i></div>";
+							//$this->email->message($html);	
+								
+							// Always set content-type when sending HTML email
+							$headers = "MIME-Version: 1.0" . "\r\n";
+							$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+							
+							// More headers
+							$headers .= 'From: Cashkarle <info@cashkarle.com>' . "\r\n";
+					//		$headers .= 'Cc: myboss@example.com' . "\r\n";
+							$to = $user_data[0]['email'];
+							if(mail($to,$subject,$html,$headers)){
+								$arr = array('status' => 1);
+							}else{
+								$arr = array('status' => 0,'error'=>'There is some issue in recover password. Please contact cashkale team.');
+							}
+						}
+					}
 				}else{			
 					$cdata = array();
 					$cdata['orderStatus'] 		= "Approved";
@@ -820,10 +942,11 @@ echo $url;
 		$add_data['for'] = 'vcomission order';
 		$add_data['date'] = date('Y-m-d H:i:s');
 		$add_data['added'] = $add_count;
+		
 		$this->db->insert('tbl_log',$add_data);
 		echo "test";
 		echo "<pre>";
-		print_r($hasoffer_report);
+		//print_r($hasoffer_report);
 		echo "</pre>";
 		echo "test1";
 	}

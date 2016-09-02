@@ -3,9 +3,10 @@
    <head>
       <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
       <link rel="icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
-     <title>CashKarle - Cashback offers, Discount codes, promo codes &amp; Fresh offers </title>
+    <title>CashKarle - Cashback offers, Discount & Promo codes, &amp; Fresh offers </title>
       <meta name="Description" content="Get Cashback offers, Promo Codes on all shopping like Flipkart, OYO, Amazon, Myntra, Paytm, Jabong, Snapdeal &amp; more. Join Us!"/>
-      <meta name="keywords" content="cashback, discounts, vouchers, coupons, offers, deals, discount coupons, offers for online sites, promo codes, online shopping, best online shopping sites" />
+      <meta name="keywords" content="cashback, paytm, paytm offers, paytm coupons,  discounts, vouchers, coupons, offers, deals, discount coupons,  promo code, paytm codes, freecharge coupons, paytm cashback, " />
+     
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link href="<?php echo base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" />
       <link href="<?php echo base_url(); ?>assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
@@ -180,8 +181,21 @@
     bottom: 30px;
   }
 }
-
-      </style>
+.carousel-indicators li {
+ 
+    background-color: #23C670;
+    box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);    
+}
+.carousel-indicators .active {
+    background-color: #ec971f;
+}
+#myCarouselTopUser .carousel-control {
+    position: absolute;
+    top: 10%; /* pushes the icon in the middle of the height */
+    z-index: 5;
+    display: inline-block;
+}
+</style>
             <link href="<?php echo base_url(); ?>assets/css/style-overriden.css" rel="stylesheet">
       <script>
   

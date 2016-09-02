@@ -386,7 +386,8 @@ class Admin_export extends CI_Controller {
 									  'G1'=>'IFSC',
 									  'H1'=>'Date',
 									  'I1'=>'Status',
-									  'J1'=>'Username'
+									  'J1'=>'Username',
+									  'K1'=>'Amount'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -409,7 +410,8 @@ class Admin_export extends CI_Controller {
 									  'G'.$counter=>$value_d['ifsc'],
 									  'H'.$counter=>(date("d-M-Y h:i a",strtotime($value_d['date']))),
 									  'I'.$counter=>(($value_d['status']==1)?"DONE":"Not DONE"),
-									  'J'.$counter=>$value_d['admin']
+									  'J'.$counter=>$value_d['admin'],
+									  'K'.$counter=>$value_d['amount']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -867,7 +869,8 @@ class Admin_export extends CI_Controller {
 									  'G1'=>'IFSC',
 									  'H1'=>'Date',
 									  'I1'=>'Status',
-									  'J1'=>'Username'
+									  'J1'=>'Username',
+									  'K1'=>'Amount'
 									  );
 				foreach($header_array as $key => $value){
 					$this->excel->getActiveSheet()->setCellValue($key, $value);
@@ -890,7 +893,8 @@ class Admin_export extends CI_Controller {
 									  'G'.$counter=>$value_d['ifsc'],
 									  'H'.$counter=>(date("d-M-Y h:i a",strtotime($value_d['date']))),
 									  'I'.$counter=>(($value_d['status']==1)?"DONE":"Not DONE"),
-									  'J'.$counter=>$value_d['admin']
+									  'J'.$counter=>$value_d['admin'],
+									  'K'.$counter=>$value_d['amount']
 									  );
 					foreach($header_array1 as $key => $value){
 						$this->excel->getActiveSheet()->setCellValue($key, $value);

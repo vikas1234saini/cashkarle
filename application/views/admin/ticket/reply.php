@@ -4,11 +4,13 @@ $(document).ready(function() {
 	$("#showcashback").click(function() {
 		$('#cashbackdiv').show();		
 		$(this).hide();
+		return false;
 	});		
 	$("#hidecashback").click(function() {
 		$('#showcashback').show();		
 		$('#cashbackdiv').hide();		
 		$('#cashback').val("");	
+		return false;
 //		$(this).hide();
 	});		
 	 /*$("#cashback").keydown(function(event) {
@@ -107,15 +109,15 @@ $(document).ready(function() {
               
 	            <?php if(strtolower($login_user_details[0]['admin_login_name'])==strtolower('admin')){ ?>
               <br />
-              <a href="javescript:void(0);" id="showcashback">Add Cashback</a>
+              <a href="javascript:void(0);" id="showcashback">Add Cashback</a>
               <br />
               <div style="display:none;" id="cashbackdiv">
               
-              	<a href="javescript:void(0);" id="hidecashback">Remove Cashback</a>
+              	<a href="javascript:void(0);" id="hidecashback">Remove Cashback</a>
               	<br />
                     <input type="text" name="cashback" id="cashback" placeholder="Add Amount" />
                     <br />
-                    <input type="checkbox" name="cashback_now" id="cashback_now" value="now" /> <label for="cashback_now" style="display:inline;">Cashback auto confirm now or later</label>
+                    <input type="checkbox" name="cashback_now" id="cashback_now" value="now" /> <label for="cashback_now" style="display:inline;">Cashback auto confirm now.</label>
                 <?php } ?>
               </div>
             </div>
